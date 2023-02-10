@@ -1,0 +1,6 @@
+Authentication - Signing in.
+	Logging in
+	Logging out
+Viewing - Post, Comments, Notifications, Messages
+Search - Post, People
+Adding - Post, Like, Messages, Follow

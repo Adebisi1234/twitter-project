@@ -1,0 +1,25 @@
+User
+	username
+	password
+	handle
+	bio
+	followers:
+		[]
+	followersCount: 0
+	Tweets
+	Notifications
+	Messages
+
+post
+	content
+	ownerhandle
+	username
+	likes:0
+	comment:[]
+	title
+	audioUrl
+Comment
+	username
+	handle
+	likes
+	content
