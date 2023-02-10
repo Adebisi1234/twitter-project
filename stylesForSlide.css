@@ -1,0 +1,9 @@
+#slide {
+transform: translateX(0%);
+max-width: 70%;
+min-width: 280px;
+height:100vh;
+transition-duration: 250ms;
+transition-timing-function: ease;
+transition-property: transform;
+}

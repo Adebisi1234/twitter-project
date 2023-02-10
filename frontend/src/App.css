@@ -1,0 +1,34 @@
+#root {
+    height: 100vh;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+input, textarea {
+    outline: 0px !important;
+    background: transparent;
+}
+
+.self {
+    align-self: flex-end;
+    max-width:60%;
+    background-color: rgb(67, 156, 219);
+    color: white;
+    padding: 2em 1em;
+    border-top-left-radius: 15%;
+    border-bottom-left-radius: 15%;
+    border-top-right-radius: 15%;
+}
+
+.others {
+    align-self: flex-start;
+    max-width:60%;
+    background-color: rgb(121, 128, 133);
+    color: white;
+    padding: 2em 1em;
+    border-top-left-radius: 15%;
+    border-bottom-right-radius: 15%;
+    border-top-right-radius: 15%;
+}
