@@ -29,12 +29,12 @@ app.use(express.json())
 app.use(cors(corsOptions))
 
 // Routes
-app.use("/user", userRoutes)
-app.use("/message", messageRoutes)
-app.use("/notification", notificationRoutes)
+// app.use("/user", userRoutes)
+// app.use("/message", messageRoutes)
+// app.use("/notification", notificationRoutes)
 app.use("/auth", authRoutes)
-app.use("/post", postRoutes)
-app.use("/comment", commentRoutes)
+// app.use("/post", postRoutes)
+// app.use("/comment", commentRoutes)
 
 
 app.use((err, req, res, next) => {

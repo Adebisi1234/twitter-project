@@ -30,9 +30,15 @@ const userSchema = new Schema({
     pp: {
         type: String
     },
+    coverImg: {
+        type: String
+    },
     posts: {
         type: [String]
     },
+    location: {
+        type: String
+    }
 },
     { timestamps: true }
 )
