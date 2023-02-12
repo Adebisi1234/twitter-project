@@ -34,7 +34,8 @@ const userSchema = new Schema({
         type: String
     },
     posts: {
-        type: [String]
+        type: Number,
+        default: 0
     },
     location: {
         type: String

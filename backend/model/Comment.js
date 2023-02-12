@@ -25,6 +25,10 @@ const commentSchema = new Schema({
         type: Number,
         default: 0
     },
+    PostId: {
+        type: String,
+        required: true
+    }
 }, { timestamps: true })
 
 module.exports = mongoose.model("Comment", commentSchema)

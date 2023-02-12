@@ -1,63 +1,75 @@
 const User = require("../model/User")
 
-export const editProfile = async (req, res, next) => {
+const editProfile = async (req, res, next) => {
     try {
-        if (req.params.username) {
-            await User.findByIdAndUpdate(req.user.id, {
-                $push: {
-                    username: req.params.username
+        if (req.body.username) {
+            await User.findOneAndUpdate({ handle: req.body.handle }, {
+                $set: {
+                    username: req.body.username
                 },
             })
-            res.status(200).json("change successful")
         }
-        if (req.params.bio) {
-            await User.findByIdAndUpdate(req.user.id, {
-                $push: {
-                    bio: req.params.bio
+        if (req.body.bio) {
+            await User.findOneAndUpdate({ handle: req.body.handle }, {
+                $set: {
+                    bio: req.body.bio
                 },
             })
-            res.status(200).json("change successful")
         }
-        if (req.params.pp) {
-            await User.findByIdAndUpdate(req.user.id, {
-                $push: {
-                    pp: req.params.pp
+        if (req.body.pp) {
+            await User.findOneAndUpdate({ handle: req.body.handle }, {
+                $set: {
+                    pp: req.body.pp
                 },
             })
-            res.status(200).json("change successful")
         }
-        if (req.params.coverImg) {
-            await User.findByIdAndUpdate(req.user.id, {
-                $push: {
-                    coverImg: req.params.coverImg
+        if (req.body.coverImg) {
+            await User.findOneAndUpdate({ handle: req.body.handle }, {
+                $set: {
+                    coverImg: req.body.coverImg
                 },
             })
-            res.status(200).json("change successful")
         }
-        if (req.params.location) {
-            await User.findByIdAndUpdate(req.user.id, {
-                $push: {
-                    location: req.params.location
+        if (req.body.location) {
+            await User.findOneAndUpdate({ handle: req.body.handle }, {
+                $set: {
+                    location: req.body.location
                 },
             })
-            res.status(200).json("change successful")
         }
+        res.status(200).json("change successful")
 
-    } catch (err) {
-
-    }
-}
-
-export const newFollowers = async (req, res, next) => {
-    try {
-        await User.findByIdAndUpdate(req.params.id, {
-            $push: { followers: req.body.username }
-        })
-        await User.findByIdAndUpdate(req.params.id, {
-            $inc: { followersCount: 1 }
-        })
-        res.status(200).json("Followed")
     } catch (err) {
         next(err)
     }
 }
+
+const newFollowers = async (req, res, next) => {
+    try {
+        await User.findOneAndUpdate({ handle: req.params.handle }, {
+            $push: { followers: req.body.username }
+        })
+        await User.findOneAndUpdate(req.body.id, {
+            $inc: { followersCount: 1 }
+        })
+        res.status(200).json("Followed")
+    } catch (err) {
+        console.log(err)
+        next(err)
+    }
+}
+
+
+const getUser = async (req, res, next) => {
+    try {
+        const handle = req.params.handle
+        const user = await User.findOne({ handle: handle })
+        const { password, ...others } = user._doc
+        res.status(200).json({ ...others })
+    } catch (err) {
+        next(err)
+    }
+}
+
+
+module.exports = { getUser, newFollowers, editProfile }

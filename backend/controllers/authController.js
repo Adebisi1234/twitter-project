@@ -21,7 +21,7 @@ const signup = async (req, res, next) => {
         })
 
         await newUser.save()
-        res.status(200).send("User has been created")
+        return signin(req, res, next)
 
     } catch (err) {
         next(err)
@@ -40,9 +40,12 @@ const signin = async (req, res, next) => {
         const { password, ...others } = user._doc
 
         res.cookie("access_token", token,
-            { httpOnly: true, sameSite: "None", secure: true }
+            {
+                httpOnly: true, sameSite: "None" //,secure: true 
+            }
         )
-        res.status(200).json(others)
+        res.status(200).json({ ...others, access_token: token })
+        next()
     } catch (err) {
         res.sendStatus(401)
         next(err)
@@ -51,11 +54,12 @@ const signin = async (req, res, next) => {
 
 const logout = async (req, res) => {
     const cookies = req.cookies
-    if (!cookies.access_token) return res.sendStatus(204)
+    console.log(cookies)
+    if (!cookies?.access_token) return res.sendStatus(204)
     res.clearCookie("access_token", {
-        httpOnly: true, sameSite: "None", secure: true
+        httpOnly: true, sameSite: "None" //,secure: true
     })
-    return res.sendStatus(204)
+    return res.sendStatus(200)
 
 }
 

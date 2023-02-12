@@ -20,20 +20,23 @@ connectDB()
 
 
 
+
+
 app.use(credentials)
 app.use(express.urlencoded({ extended: false }))
 app.use(express.json())
 
+app.use(cookieParser())
 
 
 app.use(cors(corsOptions))
 
 // Routes
-// app.use("/user", userRoutes)
+app.use("/users", userRoutes)
 // app.use("/message", messageRoutes)
 // app.use("/notification", notificationRoutes)
 app.use("/auth", authRoutes)
-// app.use("/post", postRoutes)
+app.use("/post", postRoutes)
 // app.use("/comment", commentRoutes)
 
 
