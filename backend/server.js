@@ -1,6 +1,6 @@
 require("dotenv").config()
 const express = require("express")
-const path = require("path")
+const verifyJwt = require("../middleware/verifyJwt")
 const app = express()
 const cors = require("cors")
 const credentials = require("./middleware/credentials")
@@ -11,6 +11,7 @@ const connectDB = require("./config/dbConn")
 const userRoutes = require("./routes/userRoutes")
 const authRoutes = require("./routes/authRoutes")
 const commentRoutes = require("./routes/commentRoutes")
+const notificationRoutes = require("./routes/notificationRoutes")
 const postRoutes = require("./routes/postRoutes")
 
 const PORT = process.env.PORT || 3000
@@ -32,12 +33,14 @@ app.use(cookieParser())
 app.use(cors(corsOptions))
 
 // Routes
+app.use("/auth", authRoutes)
+
+app.use(verifyJwt)
 app.use("/users", userRoutes)
 // app.use("/message", messageRoutes)
 // app.use("/notification", notificationRoutes)
-app.use("/auth", authRoutes)
 app.use("/post", postRoutes)
-// app.use("/comment", commentRoutes)
+app.use("/comment", commentRoutes)
 
 
 app.use((err, req, res, next) => {

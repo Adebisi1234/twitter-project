@@ -71,5 +71,19 @@ const getUser = async (req, res, next) => {
     }
 }
 
+const unFollow = async (req, res, next) => {
+    try {
+        await User.findByIdAndUpdate(req.body.id, {
+            $pull: { followers: req.body.handle },
+        });
+        await User.findByIdAndUpdate(req.body.id, {
+            $inc: { followersCount: -1 },
+        });
+        res.status(200).json("Un-followed.")
+    } catch (err) {
+        next(err);
+    }
 
-module.exports = { getUser, newFollowers, editProfile }
+};
+
+module.exports = { getUser, newFollowers, editProfile, unFollow }

@@ -19,7 +19,8 @@ const postSchema = new Schema({
         required: true
     },
     comment: {
-        type: String
+        type: Boolean,
+        default: false
     },
     commentCount: {
         type: Number,
