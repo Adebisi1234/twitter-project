@@ -5,3 +5,6 @@ For linking use {
 }
 
 Leave messages for now focus on the rest
+
+MESSAGES
+Each message is a new document containing handles[sender, receiver], from: sender|| receiver, content then update messageCount on User?

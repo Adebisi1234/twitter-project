@@ -2,16 +2,16 @@ const mongoose = require("mongoose")
 const Schema = mongoose.Schema
 
 const messageSchema = new Schema({
-    senderUsername: {
-        type: String,
+    handles: {
+        type: [String],
         required: true
     },
-    receiverUsername: {
+    content: {
+        type: String
+    },
+    from: {
         type: String,
         required: true
-    },
-    messages: {
-        type: [Object]
     }
 }, { timestamps: true })
 

@@ -31,6 +31,9 @@ const postSchema = new Schema({
     },
     title: {
         type: String
+    },
+    PostId: {
+        type: String
     }
 
 }, { timestamps: true })

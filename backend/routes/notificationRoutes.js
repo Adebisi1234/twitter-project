@@ -1,8 +1,8 @@
-const express = require(express)
+const express = require("express")
 const router = express.Router()
-const { getAllNotifications } = require("../controllers/notificationController")
+const { getAllNotifications, newNotification } = require("../controllers/notificationController")
 
-router.get("/", getAllNotifications)
-router.get("/newNotification", newNotification)
+router.get("/:handle", getAllNotifications)
+router.post("/new", newNotification)
 
 module.exports = router

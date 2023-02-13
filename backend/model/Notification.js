@@ -14,7 +14,7 @@ const notificationSchema = new Schema({
         required: true
     },
     action: {
-        type: [String]
+        type: String
     },
     pp: {
         type: String
