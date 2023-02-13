@@ -39,6 +39,10 @@ const userSchema = new Schema({
     },
     location: {
         type: String
+    },
+    messageCount: {
+        type: Number,
+        default: 0
     }
 },
     { timestamps: true }

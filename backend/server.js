@@ -11,6 +11,7 @@ const connectDB = require("./config/dbConn")
 const userRoutes = require("./routes/userRoutes")
 const authRoutes = require("./routes/authRoutes")
 const commentRoutes = require("./routes/commentRoutes")
+const messageRoutes = require("./routes/messageRoutes")
 const notificationRoutes = require("./routes/notificationRoutes")
 const postRoutes = require("./routes/postRoutes")
 
@@ -37,10 +38,10 @@ app.use("/auth", authRoutes)
 
 app.use(verifyJwt)
 app.use("/users", userRoutes)
-// app.use("/message", messageRoutes)
+app.use("/messages", messageRoutes)
 app.use("/notification", notificationRoutes)
-app.use("/post", postRoutes)
-app.use("/comment", commentRoutes)
+app.use("/posts", postRoutes)
+app.use("/comments", commentRoutes)
 
 
 app.use((err, req, res, next) => {

@@ -71,6 +71,25 @@ const getUser = async (req, res, next) => {
     }
 }
 
+const getSomeUser = async (req, res, next) => {
+    try {
+        let users = await User.find()
+        shuffleArray(users)
+        res.status(200).json(users)
+    } catch (err) {
+        next(err)
+    }
+}
+
+function shuffleArray(array) {
+    for (var i = array.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var temp = array[i];
+        array[i] = array[j];
+        array[j] = temp;
+    }
+}
+
 const unFollow = async (req, res, next) => {
     try {
         await User.findByIdAndUpdate(req.body.id, {
@@ -86,4 +105,4 @@ const unFollow = async (req, res, next) => {
 
 };
 
-module.exports = { getUser, newFollowers, editProfile, unFollow }
+module.exports = { getUser, newFollowers, editProfile, unFollow, getSomeUser }
