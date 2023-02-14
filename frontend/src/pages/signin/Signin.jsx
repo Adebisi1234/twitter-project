@@ -4,10 +4,10 @@ import Form from "./Form";
 
 const Signin = () => {
   return (
-    <>
+    <div className="max-h-screen">
       <Header />
       <Form />
-    </>
+    </div>
   );
 };
 

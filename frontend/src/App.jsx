@@ -3,7 +3,6 @@ import "./App.css";
 import Login from "./pages/login/Login";
 import Form from "./pages/login/Form";
 import Signin from "./pages/signin/Signin";
-import Step1 from "./pages/signin/step/Step1";
 import HomePage from "./pages/home/HomePage";
 import ProfilePix from "./components/ProfilePix";
 import NewTweet from "./pages/home/NewTweet";
@@ -17,17 +16,26 @@ import MessagePage from "./pages/messages/MessagePage";
 import People from "./pages/messages/People";
 import Sidebar from "./pages/home/Sidebar";
 import Message from "./pages/messages/Message";
+import Header from "./components/Header";
 
 function App() {
   return (
-    <div className=" flex flex-col dark:bg-black dark:text-white bg-white text-black h-full">
-      <HomePage />
-      <div
-        className=" fixed top-0 left-0 bg-slate-800 -translate-x-full max-w-[70%] min-w-[280px] transition-all duration-300"
+    <div className=" flex min-h-screen flex-col lg:grid lg:grid-cols-[1fr,2fr,1fr] dark:bg-black dark:text-white bg-white text-black">
+      <div className="hidden lg:block">
+        <Sidebar />
+      </div>
+      <div>
+        <Message />
+      </div>
+      <div className="hidden lg:block">
+        <Search />
+      </div>
+      {/* <div
+        className=" fixed top-0 left-0 dark:bg-black dark:text-white bg-white text-black -translate-x-full max-w-[70%] min-w-[280px] transition-all duration-300"
         id="slide"
       >
         <Sidebar />
-      </div>
+      </div> */}
     </div>
   );
 }

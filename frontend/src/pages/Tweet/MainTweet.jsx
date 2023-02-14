@@ -1,7 +1,6 @@
 import React from "react";
 import ProfilePix from "../../components/ProfilePix";
 import reactLogo from "../../assets/react.svg";
-import Tweet from "../../components/Tweet";
 
 const MainTweet = ({ author, text, img, handle }) => {
   return (
@@ -53,4 +52,4 @@ const MainTweet = ({ author, text, img, handle }) => {
   );
 };
 
-export default Tweet;
+export default MainTweet;

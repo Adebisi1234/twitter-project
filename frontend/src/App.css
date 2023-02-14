@@ -11,6 +11,18 @@ input, textarea {
     background: transparent;
 }
 
+#root * {
+    color: black;
+    background-color: white;
+}
+
+@media (prefers-color-scheme: dark) {
+    #root * {
+        color: white;
+        background-color: black;
+    }
+}
+
 .self {
     align-self: flex-end;
     max-width:60%;
@@ -31,4 +43,17 @@ input, textarea {
     border-top-left-radius: 15%;
     border-bottom-right-radius: 15%;
     border-top-right-radius: 15%;
+}
+
+:root {
+    --button-primary: rgb(38, 144, 38);
+    --button-secondary: rgb(27, 70, 27);
+    --bg-dark: black;
+    --bg-light: white;
+    --color-light: black;
+    --color-dark: white;
+}
+
+.trends:hover, .trends:hover *, .terms:hover, .terms:hover *, .trending:hover, .trending:hover * {
+    background-color: rgb(64, 64, 64) !important;
 }

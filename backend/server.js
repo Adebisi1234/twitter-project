@@ -14,6 +14,7 @@ const commentRoutes = require("./routes/commentRoutes")
 const messageRoutes = require("./routes/messageRoutes")
 const notificationRoutes = require("./routes/notificationRoutes")
 const postRoutes = require("./routes/postRoutes")
+mongoose.set('strictQuery', true)
 
 const PORT = process.env.PORT || 3000
 

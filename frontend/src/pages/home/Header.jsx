@@ -2,10 +2,10 @@ import React from "react";
 
 const Header = ({ title, img }) => {
   return (
-    <header className="w-full fixed dark:bg-black dark:text-white bg-white text-black">
+    <header className="w-full dark:bg-black dark:text-white bg-white text-black">
       <div className="flex w-full p-2">
         <div
-          className="w-7 dark:bg-[url('/src/assets/profileDark.png')] bg-[url('/src/assets/profile.png')] bg-left-bottom bg-cover h-7"
+          className="w-7 lg:hidden dark:bg-[url('/src/assets/profileDark.png')] bg-[url('/src/assets/profile.png')] bg-left-bottom bg-cover h-7"
           onClick={() => {
             document
               .getElementById("slide")

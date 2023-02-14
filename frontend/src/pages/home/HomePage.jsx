@@ -25,16 +25,20 @@ const repeat = arr.map(() => {
 const HomePage = () => {
   return (
     <>
-      <div className="w-full h-full">
+      <div className="w-full border-x h-full">
         <Header title="Home" img={profile} />
-        <div className="mb-28"></div>
         <NewTweet />
         <Tweet author="owner" text="message from me" img={img} />
         {repeat}
         <Tweet author="owner" text="message from me" img={img2} />
         <Hr />
       </div>
-
+      <div
+        className=" fixed top-0 left-0 dark:bg-black dark:text-white bg-white text-black -translate-x-full max-w-[70%] min-w-[280px] transition-all duration-300"
+        id="slide"
+      >
+        <Sidebar />
+      </div>
       <Bottom />
     </>
   );
