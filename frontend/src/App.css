@@ -54,6 +54,12 @@ input, textarea {
     --color-dark: white;
 }
 
-.trends:hover, .trends:hover *, .terms:hover, .terms:hover *, .trending:hover, .trending:hover * {
-    background-color: rgb(64, 64, 64) !important;
+.trend:hover, li:hover {
+    background-color: rgb(38, 144, 38) !important;
+    color: white !important;
+}
+
+.trend * {
+    background-color: inherit !important;
+    color: inherit !important;
 }

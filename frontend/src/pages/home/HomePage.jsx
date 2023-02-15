@@ -34,7 +34,7 @@ const HomePage = () => {
         <Hr />
       </div>
       <div
-        className=" fixed top-0 left-0 dark:bg-black dark:text-white bg-white text-black -translate-x-full max-w-[70%] min-w-[280px] transition-all duration-300"
+        className=" fixed top-0 left-0 dark:bg-black dark:text-white bg-white text-black -translate-x-full max-w-full min-w-[280px] transition-all duration-300"
         id="slide"
       >
         <Sidebar />

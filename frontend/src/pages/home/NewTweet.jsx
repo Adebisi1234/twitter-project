@@ -29,7 +29,7 @@ const NewTweet = () => {
               <div className="w-5 h-5 bg-slate-600"></div>
               <div className="w-5 h-5 bg-slate-600"></div>
             </div>
-            <button className=" !bg-[var(--button-primary)] dark:!bg-[var(--button-secondary)] hidden md:block px-5 text-white py-1 rounded-3xl">
+            <button className=" !bg-[var(--button-primary)] dark:!bg-[var(--button-secondary)] hidden md:block px-5 !text-white py-1 rounded-3xl">
               Post
             </button>
           </div>

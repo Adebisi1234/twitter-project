@@ -25,7 +25,7 @@ const result = arr.map(() => {
 export default function TweetPage() {
   return (
     <div className="h-full w-full">
-      <Header />
+      <Header text="Post" />
       <div className="p-3">
         <MainTweet
           author="Tobedated"

@@ -28,7 +28,7 @@ const Header = ({ title, img }) => {
             follow.classList.remove("border-b-4");
           }}
         >
-          <span className="pb-[6px] border-b-4" id="you">
+          <span className="pb-[6px] border-b-blue-600 border-b-4" id="you">
             For You
           </span>
         </button>
@@ -43,7 +43,7 @@ const Header = ({ title, img }) => {
             follow.classList.add("border-b-4");
           }}
         >
-          <span className="pb-[6px]" id="follow">
+          <span className="pb-[6px] border-b-blue-600" id="follow">
             Following
           </span>
         </button>

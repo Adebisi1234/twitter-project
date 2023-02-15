@@ -1,11 +1,14 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 export default function Header() {
   return (
     <header className="w-full flex flex-col p-2 dark:bg-black dark:text-white dark:border-b items-center gap-3">
       <div className="flex w-full h-12 gap-3">
         <div className="arrow h-full w-10">
-          <div className="w-8 bg-[url('/src/assets/logoDark.jpg')] dark:bg-[url('/src/assets/logo.jpg')] bg-cover h-8"></div>
+          <Link to="/">
+            <div className="w-8 bg-[url('/src/assets/logoDark.jpg')] dark:bg-[url('/src/assets/logo.jpg')] bg-cover h-8"></div>
+          </Link>
         </div>
         <div className="user w-full">
           <h2>Notifications</h2>

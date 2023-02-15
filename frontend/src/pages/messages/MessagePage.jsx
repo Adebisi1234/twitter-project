@@ -1,9 +1,9 @@
-import search from "../../assets/search.png";
 import reactLogo from "../../assets/react.svg";
 import Header from "../../components/Header";
 
 import ProfilePix from "../../components/ProfilePix";
 import Bottom from "../../components/Bottom";
+import { Link } from "react-router-dom";
 
 export default function MessagePage() {
   return (
@@ -18,42 +18,50 @@ export default function MessagePage() {
           className="w-full bg-transparent outline-none "
         />
       </div>
-      <div className="flex gap-3 mb-8 pl-3">
-        <ProfilePix pp={reactLogo} />
-        <div className="flex-col w-full">
-          <h1 className=" flex gap-3">
-            Mechanic <span>@owner</span> • jan 30
-          </h1>
-          <p className="opacity-70">Not Yet Complete</p>
+      <Link to="/messages/message">
+        <div className="flex gap-3 mb-8 pl-3">
+          <ProfilePix pp={reactLogo} />
+          <div className="flex-col w-full">
+            <h1 className=" flex gap-3">
+              Mechanic <span>@owner</span> • jan 30
+            </h1>
+            <p className="opacity-70">Not Yet Complete</p>
+          </div>
         </div>
-      </div>
-      <div className="flex gap-3 mb-8 pl-3">
-        <ProfilePix pp={reactLogo} />
-        <div className="flex-col w-full">
-          <h1 className=" flex gap-3">
-            Mechanic <span>@owner</span> • jan 30
-          </h1>
-          <p className="opacity-70">Not Yet Complete</p>
+      </Link>
+      <Link to="/messages/message">
+        <div className="flex gap-3 mb-8 pl-3">
+          <ProfilePix pp={reactLogo} />
+          <div className="flex-col w-full">
+            <h1 className=" flex gap-3">
+              Mechanic <span>@owner</span> • jan 30
+            </h1>
+            <p className="opacity-70">Not Yet Complete</p>
+          </div>
         </div>
-      </div>
-      <div className="flex gap-3 mb-8 pl-3">
-        <ProfilePix pp={reactLogo} />
-        <div className="flex-col w-full">
-          <h1 className=" flex gap-3">
-            Mechanic <span>@owner</span> • jan 30
-          </h1>
-          <p className="opacity-70">Not Yet Complete</p>
+      </Link>
+      <Link to="/messages/message">
+        <div className="flex gap-3 mb-8 pl-3">
+          <ProfilePix pp={reactLogo} />
+          <div className="flex-col w-full">
+            <h1 className=" flex gap-3">
+              Mechanic <span>@owner</span> • jan 30
+            </h1>
+            <p className="opacity-70">Not Yet Complete</p>
+          </div>
         </div>
-      </div>
-      <div className="flex gap-3 mb-8 pl-3">
-        <ProfilePix pp={reactLogo} />
-        <div className="flex-col w-full">
-          <h1>
-            Mechanic <span>@owner</span> • jan 30
-          </h1>
-          <p className="opacity-70">Not Yet Complete</p>
+      </Link>
+      <Link to="/messages/message">
+        <div className="flex gap-3 mb-8 pl-3">
+          <ProfilePix pp={reactLogo} />
+          <div className="flex-col w-full">
+            <h1>
+              Mechanic <span>@owner</span> • jan 30
+            </h1>
+            <p className="opacity-70">Not Yet Complete</p>
+          </div>
         </div>
-      </div>
+      </Link>
       <Bottom />
     </div>
   );

@@ -8,7 +8,7 @@ export default function User() {
     <div className="max-w-xl">
       <Header user="Owner" tweets="27" />
       <div className="big flex flex-col dark:bg-black dark:text-black bg-white text-black">
-        <div className="cover-img relative h-36 w-full bg-black dark:bg-white ">
+        <div className="cover-img relative h-36 w-full !bg-green-500 !dark:bg-red-500 ">
           <div className="pp h-28 absolute w-28 rounded-full translate-y-20 ml-4 border border-white bg-black"></div>
         </div>
         <div className=" dark:bg-black dark:text-white  options">

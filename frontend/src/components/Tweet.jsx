@@ -1,12 +1,13 @@
 import React from "react";
 import ProfilePix from "../components/ProfilePix";
 import reactLogo from "../assets/react.svg";
+import { Link } from "react-router-dom";
 
 const Tweet = ({ author, text, img, handle }) => {
   return (
     <div className="border-b pl-2 scroll-mb-20 m-auto max-w-2xl flex pt-2 dark:bg-black dark:text-white bg-white text-black ">
       <ProfilePix pp={reactLogo} />
-      <div className="tweet flex flex-col w-full p-2 pt-0">
+      <Link to="/tweetPage" className="tweet flex flex-col w-full p-2 pt-0">
         <h3 className="text-xl font-bold">
           {author} <span className="text-sm block font-thin ">{handle}</span>
         </h3>
@@ -36,7 +37,7 @@ const Tweet = ({ author, text, img, handle }) => {
             <div className="w-7 dark:bg-[url('/src/assets/shareDark.png')] bg-[url('/src/assets/share.png')] bg-cover h-7"></div>
           </div>
         </div>
-      </div>
+      </Link>
     </div>
   );
 };
