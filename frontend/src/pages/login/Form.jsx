@@ -1,35 +1,71 @@
-import React from "react";
+import React, { useState } from "react";
 import Button from "../../components/Button";
 import google from "../../assets/google.svg";
 import github from "../../assets/github.svg";
+import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { login } from "../../features/auth/userSlice";
 
 const Form = () => {
+  const user = useSelector((state) => state.user);
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  console.log(username, password);
+  const dispatch = useDispatch();
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    dispatch(
+      login({
+        username,
+      })
+    );
+  };
+
+  console.log(user);
   return (
     <div className="w-full dark:bg-black overflow-hidden dark:text-white bg-white text-black">
       <div className=" mx-4 h-screen flex flex-col gap-4 my-36 ">
         <h1 className=" text-3xl text-black dark:text-white font-bold mb-2">
           Sign in to Clone
         </h1>
-        <input
-          type="text"
-          placeholder="username"
-          className="w-full pl-2 h-14 border border-1 border-slate-300 "
-        />
-        <input
-          type="text"
-          placeholder="password"
-          className="w-full pl-2 h-14 border border-1 border-slate-300 "
-        />
+        <form
+          onSubmit={(e) => {
+            handleSubmit(e);
+          }}
+        >
+          <input
+            type="text"
+            placeholder="username"
+            className="w-full pl-2 h-14 border border-1 border-slate-300 "
+            onChange={(e) => {
+              setUsername(e.target.value);
+            }}
+            value={username}
+          />
+          <input
+            type="password"
+            placeholder="password"
+            className="w-full pl-2 h-14 border border-1 border-slate-300 "
+            onChange={(e) => {
+              setPassword(e.target.value);
+            }}
+            value={password}
+          />
 
-        <button className=" bg-black hover:!bg-green-600 dark:bg-white dark:text-black text-white w-full p-1 font-bold rounded-3xl">
-          Next
-        </button>
+          <button
+            type="submit"
+            className=" bg-black hover:!bg-green-600 dark:bg-white dark:text-black text-white w-full p-1 font-bold rounded-3xl"
+          >
+            Next
+          </button>
+        </form>
 
         <p className="dark:text-white text-black">
           Don't have an account?{" "}
-          <a href="#" className=" !text-green-600 ">
+          <Link to="/signin" className=" !text-green-600 ">
             Sign up
-          </a>
+          </Link>
         </p>
       </div>
     </div>

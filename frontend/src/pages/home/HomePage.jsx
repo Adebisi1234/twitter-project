@@ -9,6 +9,9 @@ import Sidebar from "./Sidebar";
 import Bottom from "../../components/Bottom";
 import Hr from "../../components/Hr";
 import profile from "../../assets/profile.png";
+import Skeleton from "../../components/Skeleton";
+import Signin from "../signin/Signin";
+import Login from "../login/Login";
 
 const arr = [0, 1, 2, 3, 4, 5, 6];
 const repeat = arr.map(() => {
@@ -23,6 +26,7 @@ const repeat = arr.map(() => {
 });
 
 const HomePage = () => {
+  const user = JSON.parse(localStorage.getItem("user"));
   return (
     <>
       <div className="w-full border-x h-full">

@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import Bottom from "../../components/Bottom";
 const Search = () => {
+  const user = JSON.parse(localStorage.getItem("user"));
   return (
     <div className="flex flex-col ml-auto lg:w-[90%] !sticky top-0 gap-4 dark:bg-black dark:text-white h-screen w-full bg-white text-black">
       <div className="input flex gap-3 rounded-3xl p-2 mt-1">
@@ -17,57 +18,65 @@ const Search = () => {
       </div>
 
       <div className="trends p-1 rounded-2xl mr-2 flex flex-col gap-2">
-        <div className="trend mr-3 p-2 rounded-2xl  mb-2">
-          <div className="trending flex justify-between items-center">
-            <small className="opacity-70 ">Trending now</small>
-            <small className=" opacity-70 ">•••</small>
+        <Link to="/searchPage">
+          <div className="trend mr-3 p-2 rounded-2xl  mb-2">
+            <div className="trending flex justify-between items-center">
+              <small className="opacity-70 ">Trending now</small>
+              <small className=" opacity-70 ">•••</small>
+            </div>
+
+            <h1>#HireMe</h1>
+
+            <div className="trending flex justify-between items-center">
+              <small className=" opacity-70 ">200 tweets</small>
+            </div>
           </div>
+        </Link>
 
-          <h1>#HireMe</h1>
+        <Link to="/searchPage">
+          <div className="trend mr-3 p-2 rounded-2xl mb-2">
+            <div className="trending flex justify-between items-center">
+              <small className=" opacity-70 ">Trending now</small>
+              <small className=" opacity-70 ">•••</small>
+            </div>
 
-          <div className="trending flex justify-between items-center">
-            <small className=" opacity-70 ">200 tweets</small>
+            <h1>#HireMe</h1>
+
+            <div className="trending flex justify-between items-center">
+              <small className="opacity-70 ">200 tweets</small>
+            </div>
           </div>
-        </div>
+        </Link>
 
-        <div className="trend mr-3 p-2 rounded-2xl mb-2">
-          <div className="trending flex justify-between items-center">
-            <small className=" opacity-70 ">Trending now</small>
-            <small className=" opacity-70 ">•••</small>
+        <Link to="/searchPage">
+          <div className="trend mr-3 p-2 rounded-2xl mb-2">
+            <div className="trending flex justify-between items-center">
+              <small className="opacity-70 ">Trending now</small>
+              <small className="opacity-70 ">•••</small>
+            </div>
+
+            <h1>#HireMe</h1>
+
+            <div className="trending flex justify-between items-center">
+              <small className="opacity-70 ">200 tweets</small>
+            </div>
           </div>
+        </Link>
 
-          <h1>#HireMe</h1>
+        <Link to="/searchPage">
+          <div className="trend mr-3 p-2 rounded-2xl mb-2">
+            <div className="trending flex justify-between items-center">
+              <small className="opacity-70 ">Trending now</small>
+              <small className="opacity-70 ">•••</small>
+            </div>
 
-          <div className="trending flex justify-between items-center">
-            <small className="opacity-70 ">200 tweets</small>
+            <h1>#HireMe</h1>
+
+            <div className="trending flex justify-between items-center">
+              <small className=" opacity-70 ">200 tweets</small>
+            </div>
           </div>
-        </div>
-
-        <div className="trend mr-3 p-2 rounded-2xl mb-2">
-          <div className="trending flex justify-between items-center">
-            <small className="opacity-70 ">Trending now</small>
-            <small className="opacity-70 ">•••</small>
-          </div>
-
-          <h1>#HireMe</h1>
-
-          <div className="trending flex justify-between items-center">
-            <small className="opacity-70 ">200 tweets</small>
-          </div>
-        </div>
-
-        <div className="trend mr-3 p-2 rounded-2xl mb-2">
-          <div className="trending flex justify-between items-center">
-            <small className="opacity-70 ">Trending now</small>
-            <small className="opacity-70 ">•••</small>
-          </div>
-
-          <h1>#HireMe</h1>
-
-          <div className="trending flex justify-between items-center">
-            <small className=" opacity-70 ">200 tweets</small>
-          </div>
-        </div>
+        </Link>
 
         <a href="#" className="text-teal-500">
           Show more

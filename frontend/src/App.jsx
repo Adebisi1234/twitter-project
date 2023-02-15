@@ -19,17 +19,23 @@ import Sidebar from "./pages/home/Sidebar";
 import Message from "./pages/messages/Message";
 import Header from "./components/Header";
 import { Route, Routes } from "react-router-dom";
+import ErrorPage from "./components/ErrorPage";
+import Skeleton from "./components/Skeleton";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 function App() {
+  const [user, setUser] = useState(localStorage.getItem("user"));
+
   return (
     <div className=" flex min-h-screen flex-col lg:grid lg:grid-cols-[1fr,2fr,1fr] dark:bg-black dark:text-white bg-white text-black">
       <div className="hidden lg:block">
         <Sidebar />
       </div>
-      <div>
+      <div className="lg:marker:border-x ">
         <Routes>
           <Route path="/">
-            <Route index element={<HomePage />} />
+            <Route index element={<Login />} />
             <Route path="profile">
               <Route index element={<User />} />
               <Route path="edit" element={<EditProfile />} />
@@ -46,6 +52,7 @@ function App() {
             <Route index element={<MessagePage />} />
             <Route path="message" element={<Message />} />
           </Route>
+          <Route path="*" element={<ErrorPage />} />
         </Routes>
       </div>
       <div className="hidden lg:block">

@@ -3,9 +3,10 @@ import Tweet from "../../components/Tweet";
 import Header from "./Header";
 import img2 from "../../assets/img2.png";
 import Hr from "../../components/Hr";
+import { Link } from "react-router-dom";
 export default function User() {
   return (
-    <div className="max-w-xl">
+    <div className="w-full">
       <Header user="Owner" tweets="27" />
       <div className="big flex flex-col dark:bg-black dark:text-black bg-white text-black">
         <div className="cover-img relative h-36 w-full !bg-green-500 !dark:bg-red-500 ">
@@ -19,9 +20,11 @@ export default function User() {
             <div></div>
           </div>
           <div className="edit-profile flex items-end justify-end pr-3">
-            <button className="border dark:border-white border-black py-3 px-4 rounded-3xl mt-1">
-              Edit Profile
-            </button>
+            <Link to="/profile/edit">
+              <button className="border dark:border-white border-black py-3 px-4 rounded-3xl mt-1">
+                Edit Profile
+              </button>
+            </Link>
           </div>
         </div>
         <div className="ml-5">

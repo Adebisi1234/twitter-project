@@ -1,20 +1,20 @@
 import Bottom from "../../components/Bottom";
 import Tweet from "../../components/Tweet";
 import Header from "../../components/Header";
+import uploadImg from "../../assets/uploadImg.svg";
 import img2 from "../../assets/img2.png";
-import Hr from "../../components/Hr";
 export default function User() {
   return (
-    <div className="h-full dark:bg-black dark:text-white bg-white text-black">
+    <div className="h-full w-full dark:bg-black dark:text-white bg-white text-black">
       <Header title="Save" text="Edit Profile" />
-      <div className="big flex flex-col dark:bg-black dark:text-white bg-white text-black">
-        <div className="cover-img relative h-36 w-full bg-black dark:bg-teal-700 ">
-          <div className=" absolute translate-x-44 translate-y-5 text-7xl dark:text-white text-black">
-            +
+      <div className="big flex flex-col dark:!bg-black dark:!text-white !bg-white !text-black">
+        <div className="cover-img relative h-36 w-full !bg-black dark:!bg-teal-700 ">
+          <div className="h-full !bg-red-500 w-full flex justify-center items-center text-3xl">
+            <img src={uploadImg} />
           </div>
-          <div className="pp h-28 absolute w-28 rounded-full translate-y-20 ml-4 border border-white bg-black">
-            <div className=" absolute translate-x-8 translate-y-5 text-7xl dark:text-white text-black">
-              +
+          <div className="pp h-28 absolute w-28 rounded-full ml-4 border -bottom-1/4 border-white !bg-black">
+            <div className=" h-full w-full flex !bg-transparent justify-center items-center">
+              <img src={uploadImg} />
             </div>
           </div>
         </div>
@@ -56,6 +56,9 @@ export default function User() {
           </div>
         </div>
       </div>
+      <button className="w-full !text-white border-slate-300 border !bg-green-500 h-10 flex p-3 gap-1 justify-center items-center rounded-3xl">
+        Update
+      </button>
     </div>
   );
 }

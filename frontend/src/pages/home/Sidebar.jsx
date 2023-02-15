@@ -1,33 +1,38 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import reactLogo from "../../assets/react.svg";
+import Skeleton from "../../components/Skeleton";
 import ProfilePix from "../../components/ProfilePix";
+import axios from "axios";
 
 const Sidebar = () => {
+  const user = JSON.parse(localStorage.getItem("user"));
   return (
     <div className="flex lg:w-[90%] pl-2 !sticky top-0 flex-col h-screen w-full">
-      <div className="flex justify-between p-3 ">
-        <h1>Account Info</h1>
-        <span
-          className="lg:hidden"
-          onClick={() => {
-            const slide = document.getElementById("slide");
-            slide.classList.toggle("-translate-x-full");
-          }}
-        >
-          X
-        </span>
-      </div>
-      <div className="account flex justify-between p-3">
-        <div className="user">
-          <div className="details mb-3">
-            <ProfilePix pp={reactLogo} />
-            <h1>Owner</h1>
-            <small>@God</small>
-          </div>
-          <div className="follow-count mb-4 flex gap-4">
-            <div className="following">745 Following</div>
-            <div className="followers">168 Followers</div>
+      <div>
+        <div className="flex justify-between p-3 ">
+          <h1>Account Info</h1>
+          <span
+            className="lg:hidden"
+            onClick={() => {
+              const slide = document.getElementById("slide");
+              slide.classList.toggle("-translate-x-full");
+            }}
+          >
+            X
+          </span>
+        </div>
+        <div className="account flex justify-between p-3">
+          <div className="user">
+            <div className="details mb-3">
+              <div className="w-7 dark:bg-[url('/src/assets/profileDark.png')] bg-[url('/src/assets/profile.png')] bg-left-bottom bg-cover h-7"></div>
+              <h1>Owner</h1>
+              <small>@God</small>
+            </div>
+            <div className="follow-count mb-4 flex gap-4">
+              <div className="following">745 Following</div>
+              <div className="followers">168 Followers</div>
+            </div>
           </div>
         </div>
       </div>
@@ -42,7 +47,7 @@ const Sidebar = () => {
               }
             }}
           >
-            <img src={reactLogo} />
+            <div className="w-7 dark:bg-[url('/src/assets/homesDark.png')] bg-[url('/src/assets/homes.png')] bg-left bg-cover h-7"></div>
             Home
           </li>
         </Link>
@@ -56,7 +61,7 @@ const Sidebar = () => {
               }
             }}
           >
-            <img src={reactLogo} />
+            <div className="w-7 dark:bg-[url('/src/assets/profileDark.png')] bg-[url('/src/assets/profile.png')] bg-left-bottom bg-cover h-7"></div>
             Profile
           </li>
         </Link>
@@ -70,7 +75,7 @@ const Sidebar = () => {
               }
             }}
           >
-            <img src={reactLogo} />
+            <div className="w-7 dark:!bg-[url('/src/assets/messagesDark.png')] !bg-[url('/src/assets/messages.png')] bg-left bg-cover h-7"></div>
             Messages
           </li>
         </Link>
@@ -84,7 +89,7 @@ const Sidebar = () => {
               }
             }}
           >
-            <img src={reactLogo} />
+            <div className="w-7 dark:bg-[url('/src/assets/notificationsDark.png')] bg-[url('/src/assets/notifications.png')] bg-left bg-cover bg-no-repeat h-7"></div>
             Notifications
           </li>
         </Link>
@@ -98,7 +103,7 @@ const Sidebar = () => {
               }
             }}
           >
-            <img src={reactLogo} />
+            <div className="w-7 dark:bg-[url('/src/assets/searchDark.png')] bg-[url('/src/assets/search.png')] bg-left-bottom bg-cover h-7"></div>
             Search
           </li>
         </Link>
