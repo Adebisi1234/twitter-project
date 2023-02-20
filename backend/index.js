@@ -18,7 +18,7 @@ mongoose.set('strictQuery', true)
 const PORT = process.env.PORT || 3000
 
 // Connect to mongo
-connectDB()
+// connectDB()
 
 
 
@@ -53,7 +53,17 @@ app.use((err, req, res, next) => {
     })
 })
 
-mongoose.connection.once('open', () => {
-    console.log("Connected to MongoDb")
-    app.listen(PORT, console.log(`Server running on port ${PORT}`))
-})
+const connect = () => {
+    mongoose
+        .connect(process.env.MONGO)
+        .then(() => {
+            console.log("Connected to DB");
+            app.listen(8080, () => {
+                console.log("Connected to Server");
+            });
+        })
+        .catch((err) => {
+            throw err;
+        });
+};
+connect()
