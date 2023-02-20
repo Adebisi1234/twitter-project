@@ -15,7 +15,7 @@ const notificationRoutes = require("./routes/notificationRoutes")
 const postRoutes = require("./routes/postRoutes")
 mongoose.set('strictQuery', true)
 
-const PORT = 3000
+const PORT = process.env.PORT || 3000
 
 // Connect to mongo
 connectDB()
@@ -55,5 +55,5 @@ app.use((err, req, res, next) => {
 
 mongoose.connection.once('open', () => {
     console.log("Connected to MongoDb")
-    app.listen(process.env.PORT || PORT, console.log(`Server running on port ${PORT}`))
+    app.listen(PORT, console.log(`Server running on port ${PORT}`))
 })
