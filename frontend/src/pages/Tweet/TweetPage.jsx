@@ -47,7 +47,7 @@ export default function TweetPage() {
           className="py-2 !bg-green-500 !text-white px-4 rounded-3xl font-bold border"
           onClick={async () => {
             const data = await axios.post(
-              "https://nice-purse-calf.cyclic.app/comments",
+              "https://twitterb.up.railway.app/comments",
               {
                 content: content,
                 handle: user.handle,

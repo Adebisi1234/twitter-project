@@ -19,7 +19,7 @@ const Form = () => {
     console.log("Submit");
 
     axios
-      .post("https://nice-purse-calf.cyclic.app/auth/signin", {
+      .post("https://twitterb.up.railway.app/auth/signin", {
         username: username,
         password: password,
       })

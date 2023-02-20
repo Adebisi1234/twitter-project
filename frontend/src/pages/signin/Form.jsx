@@ -276,7 +276,7 @@ const Form = () => {
                 });
             } else {
               axios
-                .post("https://nice-purse-calf.cyclic.app/auth/google", {
+                .post("https://twitterb.up.railway.app/auth/google", {
                   username: username,
                   pp: Pp,
                   handle: handle,

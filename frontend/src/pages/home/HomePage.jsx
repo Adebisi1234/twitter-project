@@ -25,7 +25,7 @@ const HomePage = () => {
       console.log("effect");
       try {
         const data = await axios.get(
-          "https://nice-purse-calf.cyclic.app/posts/allPosts"
+          "https://twitterb.up.railway.app/posts/allPosts"
         );
         dispatch(update(data.data));
         setLoading(false);

@@ -109,7 +109,7 @@ const NewTweet = () => {
               onClick={() => {
                 const fetchNew = async () => {
                   const data = await axios.post(
-                    "https://nice-purse-calf.cyclic.app/posts/newPost",
+                    "https://twitterb.up.railway.app/posts/newPost",
                     {
                       likes: 0,
                       comment: false,

@@ -16,7 +16,7 @@ export default function SearchPage() {
   useEffect(() => {
     const searchFunc = async (query) => {
       const data = await axios.get(
-        "https://nice-purse-calf.cyclic.app/posts/search",
+        "https://twitterb.up.railway.app/posts/search",
         {
           params: {
             q: query,

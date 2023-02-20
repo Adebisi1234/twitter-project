@@ -14,7 +14,7 @@ export default function Poster() {
   useEffect(() => {
     const getUser = async (handle) => {
       const { data } = await axios.get(
-        `https://nice-purse-calf.cyclic.app/users/get/${handle}`
+        `https://twitterb.up.railway.app/users/get/${handle}`
       );
       setUser(data);
       console.log("data", data);
