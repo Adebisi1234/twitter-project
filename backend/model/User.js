@@ -8,8 +8,7 @@ const userSchema = new Schema({
         unique: true
     },
     password: {
-        type: String,
-        required: true
+        type: String
     },
     handle: {
         type: String,
@@ -24,6 +23,13 @@ const userSchema = new Schema({
         type: [String],
     },
     followersCount: {
+        type: Number,
+        default: 0
+    },
+    following: {
+        type: [String],
+    },
+    followingCount: {
         type: Number,
         default: 0
     },
@@ -43,6 +49,10 @@ const userSchema = new Schema({
     messageCount: {
         type: Number,
         default: 0
+    },
+    fromGoogle: {
+        type: Boolean,
+        default: false
     }
 },
     { timestamps: true }

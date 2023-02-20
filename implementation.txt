@@ -1,0 +1,3 @@
+Login, Signin - Send post to server, save the result to redux
+
+HomePage - Fetch posts save post to redux, display post. On post click fetch post comments from redux

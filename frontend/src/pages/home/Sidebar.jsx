@@ -1,13 +1,15 @@
 import React, { useEffect } from "react";
-import { Link } from "react-router-dom";
-import reactLogo from "../../assets/react.svg";
+import { Link, useNavigate } from "react-router-dom";
 import Skeleton from "../../components/Skeleton";
 import ProfilePix from "../../components/ProfilePix";
-import axios from "axios";
+import { useSelector, useDispatch } from "react-redux";
+import { logout } from "../../features/auth/userSlice";
 
 const Sidebar = () => {
-  const user = JSON.parse(localStorage.getItem("user"));
-  return (
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user.user);
+  return Object.keys(user).length ? (
     <div className="flex lg:w-[90%] pl-2 !sticky top-0 flex-col h-screen w-full">
       <div>
         <div className="flex justify-between p-3 ">
@@ -25,13 +27,17 @@ const Sidebar = () => {
         <div className="account flex justify-between p-3">
           <div className="user">
             <div className="details mb-3">
-              <div className="w-7 dark:bg-[url('/src/assets/profileDark.png')] bg-[url('/src/assets/profile.png')] bg-left-bottom bg-cover h-7"></div>
-              <h1>Owner</h1>
-              <small>@God</small>
+              {user.pp ? (
+                <img src={user.pp} className="h-9 rounded-full" />
+              ) : (
+                <div className="w-7 dark:bg-[url('/src/assets/profileDark.png')] bg-[url('/src/assets/profile.png')] bg-left-bottom bg-cover h-7"></div>
+              )}
+              <h1>{user.username ? user.username : "owner"}</h1>
+              <small>{user.handle ? user.handle : "owner"}</small>
             </div>
             <div className="follow-count mb-4 flex gap-4">
-              <div className="following">745 Following</div>
-              <div className="followers">168 Followers</div>
+              <div className="following">1 Following</div>
+              <div className="followers">{user.followersCount} Followers</div>
             </div>
           </div>
         </div>
@@ -108,12 +114,21 @@ const Sidebar = () => {
           </li>
         </Link>
       </ul>
-      <div className="mt-auto">
-        <button className=" w-full !text-white border-slate-300 border !bg-red-500 h-10 flex p-3 gap-1 justify-center items-center rounded-3xl">
+      <div className="mt-auto mb-14 md:mb-0">
+        <button
+          className=" w-full !text-white border-slate-300 border !bg-red-500 h-10 flex p-3 gap-1 justify-center items-center rounded-3xl"
+          onClick={() => {
+            localStorage.clear();
+            dispatch(logout());
+            navigate("/login");
+          }}
+        >
           Logout
         </button>
       </div>
     </div>
+  ) : (
+    ""
   );
 };
 

@@ -2,28 +2,39 @@ import React, { useState } from "react";
 import Button from "../../components/Button";
 import google from "../../assets/google.svg";
 import github from "../../assets/github.svg";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../../features/auth/userSlice";
+import axios from "axios";
+import HomePage from "../home/HomePage";
 
 const Form = () => {
-  const user = useSelector((state) => state.user);
+  const navigate = useNavigate();
+  const user = useSelector((state) => state.user.user);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  console.log(username, password);
   const dispatch = useDispatch();
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log("Submit");
 
-    dispatch(
-      login({
-        username,
+    axios
+      .post("http://localhost:3000/auth/signin", {
+        username: username,
+        password: password,
       })
-    );
+      .then((data) => {
+        const details = data.data;
+        dispatch(login(details));
+      })
+
+      .then(() => {
+        navigate("/home");
+      })
+      .catch((err) => console.log(err));
   };
 
-  console.log(user);
-  return (
+  return !Object.keys(user).length ? (
     <div className="w-full dark:bg-black overflow-hidden dark:text-white bg-white text-black">
       <div className=" mx-4 h-screen flex flex-col gap-4 my-36 ">
         <h1 className=" text-3xl text-black dark:text-white font-bold mb-2">
@@ -69,6 +80,8 @@ const Form = () => {
         </p>
       </div>
     </div>
+  ) : (
+    <HomePage />
   );
 };
 

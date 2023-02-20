@@ -26,14 +26,18 @@ const postSchema = new Schema({
         type: Number,
         default: 0
     },
-    audioUrl: {
-        type: String
-    },
-    title: {
-        type: String
-    },
     PostId: {
         type: String
+    },
+    retweet: {
+        type: Number,
+        default: 0
+    },
+    pp: {
+        type: String,
+    },
+    img: {
+        type: String,
     }
 
 }, { timestamps: true })

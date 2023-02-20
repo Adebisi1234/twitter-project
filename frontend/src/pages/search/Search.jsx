@@ -1,12 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import Bottom from "../../components/Bottom";
+import Skeleton from "../../components/Skeleton";
 const Search = () => {
-  const user = JSON.parse(localStorage.getItem("user"));
-  return (
+  const user = useSelector((state) => state.user.user);
+  const [query, setQuery] = useState("");
+  return Object.keys(user).length ? (
     <div className="flex flex-col ml-auto lg:w-[90%] !sticky top-0 gap-4 dark:bg-black dark:text-white h-screen w-full bg-white text-black">
       <div className="input flex gap-3 rounded-3xl p-2 mt-1">
-        <Link to="/searchPage">
+        <Link to={`/searchPage/${query}`}>
           <div className="w-7 dark:bg-[url('/src/assets/searchDark.png')] bg-[url('/src/assets/search.png')] bg-left bg-cover h-7"></div>
         </Link>
 
@@ -14,6 +17,8 @@ const Search = () => {
           type="text"
           placeholder="Search Clone"
           className="w-full bg-transparent outline-none "
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
         />
       </div>
 
@@ -92,6 +97,8 @@ const Search = () => {
       </div>
       <Bottom />
     </div>
+  ) : (
+    ""
   );
 };
 

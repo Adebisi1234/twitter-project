@@ -1,9 +1,29 @@
-import React from "react";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import Bottom from "../../components/Bottom";
-import Hr from "../../components/Hr";
+import Skeleton from "../../components/Skeleton";
 import Tweet from "../../components/Tweet";
 
 export default function SearchPage() {
+  const { id } = useParams();
+  const [result, setResult] = useState([]);
+  const [query, setQuery] = useState(id);
+
+  const res = result.map((post) => {
+    return <Tweet post={post} />;
+  });
+  useEffect(() => {
+    const searchFunc = async (query) => {
+      const data = await axios.get("http://localhost:3000/posts/search", {
+        params: {
+          q: query,
+        },
+      });
+      setResult(data.data);
+    };
+    searchFunc(query);
+  }, [query]);
   return (
     <>
       <div className="input flex gap-3 rounded-3xl p-2 mt-1">
@@ -13,9 +33,11 @@ export default function SearchPage() {
           type="text"
           placeholder="Search Clone"
           className="w-full bg-transparent outline-none "
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
         />
       </div>
-      <Tweet author="owner" text="message from me" />
+      {res.length ? res : <Skeleton />}
       <Bottom />
     </>
   );

@@ -9,29 +9,34 @@ export default function Notifications() {
       <Header />
       <div className="pl-2">
         <Note
-          name="Devil"
+          name="Test"
           action="Liked your tweet"
-          text="dladfl fkdfjaldsf dlkder daceda4 dfsdlfduie dakdr etedfdof dfkadf aidfe dadn and thi hou got to get connection if you wan bvecomea big start uncle"
+          text="This page is not ready yet ...
+          Check back later cheers."
         />
         <Note
-          name="Devil"
+          name="Test"
           action="Liked your tweet"
-          text="dladfl fkdfjaldsf dlkder daceda4 dfsdlfduie dakdr etedfdof dfkadf aidfe dadn and thi hou got to get connection if you wan bvecomea big start uncle"
+          text="This page is not ready yet ...
+          Check back later cheers."
         />
         <Note
-          name="Devil"
+          name="Test"
           action="Liked your tweet"
-          text="dladfl fkdfjaldsf dlkder daceda4 dfsdlfduie dakdr etedfdof dfkadf aidfe dadn and thi hou got to get connection if you wan bvecomea big start uncle"
+          text="This page is not ready yet ...
+          Check back later cheers."
         />
         <Note
-          name="Devil"
+          name="Test"
           action="Liked your tweet"
-          text="dladfl fkdfjaldsf dlkder daceda4 dfsdlfduie dakdr etedfdof dfkadf aidfe dadn and thi hou got to get connection if you wan bvecomea big start uncle"
+          text="This page is not ready yet ...
+          Check back later cheers."
         />
         <Note
-          name="Devil"
+          name="Test"
           action="Liked your tweet"
-          text="dladfl fkdfjaldsf dlkder daceda4 dfsdlfduie dakdr etedfdof dfkadf aidfe dadn and thi hou got to get connection if you wan bvecomea big start uncle"
+          text="This page is not ready yet ...
+          Check back later cheers."
         />
       </div>
       <Bottom />

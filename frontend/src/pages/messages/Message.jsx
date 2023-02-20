@@ -12,7 +12,7 @@ export default function Message() {
       <div className="mt-7 px-10 flex w-full justify-center items-center flex-col gap-1">
         <ProfilePix pp={reactLogo} />
         <h1>Owner</h1>
-        <p>@God</p>
+        <p>@testing</p>
         <p>
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt,
           recusandae!

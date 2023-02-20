@@ -4,7 +4,6 @@ const verifyJwt = require("./middleware/verifyJwt")
 const app = express()
 const cors = require("cors")
 const credentials = require("./middleware/credentials")
-const corsOptions = require("./config/corsOptions")
 const cookieParser = require("cookie-parser")
 const mongoose = require("mongoose")
 const connectDB = require("./config/dbConn")
@@ -32,12 +31,11 @@ app.use(express.json())
 app.use(cookieParser())
 
 
-app.use(cors(corsOptions))
+app.use(cors())
 
 // Routes
 app.use("/auth", authRoutes)
 
-app.use(verifyJwt)
 app.use("/users", userRoutes)
 app.use("/messages", messageRoutes)
 app.use("/notification", notificationRoutes)

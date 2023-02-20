@@ -1,20 +1,33 @@
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 import Bottom from "../../components/Bottom";
+import Hr from "../../components/Hr";
+import Skeleton from "../../components/Skeleton";
 import Tweet from "../../components/Tweet";
 import Header from "./Header";
-import img2 from "../../assets/img2.png";
-import Hr from "../../components/Hr";
-import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
-import Skeleton from "../../components/Skeleton";
-export default function User() {
-  const user = useSelector((state) => state.user.user);
-  console.log(user);
+
+export default function Poster() {
+  const { handle } = useParams();
+  const [user, setUser] = useState(undefined);
+  useEffect(() => {
+    const getUser = async (handle) => {
+      const { data } = await axios.get(
+        `http://localhost:3000/users/get/${handle}`
+      );
+      setUser(data);
+      console.log("data", data);
+    };
+    getUser(handle);
+  }, []);
   const post = useSelector((state) => state.post);
-  const userPost = post[0].filter((post) => post.username === user.username);
+  const userPost = post[0].filter((post) => post.handle === handle);
   const tweets = userPost.map((post) => {
     return <Tweet key={post._id} post={post} />;
   });
-  return Object.keys(user).length ? (
+
+  return user ? (
     <div className="w-full">
       <Header user={user.username} tweets={user.posts} />
       <div className="big flex flex-col dark:bg-black dark:text-black bg-white text-black">
@@ -29,11 +42,15 @@ export default function User() {
         </div>
         <div className=" dark:bg-black dark:text-white  options">
           <div className="edit-profile flex items-end justify-end pr-3">
-            <Link to="/profile/edit">
-              <button className="border dark:border-white border-black py-3 px-4 rounded-3xl mt-1">
-                Edit Profile
-              </button>
-            </Link>
+            <button
+              className="border dark:border-white border-black py-3 px-4 rounded-3xl mt-1"
+              id="follow"
+              onClick={() => {
+                document.getElementById("follow").textContent = "Following";
+              }}
+            >
+              Follow
+            </button>
           </div>
         </div>
         <div className="ml-5">

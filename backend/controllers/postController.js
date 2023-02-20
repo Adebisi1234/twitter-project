@@ -54,6 +54,16 @@ const like = async (req, res, next) => {
         next(err)
     }
 }
+const retweet = async (req, res, next) => {
+    try {
+        await Post.findByIdAndUpdate(req.body.id, {
+            $inc: { retweet: 1 }
+        })
+        res.sendStatus(200)
+    } catch (err) {
+        next(err)
+    }
+}
 
 
 const search = async (req, res, next) => {
@@ -70,4 +80,4 @@ const search = async (req, res, next) => {
 }
 
 
-module.exports = { search, like, getAllPosts, getPost, addPost }
+module.exports = { search, like, retweet, getAllPosts, getPost, addPost }

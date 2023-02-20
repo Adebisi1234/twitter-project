@@ -37,7 +37,8 @@ const editProfile = async (req, res, next) => {
                 },
             })
         }
-        res.status(200).json("change successful")
+        const user = await User.findOne({ handle: req.body.handle })
+        res.status(200).json(user)
 
     } catch (err) {
         next(err)
@@ -59,11 +60,27 @@ const newFollowers = async (req, res, next) => {
     }
 }
 
+const newFollowing = async (req, res, next) => {
+    try {
+        await User.findOneAndUpdate({ handle: req.params.handle }, {
+            $push: { following: req.body.username }
+        })
+        await User.findOneAndUpdate(req.body.id, {
+            $inc: { followingCount: 1 }
+        })
+        res.status(200).json("Followed")
+    } catch (err) {
+        console.log(err)
+        next(err)
+    }
+}
+
 
 const getUser = async (req, res, next) => {
     try {
         const handle = req.params.handle
         const user = await User.findOne({ handle: handle })
+        if (!user) return res.status(404).json("User not found")
         const { password, ...others } = user._doc
         res.status(200).json({ ...others })
     } catch (err) {
@@ -105,4 +122,4 @@ const unFollow = async (req, res, next) => {
 
 };
 
-module.exports = { getUser, newFollowers, editProfile, unFollow, getSomeUser }
+module.exports = { getUser, newFollowers, newFollowing, editProfile, unFollow, getSomeUser }

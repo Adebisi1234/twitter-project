@@ -1,4 +1,4 @@
-import React from "react";
+import { useState } from "react";
 import Header from "../../components/Header";
 import MainTweet from "./MainTweet";
 import img2 from "../../assets/img2.png";
@@ -8,51 +8,71 @@ import ProfilePix from "../../components/ProfilePix";
 import Tweet from "../../components/Tweet";
 import Bottom from "../../components/Bottom";
 import Hr from "../../components/Hr";
-
-const arr = [1, 2, 3, 4, 5, 6];
-
-const result = arr.map(() => {
-  return (
-    <Tweet
-      key={Math.random() * 20}
-      author="User"
-      handle="@User"
-      text="This is soooo cool"
-    />
-  );
-});
+import { useParams } from "react-router-dom";
+import Skeleton from "../../components/Skeleton";
+import { useSelector, useDispatch } from "react-redux";
+import { newPost, addComment } from "../../features/post/postSlice";
+import axios from "axios";
 
 export default function TweetPage() {
-  return (
+  const user = useSelector((state) => state.user.user);
+  const dispatch = useDispatch();
+  const [content, setContent] = useState("");
+  const { id } = useParams();
+  const posts = useSelector((state) => state.post);
+
+  const [comments, setComments] = useState(
+    posts[1].filter((post) => post.PostId === id)
+  );
+  const post = posts[0].find((post) => post._id === id);
+
+  const comment = comments.map((comment) => {
+    return <Tweet key={comment._id} post={comment} />;
+  });
+  return Object.keys(post).length ? (
     <div className="h-full w-full">
       <Header text="Post" />
       <div className="p-3">
-        <MainTweet
-          author="Tobedated"
-          handle="@owner"
-          img={img2}
-          text="This is me testing the main tweet page"
-        />
+        <MainTweet id={post._id} />
       </div>
-      <div className="flex w-full mt-2 mb-3 p-2 h-10 items-center gap-2">
-        <ProfilePix pp={reactLogo} />
+      <div className="flex mt-2 mb-3 p-2 h-10 items-center gap-2">
+        <ProfilePix pp={post.pp} />
         <textarea
           className="w-full h-full rounded-2xl"
+          value={content}
+          onChange={(e) => setContent(e.target.value)}
           placeholder="Post your reply"
         ></textarea>
-        <button className="py-2 bg-blue-400 text-white px-4 rounded-3xl font-bold border">
+        <button
+          className="py-2 !bg-green-500 !text-white px-4 rounded-3xl font-bold border"
+          onClick={async () => {
+            const data = await axios.post("http://localhost:3000/comments", {
+              content: content,
+              handle: user.handle,
+              username: user.username,
+              PostId: post._id,
+              likes: 0,
+              commentCount: 0,
+              pp: user.pp,
+            });
+
+            dispatch(
+              addComment({
+                ...data.data,
+              })
+            );
+            setComments([data.data, ...comments]);
+            console.log(comments.length);
+          }}
+        >
           Post
         </button>
       </div>
-      {result}
-      <Tweet
-        author="user"
-        handle="@user"
-        text="This is effing amazing"
-        img={img}
-      />
+      {comment}
       <Hr />
       <Bottom />
     </div>
+  ) : (
+    <Skeleton />
   );
 }

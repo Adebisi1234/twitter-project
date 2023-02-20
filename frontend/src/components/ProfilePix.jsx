@@ -1,11 +1,20 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
-const ProfilePix = ({ pp }) => {
+const ProfilePix = ({ pp, handle }) => {
+  const user = useSelector((state) => state.user.user);
   return (
-    <Link to="/profile" className="h-fit">
+    <Link
+      to={
+        !handle || user.handle === handle
+          ? "/profile"
+          : `/profile/poster/${handle}`
+      }
+      className="h-fit"
+    >
       <div
-        className="bg-[url(${pp})] h-9 w-9 bg-left rounded-full !bg-cover "
+        className=" h-9 w-9 bg-left rounded-full !bg-cover "
         style={{ background: `url(${pp})` }}
       ></div>
     </Link>

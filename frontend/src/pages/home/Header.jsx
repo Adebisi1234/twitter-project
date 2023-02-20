@@ -1,17 +1,30 @@
 import React from "react";
 
-const Header = ({ title, img }) => {
+const Header = ({ imgs }) => {
   return (
     <header className="w-full dark:bg-black dark:text-white bg-white text-black">
       <div className="flex w-full p-2">
-        <div
-          className="w-7 lg:hidden dark:bg-[url('/src/assets/profileDark.png')] bg-[url('/src/assets/profile.png')] bg-left-bottom bg-cover h-7"
-          onClick={() => {
-            document
-              .getElementById("slide")
-              .classList.toggle("-translate-x-full");
-          }}
-        ></div>
+        {imgs ? (
+          <img
+            src={imgs}
+            className="h-7 rounded-full"
+            onClick={() => {
+              document
+                .getElementById("slide")
+                .classList.toggle("-translate-x-full");
+            }}
+          />
+        ) : (
+          <div
+            className="w-7 lg:hidden dark:bg-[url('/src/assets/profileDark.png')] bg-[url('/src/assets/profile.png')] bg-left-bottom bg-cover h-7"
+            onClick={() => {
+              document
+                .getElementById("slide")
+                .classList.toggle("-translate-x-full");
+            }}
+          ></div>
+        )}
+
         <div className="h-full header w-full flex justify-center items-center font-extrabold">
           <div className="w-8 bg-[url('/src/assets/logoDark.jpg')] dark:bg-[url('/src/assets/logo.jpg')] bg-cover h-8"></div>
         </div>

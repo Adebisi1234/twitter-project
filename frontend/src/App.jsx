@@ -23,10 +23,12 @@ import ErrorPage from "./components/ErrorPage";
 import Skeleton from "./components/Skeleton";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { useSelector } from "react-redux";
+import MobileTweet from "./pages/home/MobileTweet";
+import Poster from "./pages/User/Poster";
 
 function App() {
-  const [user, setUser] = useState(localStorage.getItem("user"));
-
+  const user = useSelector((state) => state.user.user);
   return (
     <div className=" flex min-h-screen flex-col lg:grid lg:grid-cols-[1fr,2fr,1fr] dark:bg-black dark:text-white bg-white text-black">
       <div className="hidden lg:block">
@@ -35,19 +37,25 @@ function App() {
       <div className="lg:marker:border-x ">
         <Routes>
           <Route path="/">
-            <Route index element={<Login />} />
+            <Route
+              index
+              element={Object.keys(user).length ? <HomePage /> : <Login />}
+            />
+            <Route path="/home" element={<HomePage />} />
+            <Route path="/mobile" element={<MobileTweet />} />
             <Route path="profile">
               <Route index element={<User />} />
               <Route path="edit" element={<EditProfile />} />
+              <Route path="poster/:handle" element={<Poster />} />
             </Route>
             <Route path="signin" element={<Signin />} />
             <Route path="login" element={<Login />} />
           </Route>
-          <Route path="tweet" element={<TweetPage />} />
           <Route path="notifications" element={<Notifications />} />
-          <Route path="tweetPage" element={<TweetPage />} />
+          <Route path="tweetPage/:id" element={<TweetPage />} />
+          <Route path="newtweet" element={<NewTweet />} />
           <Route path="search" element={<Search />} />
-          <Route path="searchPage" element={<SearchPage />} />
+          <Route path="searchPage/:id" element={<SearchPage />} />
           <Route path="messages">
             <Route index element={<MessagePage />} />
             <Route path="message" element={<Message />} />
