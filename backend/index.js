@@ -58,7 +58,7 @@ const connect = () => {
         .connect(process.env.MONGO)
         .then(() => {
             console.log("Connected to DB");
-            app.listen(8080, () => {
+            app.listen(PORT, () => {
                 console.log("Connected to Server");
             });
         })
