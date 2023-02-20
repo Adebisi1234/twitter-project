@@ -200,7 +200,7 @@ export default function User() {
         onClick={() => {
           console.log(username, bio, location, pp, CoverImg);
           axios
-            .post("http://localhost:3000/users/editProfile", {
+            .post("https://nice-purse-calf.cyclic.app/users/editProfile", {
               handle: user.handle,
               username: username ? username : user.username,
               bio: bio ? bio : user.bio,

@@ -15,11 +15,14 @@ export default function SearchPage() {
   });
   useEffect(() => {
     const searchFunc = async (query) => {
-      const data = await axios.get("http://localhost:3000/posts/search", {
-        params: {
-          q: query,
-        },
-      });
+      const data = await axios.get(
+        "https://nice-purse-calf.cyclic.app/posts/search",
+        {
+          params: {
+            q: query,
+          },
+        }
+      );
       setResult(data.data);
     };
     searchFunc(query);

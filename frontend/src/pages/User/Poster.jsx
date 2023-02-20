@@ -14,7 +14,7 @@ export default function Poster() {
   useEffect(() => {
     const getUser = async (handle) => {
       const { data } = await axios.get(
-        `http://localhost:3000/users/get/${handle}`
+        `https://nice-purse-calf.cyclic.app/users/get/${handle}`
       );
       setUser(data);
       console.log("data", data);

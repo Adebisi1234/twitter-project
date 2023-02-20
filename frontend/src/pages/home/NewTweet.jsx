@@ -10,6 +10,7 @@ import {
   getDownloadURL,
 } from "firebase/storage";
 import app from "../../firebase";
+import { useNavigate } from "react-router-dom";
 
 const NewTweet = () => {
   const user = useSelector((state) => state.user.user);
@@ -21,6 +22,7 @@ const NewTweet = () => {
   const [uploadStatus, setUploadStatus] = useState("");
   console.log(image);
   console.log(uploadStatus);
+  const navigate = useNavigate();
 
   const uploadImg = (file) => {
     const storage = getStorage(app);
@@ -107,7 +109,7 @@ const NewTweet = () => {
               onClick={() => {
                 const fetchNew = async () => {
                   const data = await axios.post(
-                    "http://localhost:3000/posts/newPost",
+                    "https://nice-purse-calf.cyclic.app/posts/newPost",
                     {
                       likes: 0,
                       comment: false,
@@ -126,6 +128,9 @@ const NewTweet = () => {
                 fetchNew();
                 setContent("");
                 setImage({});
+                if (window.innerWidth < 1024) {
+                  navigate(-1);
+                }
               }}
             >
               Post

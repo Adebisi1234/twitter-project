@@ -15,7 +15,7 @@ const notificationRoutes = require("./routes/notificationRoutes")
 const postRoutes = require("./routes/postRoutes")
 mongoose.set('strictQuery', true)
 
-const PORT = process.env.PORT || 3000
+const PORT = 8080
 
 // Connect to mongo
 connectDB()

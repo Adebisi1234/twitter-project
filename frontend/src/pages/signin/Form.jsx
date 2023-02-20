@@ -251,7 +251,7 @@ const Form = () => {
           onClick={() => {
             if (!fromGoogle) {
               axios
-                .post("http://localhost:3000/auth/signup", {
+                .post("https://nice-purse-calf.cyclic.app/auth/signup", {
                   username: username,
                   password: password,
                   handle: handle,
@@ -276,7 +276,7 @@ const Form = () => {
                 });
             } else {
               axios
-                .post("http://localhost:3000/auth/google", {
+                .post("https://nice-purse-calf.cyclic.app/auth/google", {
                   username: username,
                   pp: Pp,
                   handle: handle,

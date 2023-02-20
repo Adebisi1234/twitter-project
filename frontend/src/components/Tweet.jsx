@@ -40,7 +40,9 @@ const Tweet = ({ post }) => {
                 console.log("heart");
                 dispatch(like({ id: post._id }));
                 axios
-                  .post("http://localhost:3000/posts/like", { id: post._id })
+                  .post("https://nice-purse-calf.cyclic.app/posts/like", {
+                    id: post._id,
+                  })
                   .then(() => console.log("liked"));
               }}
             ></div>
@@ -61,7 +63,7 @@ const Tweet = ({ post }) => {
               onClick={() => {
                 console.log("tweets");
                 dispatch(retweet({ id: post._id }));
-                axios.post("http://localhost:3000/posts/retweet", {
+                axios.post("https://nice-purse-calf.cyclic.app/posts/retweet", {
                   id: post._id,
                 });
               }}

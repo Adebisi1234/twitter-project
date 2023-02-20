@@ -24,7 +24,9 @@ const HomePage = () => {
       setLoading(true);
       console.log("effect");
       try {
-        const data = await axios.get("http://localhost:3000/posts/allPosts");
+        const data = await axios.get(
+          "https://nice-purse-calf.cyclic.app/posts/allPosts"
+        );
         dispatch(update(data.data));
         setLoading(false);
       } catch (err) {

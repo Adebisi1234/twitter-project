@@ -46,15 +46,18 @@ export default function TweetPage() {
         <button
           className="py-2 !bg-green-500 !text-white px-4 rounded-3xl font-bold border"
           onClick={async () => {
-            const data = await axios.post("http://localhost:3000/comments", {
-              content: content,
-              handle: user.handle,
-              username: user.username,
-              PostId: post._id,
-              likes: 0,
-              commentCount: 0,
-              pp: user.pp,
-            });
+            const data = await axios.post(
+              "https://nice-purse-calf.cyclic.app/comments",
+              {
+                content: content,
+                handle: user.handle,
+                username: user.username,
+                PostId: post._id,
+                likes: 0,
+                commentCount: 0,
+                pp: user.pp,
+              }
+            );
 
             dispatch(
               addComment({
