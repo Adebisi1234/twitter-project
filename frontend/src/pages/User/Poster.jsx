@@ -10,6 +10,7 @@ import Header from "./Header";
 
 export default function Poster() {
   const { handle } = useParams();
+  const users = useSelector((state) => state.user.user);
   const [user, setUser] = useState(undefined);
   useEffect(() => {
     const getUser = async (handle) => {
@@ -47,6 +48,18 @@ export default function Poster() {
               id="follow"
               onClick={() => {
                 document.getElementById("follow").textContent = "Following";
+                axios.post(
+                  `https://twitterb.up.railway.app/users/new-following/${users.handle}`,
+                  {
+                    username: user.handle,
+                  }
+                );
+                axios.post(
+                  `https://twitterb.up.railway.app/users/new-following/${user.handle}`,
+                  {
+                    username: users.handle,
+                  }
+                );
               }}
             >
               Follow

@@ -4,8 +4,34 @@ import Header from "../../components/Header";
 
 import ProfilePix from "../../components/ProfilePix";
 import Bottom from "../../components/Bottom";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getMessages } from "../../features/messages/messageSlice";
+import { Link } from "react-router-dom";
 
 export default function People() {
+  const [messages, setMessages] = useState([]);
+  const dispatch = useDispatch();
+  const message = useSelector((state) => state.message);
+  const user = useSelector((state) => state.user.user);
+  useEffect(() => {
+    axios
+      .get("https://twitterb.up.railway.app/messages/all")
+      .then((res) => setMessages(...res.data));
+    dispatch(getMessages(messages));
+  }, []);
+  const people = user.followers.map((follower) => {
+    return (
+      <Link to={`/messages/message/${follower}`}>
+        <div className="flex gap-3 mb-8 pl-3">
+          <ProfilePix pp={reactLogo} />
+          <div className="w-full">
+            <h1 className="text-3xl font-bold">{follower}</h1>
+          </div>
+        </div>
+      </Link>
+    );
+  });
   return (
     <div className="dark:bg-black dark:text-white bg-white h-full text-black">
       <Header title="New" text="Messages" />
@@ -18,27 +44,9 @@ export default function People() {
           className="w-full bg-transparent outline-none "
         />
       </div>
-      <div className="flex gap-3 mb-8 pl-3">
-        <ProfilePix pp={reactLogo} />
-        <div className="flex-col w-full">
-          <h1 className=" flex gap-3">Mechanic</h1>
-          <p className="opacity-70">@owner</p>
-        </div>
-      </div>
-      <div className="flex gap-3 mb-8 pl-3">
-        <ProfilePix pp={reactLogo} />
-        <div className="flex-col w-full">
-          <h1 className=" flex gap-3">Mechanic</h1>
-          <p className="opacity-70">@owner</p>
-        </div>
-      </div>
-      <div className="flex gap-3 mb-8 pl-3">
-        <ProfilePix pp={reactLogo} />
-        <div className="flex-col w-full">
-          <h1 className=" flex gap-3">Mechanic</h1>
-          <p className="opacity-70">@owner</p>
-        </div>
-      </div>
+      {people
+        ? people
+        : "No followers found, someone needs to follow you to send a message"}
       <Bottom />
     </div>
   );

@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { login } from "../../features/auth/userSlice";
 import axios from "axios";
 import HomePage from "../home/HomePage";
+import Skeleton from "../../components/Skeleton";
 
 const Form = () => {
   const navigate = useNavigate();
@@ -65,11 +66,19 @@ const Form = () => {
           />
 
           <button
+            onClick={() => {
+              document
+                .getElementById("img")
+                .classList.replace("hidden", "flex");
+            }}
             type="submit"
             className=" bg-black hover:!bg-green-600 dark:bg-white dark:text-black text-white w-full p-1 font-bold rounded-3xl"
           >
             Next
           </button>
+          <div className="h-7 w-7 hidden justify-center items-center" id="img">
+            <Skeleton />
+          </div>
         </form>
 
         <p className="dark:text-white text-black">

@@ -1,11 +1,23 @@
 import reactLogo from "../../assets/react.svg";
 import Header from "../../components/Header";
-
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getMessages } from "../../features/messages/messageSlice";
 import ProfilePix from "../../components/ProfilePix";
 import Bottom from "../../components/Bottom";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 export default function MessagePage() {
+  const [messages, setMessages] = useState([]);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    axios
+      .get("https://twitterb.up.railway.app/messages/all")
+      .then((res) => setMessages(...res.data));
+    dispatch(getMessages(messages));
+  }, []);
+
   return (
     <div className="dark:bg-black dark:text-white bg-white h-full text-black">
       <Header title="New" text="Messages" />

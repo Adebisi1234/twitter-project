@@ -61,12 +61,6 @@ const NewTweet = () => {
 
   return (
     <div className="w-full m-auto max-w-2xl">
-      <header className="w-full flex h-12 p-2  items-center gap-3 justify-between">
-        <div className="arrow h-full w-10 bg-slate-800"></div>
-        <button className="py-2 px-4 rounded-3xl !bg-[var(--button-primary)] dark:!bg-[var(--button-secondary)] border">
-          Post
-        </button>
-      </header>
       <div className="gap-3 flex pl-2 w-full pt-2 dark:bg-slate-900 p-1 border-b-2 max-w-2xl">
         <ProfilePix pp={Object.keys(user).length && user.pp} />
         <div className="new-tweet w-full h-full flex flex-col ">

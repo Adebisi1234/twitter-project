@@ -38,7 +38,7 @@ app.use("/auth", authRoutes)
 
 app.use("/users", userRoutes)
 app.use("/messages", messageRoutes)
-app.use("/notification", notificationRoutes)
+app.use("/notifications", notificationRoutes)
 app.use("/posts", postRoutes)
 app.use("/comments", commentRoutes)
 

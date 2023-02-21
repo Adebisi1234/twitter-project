@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 
 const Bottom = () => {
   return (
-    <footer className="flex md:hidden fixed bottom-0 bg-white dark:bg-black z-50 p-3 w-full justify-evenly gap-12 items-center">
+    <footer className="flex lg:hidden fixed bottom-0 bg-white dark:bg-black z-50 p-3 w-full justify-evenly gap-12 items-center">
       <div className="contain gap-2 flex bg-left">
         <Link to="/">
           <div className="w-7 dark:bg-[url('/src/assets/homesDark.png')] bg-[url('/src/assets/homes.png')] bg-left bg-cover h-7"></div>

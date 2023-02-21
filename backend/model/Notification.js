@@ -2,8 +2,9 @@ const mongoose = require("mongoose")
 const Schema = mongoose.Schema
 
 const notificationSchema = new Schema({
-    userHandle: {
-        type: String
+    actionHandle: {
+        type: String,
+        required: true
     },
     handle: {
         type: String,
@@ -14,10 +15,12 @@ const notificationSchema = new Schema({
         required: true
     },
     action: {
-        type: String
+        type: String,
+        required: true
     },
-    pp: {
-        type: String
+    PostId: {
+        type: String,
+        required: true
     }
 
 }, { timestamps: true })

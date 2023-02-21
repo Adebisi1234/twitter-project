@@ -1,4 +1,5 @@
 const Notification = require("../model/Notification")
+const User = require("../model/User")
 const getAllNotifications = async (req, res, next) => {
     try {
         const notifications = await Notification.find({
@@ -17,8 +18,9 @@ const newNotification = async (req, res, next) => {
                 ...req.body
             }
         )
+        const user = await User.findOneAndUpdate({ handle: req.body.handle }, { $inc: { notification: 1 } })
+        user.save()
         await newNote.save()
-        res.sendStatus(200)
     } catch (err) {
         next(err)
     }

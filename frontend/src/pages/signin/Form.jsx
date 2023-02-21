@@ -15,6 +15,7 @@ import {
   getDownloadURL,
 } from "firebase/storage";
 import app from "../../firebase";
+import Skeleton from "../../components/Skeleton";
 
 const Form = () => {
   const [username, setUsername] = useState("");
@@ -247,8 +248,9 @@ const Form = () => {
           </label>
         </div>
         <button
-          className=" bg-black hover:!bg-[var(--button-primary)] hover:dark:!bg-[var(--button-primary)] mb-2 dark:bg-white dark:text-black text-white w-full p-1 font-bold rounded-3xl"
+          className=" bg-black hover:!bg-[var(--button-primary)] hover:dark:!bg-[var(--button-primary)] my-2 dark:bg-white dark:text-black text-white w-full p-1 font-bold rounded-3xl"
           onClick={() => {
+            document.getElementById("img").classList.replace("hidden", "flex");
             if (!fromGoogle) {
               axios
                 .post("https://nice-purse-calf.cyclic.app/auth/signup", {
@@ -304,6 +306,9 @@ const Form = () => {
         >
           Create account
         </button>
+        <div className="h-7 w-7 hidden justify-center items-center" id="img">
+          <Skeleton />
+        </div>
       </div>
     </div>
   ) : (

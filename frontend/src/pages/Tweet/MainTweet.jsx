@@ -12,7 +12,7 @@ const MainTweet = ({ id }) => {
   return Object.keys(post).length ? (
     <div className="border-b scroll-mb-20 m-auto max-w-2xl flex flex-col pt-2 dark:bg-black dark:text-white bg-white text-black ">
       <div className="details">
-        <ProfilePix pp={post.pp ? post.pp : reactLogo} />
+        <ProfilePix pp={post.pp ? post.pp : reactLogo} handle={post.handle} />
         <h3 className="text-xl font-bold">
           {post.username}{" "}
           <span className=" block text-sm font-thin ">{post.handle}</span>
@@ -46,8 +46,23 @@ const MainTweet = ({ id }) => {
             <div
               className="w-7 dark:bg-[url('/src/assets/heart.png')] bg-[url('/src/assets/heartDark.png')]  bg-cover h-7"
               onClick={() => {
-                console.log("heart");
                 dispatch(like({ id: post._id }));
+                axios
+                  .post("https://twitterb.up.railway.app/posts/like", {
+                    id: post._id,
+                  })
+                  .then(() => console.log("liked"));
+
+                axios.post(
+                  "https://twitterb.up.railway.app/notifications/new",
+                  {
+                    actionHandle: user.handle,
+                    handle: post.handle,
+                    username: user.username,
+                    action: "liked your post",
+                    PostId: post._id,
+                  }
+                );
               }}
             ></div>
             {post.likes}
@@ -56,8 +71,21 @@ const MainTweet = ({ id }) => {
             <div
               className="w-7 dark:bg-[url('/src/assets/retweetDark.png')] bg-[url('/src/assets/retweet.png')] bg-left bg-cover h-7"
               onClick={() => {
-                console.log("tweets");
                 dispatch(retweet({ id: post._id }));
+                axios.post("https://twitterb.up.railway.app/posts/retweet", {
+                  id: post._id,
+                });
+
+                axios.post(
+                  "https://twitterb.up.railway.app/notifications/new",
+                  {
+                    actionHandle: user.handle,
+                    handle: post.handle,
+                    username: user.username,
+                    action: "retweeted your post",
+                    PostId: post._id,
+                  }
+                );
               }}
             ></div>
             {post.retweet}

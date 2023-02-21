@@ -65,10 +65,10 @@ const newFollowing = async (req, res, next) => {
         await User.findOneAndUpdate({ handle: req.params.handle }, {
             $push: { following: req.body.username }
         })
-        await User.findOneAndUpdate(req.body.id, {
+        await User.findOneAndUpdate({ handle: req.params.handle }, {
             $inc: { followingCount: 1 }
         })
-        res.status(200).json("Followed")
+        res.status(200).json("Following")
     } catch (err) {
         console.log(err)
         next(err)
