@@ -1,9 +1,5 @@
-import post from "../assets/post.svg";
-
 export default function Post() {
   return (
-    <div className="fixed bottom-20 right-10 md:hidden rounded-full w-20 h-20 dark:!bg-blue-500 !bg-blue-500">
-      <img src={post} />
-    </div>
+    <div className="w-20 lg:hidden fixed bottom-20 right-10 rounded-full dark:bg-[url('/src/assets/postDark.png')] bg-[url('/src/assets/post.png')] bg-left bg-cover h-20"></div>
   );
 }

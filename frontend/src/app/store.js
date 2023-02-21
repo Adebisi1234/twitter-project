@@ -1,7 +1,6 @@
 import { configureStore, combineReducers, getDefaultMiddleware } from "@reduxjs/toolkit";
 import userReducer from "../features/auth/userSlice"
 import postReducer from "../features/post/postSlice"
-import messageReducer from "../features/messages/messageSlice"
 import {
     persistStore,
     persistReducer,
@@ -20,7 +19,7 @@ const persistConfig = {
     storage
 }
 
-const rootReducer = combineReducers({ user: userReducer, post: postReducer, message: messageReducer })
+const rootReducer = combineReducers({ user: userReducer, post: postReducer })
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)
 

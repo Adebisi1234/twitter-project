@@ -11,12 +11,12 @@ export default function Note({ name, action, text, PostId, pp }) {
           {action.includes("liked") ? (
             <div className="w-9 dark:bg-[url('/src/assets/heart.png')] bg-[url('/src/assets/heartDark.png')]  bg-cover h-9"></div>
           ) : (
-            <div className="w-9 dark:bg-[url('/src/assets/retweet.png')] bg-[url('/src/assets/retweetDark.png')]  bg-cover h-9"></div>
+            <div className="w-9 dark:bg-[url('/src/assets/retweetDark.png')] bg-[url('/src/assets/retweet.png')]  bg-cover h-9"></div>
           )}
         </div>
         <div className="content flex flex-col gap-1">
-          <ProfilePix pp={profile} />
-          <Link to={`/tweetPage/${pp ? pp : PostId}`}>
+          <ProfilePix pp={pp ? pp : profile} />
+          <Link to={`/tweetPage/${PostId}`}>
             <p>
               <span className="font-bold">{name}</span> {action}
             </p>

@@ -48,9 +48,6 @@ const Sidebar = () => {
             className="flex p-2 rounded-3xl gap-6  "
             onClick={() => {
               const slide = document.getElementById("slide");
-              if (slide.clientWidth === 280) {
-                slide.classList.toggle("-translate-x-full");
-              }
             }}
           >
             <div className="w-7 dark:bg-[url('/src/assets/homesDark.png')] bg-[url('/src/assets/homes.png')] bg-left bg-cover h-7"></div>
@@ -62,9 +59,6 @@ const Sidebar = () => {
             className="flex p-2 rounded-3xl gap-6  "
             onClick={() => {
               const slide = document.getElementById("slide");
-              if (slide.clientWidth === 280) {
-                slide.classList.toggle("-translate-x-full");
-              }
             }}
           >
             <div className="w-7 dark:bg-[url('/src/assets/profileDark.png')] bg-[url('/src/assets/profile.png')] bg-left-bottom bg-cover h-7"></div>
@@ -76,9 +70,6 @@ const Sidebar = () => {
             className="flex gap-6  p-2 rounded-3xl"
             onClick={() => {
               const slide = document.getElementById("slide");
-              if (slide.clientWidth === 280) {
-                slide.classList.toggle("-translate-x-full");
-              }
             }}
           >
             <div className="w-7 dark:!bg-[url('/src/assets/messagesDark.png')] !bg-[url('/src/assets/messages.png')] bg-left bg-cover h-7"></div>
@@ -90,9 +81,6 @@ const Sidebar = () => {
             className="flex gap-6  p-2 rounded-3xl"
             onClick={() => {
               const slide = document.getElementById("slide");
-              if (slide.clientWidth === 280) {
-                slide.classList.toggle("-translate-x-full");
-              }
             }}
           >
             <div className="w-7 dark:bg-[url('/src/assets/notificationsDark.png')] bg-[url('/src/assets/notifications.png')] bg-left bg-cover bg-no-repeat h-7"></div>
@@ -104,9 +92,6 @@ const Sidebar = () => {
             className="flex gap-6  p-2 rounded-3xl"
             onClick={() => {
               const slide = document.getElementById("slide");
-              if (slide.clientWidth === 280) {
-                slide.classList.toggle("-translate-x-full");
-              }
             }}
           >
             <div className="w-7 dark:bg-[url('/src/assets/searchDark.png')] bg-[url('/src/assets/search.png')] bg-left-bottom bg-cover h-7"></div>

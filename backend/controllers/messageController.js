@@ -14,10 +14,8 @@ const getMessages = async (req, res, next) => {
 
 const getAllMessages = async (req, res, next) => {
     try {
-        const { owner } = req.query
-        if (owner) {
-
-            const all = await Message.find({ owner })
+        if (req.query.owner) {
+            const all = await Message.find({ owner: req.query.owner })
             res.status(200).json(all)
         } else {
             const all = await Message.find()

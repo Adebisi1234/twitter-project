@@ -58,7 +58,8 @@ function App() {
           <Route path="searchPage/:id" element={<SearchPage />} />
           <Route path="messages">
             <Route index element={<MessagePage />} />
-            <Route path="message/:handle" element={<Message />} />
+            <Route path="people" element={<People />} />
+            <Route path="message/:object" element={<Message />} />
           </Route>
           <Route path="*" element={<ErrorPage />} />
         </Routes>

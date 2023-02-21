@@ -25,8 +25,9 @@ export default function Notifications() {
         key={note._id}
         text={note.text}
         action={note.action}
-        name={note.handle}
+        name={note.actionHandle}
         pp={note.pp}
+        PostId={note.PostId}
       />
     );
   });
