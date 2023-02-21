@@ -103,7 +103,7 @@ const NewTweet = () => {
               onClick={() => {
                 const fetchNew = async () => {
                   const data = await axios.post(
-                    "https://twitterb.up.railway.app/posts/newPost",
+                    "https://my-twitter-backend.onrender.com/posts/newPost",
                     {
                       likes: 0,
                       comment: false,

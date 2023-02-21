@@ -200,7 +200,7 @@ export default function User() {
         onClick={() => {
           console.log(username, bio, location, pp, CoverImg);
           axios
-            .post("https://twitterb.up.railway.app/users/editProfile", {
+            .post("https://my-twitter-backend.onrender.com/users/editProfile", {
               handle: user.handle,
               username: username ? username : user.username,
               bio: bio ? bio : user.bio,

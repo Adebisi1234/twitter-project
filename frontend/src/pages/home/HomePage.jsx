@@ -25,7 +25,7 @@ const HomePage = () => {
       console.log("effect");
       try {
         const data = await axios.get(
-          "https://twitterb.up.railway.app/posts/allPosts"
+          "https://my-twitter-backend.onrender.com/posts/allPosts"
         );
         dispatch(update(data.data));
         setLoading(false);

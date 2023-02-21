@@ -38,12 +38,15 @@ const Tweet = ({ post }) => {
               className="w-7 dark:bg-[url('/src/assets/heart.png')] bg-[url('/src/assets/heartDark.png')]  bg-cover h-7"
               onClick={() => {
                 dispatch(like({ id: post._id }));
-                axios.post("https://twitterb.up.railway.app/posts/like", {
-                  id: post._id,
-                });
+                axios.post(
+                  "https://my-twitter-backend.onrender.com/posts/like",
+                  {
+                    id: post._id,
+                  }
+                );
 
                 axios.post(
-                  "https://twitterb.up.railway.app/notifications/new",
+                  "https://my-twitter-backend.onrender.com/notifications/new",
                   {
                     actionHandle: user.handle,
                     handle: post.handle,
@@ -73,11 +76,14 @@ const Tweet = ({ post }) => {
               onClick={() => {
                 console.log("tweets");
                 dispatch(retweet({ id: post._id }));
-                axios.post("https://twitterb.up.railway.app/posts/retweet", {
-                  id: post._id,
-                });
                 axios.post(
-                  "https://twitterb.up.railway.app/notifications/new",
+                  "https://my-twitter-backend.onrender.com/posts/retweet",
+                  {
+                    id: post._id,
+                  }
+                );
+                axios.post(
+                  "https://my-twitter-backend.onrender.com/notifications/new",
                   {
                     actionHandle: user.handle,
                     handle: post.handle,

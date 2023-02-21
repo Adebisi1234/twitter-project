@@ -15,7 +15,7 @@ export default function Poster() {
   useEffect(() => {
     const getUser = async (handle) => {
       const { data } = await axios.get(
-        `https://twitterb.up.railway.app/users/get/${handle}`
+        `https://my-twitter-backend.onrender.com/users/get/${handle}`
       );
       setUser(data);
       console.log("data", data);
@@ -49,13 +49,13 @@ export default function Poster() {
               onClick={() => {
                 document.getElementById("follow").textContent = "Following";
                 axios.post(
-                  `https://twitterb.up.railway.app/users/new-following/${users.handle}`,
+                  `https://my-twitter-backend.onrender.com/users/new-following/${users.handle}`,
                   {
                     username: user.handle,
                   }
                 );
                 axios.post(
-                  `https://twitterb.up.railway.app/users/new-following/${user.handle}`,
+                  `https://my-twitter-backend.onrender.com/users/new-following/${user.handle}`,
                   {
                     username: users.handle,
                   }

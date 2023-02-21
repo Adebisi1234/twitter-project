@@ -11,7 +11,9 @@ export default function Notifications() {
   const user = useSelector((state) => state.user.user);
   useEffect(() => {
     axios
-      .get(`https://twitterb.up.railway.app/notifications/all/${user.handle}`)
+      .get(
+        `https://my-twitter-backend.onrender.com/notifications/all/${user.handle}`
+      )
       .then((res) => {
         console.log(...res.data);
         setNotifications(res.data);

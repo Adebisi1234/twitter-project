@@ -16,7 +16,7 @@ export default function SearchPage() {
   useEffect(() => {
     const searchFunc = async (query) => {
       const data = await axios.get(
-        "https://twitterb.up.railway.app/posts/search",
+        "https://my-twitter-backend.onrender.com/posts/search",
         {
           params: {
             q: query,

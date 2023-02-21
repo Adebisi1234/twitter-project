@@ -20,7 +20,7 @@ const Form = () => {
     console.log("Submit");
 
     axios
-      .post("https://twitterb.up.railway.app/auth/signin", {
+      .post("https://my-twitter-backend.onrender.com/auth/signin", {
         username: username,
         password: password,
       })

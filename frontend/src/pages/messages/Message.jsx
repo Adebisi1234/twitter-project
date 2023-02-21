@@ -24,7 +24,7 @@ export default function Message() {
 
   useEffect(() => {
     axios
-      .get(`https://twitterb.up.railway.app/users/get/@${handle}`)
+      .get(`https://my-twitter-backend.onrender.com/users/get/@${handle}`)
       .then((res) => setUser(res.data));
   }, []);
   let result = [];
@@ -66,7 +66,7 @@ export default function Message() {
             className="w-7 dark:bg-[url('/src/assets/sendDark.png')] bg-[url('/src/assets/send.png')] bg-left bg-cover h-7"
             onClick={() => {
               axios
-                .post("https://twitterb.up.railway.app/messages/new", {
+                .post("https://my-twitter-backend.onrender.com/messages/new", {
                   owner: users.handle,
                   receiver: handle,
                   content: [{ from: users.handle, message: content }],

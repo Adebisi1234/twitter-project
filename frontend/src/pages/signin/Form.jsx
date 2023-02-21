@@ -278,7 +278,7 @@ const Form = () => {
                 });
             } else {
               axios
-                .post("https://twitterb.up.railway.app/auth/google", {
+                .post("https://my-twitter-backend.onrender.com/auth/google", {
                   username: username,
                   pp: Pp,
                   handle: handle,

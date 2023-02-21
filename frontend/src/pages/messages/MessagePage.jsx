@@ -17,7 +17,7 @@ export default function MessagePage() {
   console.log("user handle", user.handle);
   useEffect(() => {
     axios
-      .get("https://twitterb.up.railway.app/messages/all", {
+      .get("https://my-twitter-backend.onrender.com/messages/all", {
         params: {
           owner: user.handle,
         },
@@ -36,7 +36,7 @@ export default function MessagePage() {
         : (handle[i] = message.owner);
       console.log(handle);
       axios
-        .get(`https://twitterb.up.railway.app/users/get/${handle[i]}`)
+        .get(`https://my-twitter-backend.onrender.com/users/get/${handle[i]}`)
         .then((res) => {
           setPp(res.data.pp);
           setUsername(res.data.user);
