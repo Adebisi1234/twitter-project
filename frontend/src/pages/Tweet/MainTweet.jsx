@@ -7,6 +7,7 @@ import Skeleton from "../../components/Skeleton";
 
 const MainTweet = ({ id }) => {
   const posts = useSelector((state) => state.post);
+  const user = useSelector((state) => state.user.user);
   const post = posts[0].find((post) => post._id === id);
   const dispatch = useDispatch();
   return Object.keys(post).length ? (
@@ -61,6 +62,8 @@ const MainTweet = ({ id }) => {
                     username: user.username,
                     action: "liked your post",
                     PostId: post._id,
+                    pp: user.pp,
+                    text: post.content.slice(0, 100),
                   }
                 );
               }}
@@ -84,6 +87,8 @@ const MainTweet = ({ id }) => {
                     username: user.username,
                     action: "retweeted your post",
                     PostId: post._id,
+                    text: post.content.slice(0, 100),
+                    pp: user.pp,
                   }
                 );
               }}

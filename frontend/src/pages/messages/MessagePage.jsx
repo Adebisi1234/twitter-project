@@ -14,8 +14,10 @@ export default function MessagePage() {
   useEffect(() => {
     axios
       .get("https://twitterb.up.railway.app/messages/all")
-      .then((res) => setMessages(...res.data));
-    dispatch(getMessages(messages));
+      .then((res) => setMessages(...res.data))
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
+    // dispatch(getMessages(messages));
   }, []);
 
   return (

@@ -18,9 +18,12 @@ const newNotification = async (req, res, next) => {
                 ...req.body
             }
         )
-        const user = await User.findOneAndUpdate({ handle: req.body.handle }, { $inc: { notification: 1 } })
+        const user = await User.findOneAndUpdate({ handle: req.body.handle }, {
+            $inc: { notification: 1 }
+        })
         user.save()
         await newNote.save()
+        res.status(200).json(newNote)
     } catch (err) {
         next(err)
     }

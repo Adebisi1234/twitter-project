@@ -1,12 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = []
+const initialState = [
+    []
+]
 export const messageSlice = createSlice({
     name: "message",
     initialState,
     reducers: {
         getMessages: (state, action) => {
-            state.message.push({ ...action.payload })
+            state.message[0].push({ ...action.payload })
         },
         updateMessage: (state, action) => {
             const { index, ...others } = action.payload

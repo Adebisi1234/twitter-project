@@ -11,7 +11,8 @@ const userSchema = new Schema({
         type: String
     },
     notification: {
-        type: String
+        type: Number,
+        default: 0
     },
     handle: {
         type: String,

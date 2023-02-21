@@ -50,6 +50,7 @@ const Tweet = ({ post }) => {
                     username: user.username,
                     action: "liked your post",
                     PostId: post._id,
+                    pp: user.pp,
                     text: post.content.slice(0, 100),
                   }
                 );
@@ -83,6 +84,8 @@ const Tweet = ({ post }) => {
                     username: user.username,
                     action: "retweeted your post",
                     PostId: post._id,
+                    pp: user.pp,
+                    text: post.content.slice(0, 100),
                   }
                 );
               }}
