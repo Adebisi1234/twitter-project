@@ -12,7 +12,7 @@ export default function People() {
       <Link
         to={`/messages/message/${JSON.stringify({
           message: {},
-          follower: follower,
+          handle: follower,
         })}`}
         key={follower}
       >

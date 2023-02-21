@@ -12,6 +12,7 @@ import Self from "./Self";
 
 export default function Message() {
   const [user, setUser] = useState({});
+  const users = useSelector((state) => state.user.user);
   const { object } = useParams();
   const { message, handle } = JSON.parse(object);
   console.log("message", message);
@@ -20,17 +21,19 @@ export default function Message() {
 
   useEffect(() => {
     axios
-      .get(`https://twitterb.up.railway.app/users/get/${handle}`)
+      .get(`https://twitterb.up.railway.app/users/get/@${handle}`)
       .then((res) => setUser(res.data));
   }, []);
-
-  const result = message.content.map((mes) => {
-    if (mes.from === handle) {
-      return <Others text={mes.message} />;
-    } else {
-      return <Self text={mes.message} />;
-    }
-  });
+  let result = [];
+  Object.keys(message).length
+    ? (result = message.content.map((mes) => {
+        if (mes.from === handle) {
+          return <Others text={mes.message} />;
+        } else {
+          return <Self text={mes.message} />;
+        }
+      }))
+    : "";
   return Object.keys(user).length ? (
     <div>
       <Header />
@@ -53,8 +56,21 @@ export default function Message() {
             type="text"
             placeholder="Send a new message"
             className="w-full"
+            onChange={(e) => setContent(e.target.value)}
+            value={content}
           />
-          <div className="w-7 dark:bg-[url('/src/assets/sendDark.png')] bg-[url('/src/assets/send.png')] bg-left bg-cover h-7"></div>
+          <div
+            className="w-7 dark:bg-[url('/src/assets/sendDark.png')] bg-[url('/src/assets/send.png')] bg-left bg-cover h-7"
+            onClick={() => {
+              axios.post("https://twitterb.up.railway.app/messages/new", {
+                owner: users.handle,
+                receiver: handle,
+                content: [{ from: users.handle, message: content }],
+              });
+
+              setContent("");
+            }}
+          ></div>
         </div>
       </div>
     </div>
