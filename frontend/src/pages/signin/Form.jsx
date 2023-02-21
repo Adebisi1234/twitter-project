@@ -202,7 +202,7 @@ const Form = () => {
             <label
               htmlFor="ppReal"
               id="ppLabel"
-              className=" w-7 h-7 !bg-[url('/src/assets/uploadImg.svg')] !bg-cover"
+              className=" w-7 h-7 !bg-[url('/src/assets/uploadImg.png')] dark:!bg-[url('/src/assets/uploadImgDark.png')] !bg-cover"
             >
               <input
                 className="hidden"
@@ -227,7 +227,7 @@ const Form = () => {
             <div className="buttons w-7 h-9 flex gap-2 justify-between">
               <label
                 htmlFor="coverImgReal"
-                className=" w-7 h-7 !bg-[url('/src/assets/uploadImg.svg')] !bg-cover"
+                className=" w-7 h-7 !bg-[url('/src/assets/uploadImg.png')] dark:!bg-[url('/src/assets/uploadImgDark.png')] !bg-cover"
               >
                 <input
                   className="hidden"
