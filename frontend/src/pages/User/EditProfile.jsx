@@ -1,8 +1,4 @@
-import Bottom from "../../components/Bottom";
-import Tweet from "../../components/Tweet";
 import Header from "../../components/Header";
-import uploadImg from "../../assets/uploadImg.svg";
-import img2 from "../../assets/img2.png";
 import { useState } from "react";
 import axios from "axios";
 import {

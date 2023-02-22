@@ -1,9 +1,6 @@
 import { useState } from "react";
 import Header from "../../components/Header";
 import MainTweet from "./MainTweet";
-import img2 from "../../assets/img2.png";
-import img from "../../assets/img.jpg";
-import reactLogo from "../../assets/react.svg";
 import ProfilePix from "../../components/ProfilePix";
 import Tweet from "../../components/Tweet";
 import Bottom from "../../components/Bottom";
@@ -11,7 +8,7 @@ import Hr from "../../components/Hr";
 import { useParams } from "react-router-dom";
 import Skeleton from "../../components/Skeleton";
 import { useSelector, useDispatch } from "react-redux";
-import { newPost, addComment } from "../../features/post/postSlice";
+import { addComment } from "../../features/post/postSlice";
 import axios from "axios";
 
 export default function TweetPage() {

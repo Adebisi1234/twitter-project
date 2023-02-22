@@ -1,7 +1,6 @@
 import Bottom from "../../components/Bottom";
 import Tweet from "../../components/Tweet";
 import Header from "./Header";
-import img2 from "../../assets/img2.png";
 import Hr from "../../components/Hr";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
