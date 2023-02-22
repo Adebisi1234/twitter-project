@@ -42,7 +42,7 @@ const google = async (req, res, next) => {
 
             res.cookie("access_token", token,
                 {
-                    httpOnly: true, sameSite: "None" //,secure: true 
+                    httpOnly: true, sameSite: "None", secure: true
                 }
             )
             return res.status(200).json({ ...others, access_token: token })
@@ -58,7 +58,7 @@ const google = async (req, res, next) => {
 
             res.cookie("access_token", token,
                 {
-                    httpOnly: true, sameSite: "None" //,secure: true 
+                    httpOnly: true, sameSite: "None", secure: true
                 }
             )
             return res.status(200).json({ ...others, access_token: token })
