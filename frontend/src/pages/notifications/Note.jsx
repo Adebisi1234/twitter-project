@@ -15,7 +15,7 @@ export default function Note({ name, action, text, PostId, pp }) {
           )}
         </div>
         <div className="content flex flex-col gap-1">
-          <ProfilePix pp={pp ? pp : profile} />
+          <ProfilePix pp={pp ? pp : profile} handle={name} />
           <Link to={`/tweetPage/${PostId}`}>
             <p>
               <span className="font-bold">{name}</span> {action}

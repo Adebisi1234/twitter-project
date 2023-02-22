@@ -19,15 +19,18 @@ export default function Message() {
   // const [messages, setMessages] = useState([
   //   Object.keys(message).length ? message : {},
   // ]);
-  const [maps, setMaps] = useState(message.content);
+  const [maps, setMaps] = useState(
+    Object.keys(message).length !== 0 ? message.content : {}
+  );
 
+  console.log("map", maps);
   useEffect(() => {
     axios
       .get(`https://my-twitter-backend.onrender.com/users/get/@${handle}`)
       .then((res) => setUser(res.data));
   }, []);
   let result = [];
-  Object.keys(maps[0]).length
+  Object.keys(maps).length
     ? (result = maps.map((mes) => {
         if (mes.from === handle) {
           return <Others key={mes._id} text={mes.message} />;
@@ -48,8 +51,8 @@ export default function Message() {
         <p>{user.followersCount} followers</p>
       </div>
 
-      <div className="message other flex-col flex mt-16 gap-y-10 p-2 ">
-        {Object.keys(maps[0]).length && result}
+      <div className="message flex-col flex mt-16 gap-y-10 p-2 ">
+        {Object.keys(maps).length ? result : ""}
         <Hr />
       </div>
       <div className="fixed bottom-0 dark:bg-black dark:text-white bg-slate-200 w-full p-2">

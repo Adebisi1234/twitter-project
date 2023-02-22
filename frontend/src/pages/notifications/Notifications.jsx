@@ -8,6 +8,7 @@ import Skeleton from "../../components/Skeleton";
 
 export default function Notifications() {
   const [notifications, setNotifications] = useState([]);
+  const [loading, setloading] = useState(true);
   const user = useSelector((state) => state.user.user);
   useEffect(() => {
     axios
@@ -15,8 +16,9 @@ export default function Notifications() {
         `https://my-twitter-backend.onrender.com/notifications/all/${user.handle}`
       )
       .then((res) => {
-        console.log(...res.data);
-        setNotifications(res.data);
+        console.log("notification", res.data);
+        res.data.length ? setNotifications(res.data) : "";
+        setloading(false);
         console.log(notifications);
       });
   }, []);
@@ -33,13 +35,13 @@ export default function Notifications() {
       />
     );
   });
-  return notifications.length ? (
+  return !loading ? (
     <div className="dark:bg-black dark:text-white">
       <Header />
-      {notifications ? (
+      {notifications.length ? (
         <div className="pl-2">{notes}</div>
       ) : (
-        "No notifications check back later"
+        <p className="text-center">No notifications check back later</p>
       )}
       <Bottom />
     </div>
