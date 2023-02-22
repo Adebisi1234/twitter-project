@@ -130,7 +130,7 @@ const Form = () => {
         </h1>
         <Button
           onClick={() => signInWithGoogle}
-          word="Signin with google"
+          word="Sign in with google"
           svg={google}
         />
         <div className="flex w-full items-center">
@@ -262,7 +262,7 @@ const Form = () => {
             document.getElementById("img").classList.replace("hidden", "flex");
             if (!fromGoogle) {
               axios
-                .post("https://nice-purse-calf.cyclic.app/auth/signup", {
+                .post("https://my-twitter-backend.onrender.com/auth/signup", {
                   username: username,
                   password: password,
                   handle: handle,
