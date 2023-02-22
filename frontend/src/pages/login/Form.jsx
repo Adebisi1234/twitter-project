@@ -17,7 +17,6 @@ const Form = () => {
   const dispatch = useDispatch();
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Submit");
 
     axios
       .post("https://my-twitter-backend.onrender.com/auth/signin", {
@@ -32,7 +31,9 @@ const Form = () => {
       .then(() => {
         navigate("/home");
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        document.getElementById("err").textContent = err.response.data.message;
+      });
   };
 
   return !Object.keys(user).length ? (
@@ -47,6 +48,7 @@ const Form = () => {
           }}
         >
           <input
+            required
             type="text"
             placeholder="username"
             className="w-full pl-2 h-14 border border-1 border-slate-300 "
@@ -56,6 +58,7 @@ const Form = () => {
             value={username}
           />
           <input
+            required
             type="password"
             placeholder="password"
             className="w-full pl-2 h-14 border border-1 border-slate-300 "
@@ -72,13 +75,17 @@ const Form = () => {
                 .classList.replace("hidden", "flex");
             }}
             type="submit"
-            className=" bg-black hover:!bg-green-600 dark:bg-white dark:text-black text-white w-full p-1 font-bold rounded-3xl"
+            className=" bg-black hover:!bg-green-600 dark:bg-white dark:text-black text-white w-full p-3 mt-2 font-bold rounded-3xl"
           >
             Next
           </button>
-          <div className="h-7 w-7 hidden justify-center items-center" id="img">
+          <div
+            className="h-7 w-full hidden justify-center items-center"
+            id="img"
+          >
             <Skeleton />
           </div>
+          <span id="err"></span>
         </form>
 
         <p className="dark:text-white text-black">

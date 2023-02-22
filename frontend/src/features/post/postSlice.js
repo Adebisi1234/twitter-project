@@ -22,7 +22,7 @@ export const postSlice = createSlice({
             state[0].push(posts[0])
             state[0].push(...posts.reverse())
             state[0].pop()
-            state[1].push(...comments)
+            state[1].push(...comments.reverse())
         },
         like: (state, action) => {
             const { id } = action.payload

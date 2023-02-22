@@ -78,7 +78,8 @@ const Form = () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
           console.log("File available at", downloadURL);
           setPp(downloadURL);
-          setUploadPPStatus("");
+          setUploadPPStatus("Uploaded");
+          document.getElementById("ppReal").setAttribute("readOnly", true);
         });
       }
     );
@@ -112,7 +113,10 @@ const Form = () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
           console.log("File available at", downloadURL);
           setCoverImg(downloadURL);
-          setUploadCoverStatus("");
+          setUploadCoverStatus("Uploaded");
+          document
+            .getElementById("coverImgReal")
+            .setAttribute("readOnly", true);
         });
       }
     );
@@ -130,15 +134,16 @@ const Form = () => {
           svg={google}
         />
         <div className="flex w-full items-center">
-          <div className="border w-full h-1"></div>
+          <div className="border w-full"></div>
           <div>or</div>
-          <div className="border w-full h-1"></div>
+          <div className="border w-full"></div>
         </div>
         <div className="input handle border p-3">
           <label htmlFor="handle" className="block">
             handle:
           </label>
           <input
+            required
             value={handle}
             onChange={(e) => {
               setHandle(e.target.value);
@@ -154,6 +159,7 @@ const Form = () => {
             username:
           </label>
           <input
+            required
             value={username}
             onChange={(e) => {
               setUsername(e.target.value);
@@ -169,6 +175,7 @@ const Form = () => {
             password:
           </label>
           <input
+            required
             value={password}
             onChange={(e) => {
               setPassword(e.target.value);
@@ -184,6 +191,7 @@ const Form = () => {
             bio:
           </label>
           <input
+            required
             value={bio}
             onChange={(e) => {
               setBio(e.target.value);
@@ -201,10 +209,10 @@ const Form = () => {
           <div className="buttons w-7 h-9 flex gap-2 justify-between">
             <label
               htmlFor="ppReal"
-              id="ppLabel"
               className=" w-7 h-7 !bg-[url('/src/assets/uploadImg.png')] dark:!bg-[url('/src/assets/uploadImgDark.png')] !bg-cover"
             >
               <input
+                required
                 className="hidden"
                 name="ppReal"
                 id="ppReal"
@@ -230,6 +238,7 @@ const Form = () => {
                 className=" w-7 h-7 !bg-[url('/src/assets/uploadImg.png')] dark:!bg-[url('/src/assets/uploadImgDark.png')] !bg-cover"
               >
                 <input
+                  required
                   className="hidden"
                   name="coverImgReal"
                   id="coverImgReal"
@@ -248,7 +257,7 @@ const Form = () => {
           </label>
         </div>
         <button
-          className=" bg-black hover:!bg-[var(--button-primary)] hover:dark:!bg-[var(--button-primary)] my-2 dark:bg-white dark:text-black text-white w-full p-1 font-bold rounded-3xl"
+          className=" bg-black hover:!bg-[var(--button-primary)] hover:dark:!bg-[var(--button-primary)] p-3 my-3 dark:bg-white dark:text-black text-white w-full font-bold rounded-3xl"
           onClick={() => {
             document.getElementById("img").classList.replace("hidden", "flex");
             if (!fromGoogle) {
@@ -306,7 +315,7 @@ const Form = () => {
         >
           Create account
         </button>
-        <div className="h-7 w-7 hidden justify-center items-center" id="img">
+        <div className="h-7 w-full hidden justify-center items-center" id="img">
           <Skeleton />
         </div>
       </div>

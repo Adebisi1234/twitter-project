@@ -42,7 +42,7 @@ const HomePage = () => {
 
   return (
     <>
-      <div className="w-full border-x h-full">
+      <div className="w-full h-full">
         <Header imgs={user.length && user.pp} />
         <div className="hidden md:block">
           <NewTweet />
@@ -55,7 +55,7 @@ const HomePage = () => {
       >
         <Sidebar />
       </div>
-      <Link to="/newtweet">
+      <Link to="/newtweet" className="lg:hidden">
         <Post />
       </Link>
       <Bottom />

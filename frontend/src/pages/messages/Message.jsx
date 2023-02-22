@@ -16,11 +16,10 @@ export default function Message() {
   const { object } = useParams();
   const { message, handle } = JSON.parse(object);
   const [content, setContent] = useState("");
-  const [messages, setMessages] = useState([
-    Object.keys(message).length ? message : {},
-  ]);
-  console.log("handle", handle);
-  console.log("messages", messages);
+  // const [messages, setMessages] = useState([
+  //   Object.keys(message).length ? message : {},
+  // ]);
+  const [maps, setMaps] = useState(message.content);
 
   useEffect(() => {
     axios
@@ -28,12 +27,12 @@ export default function Message() {
       .then((res) => setUser(res.data));
   }, []);
   let result = [];
-  Object.keys(messages[0]).length
-    ? (result = message.content.map((mes) => {
+  Object.keys(maps[0]).length
+    ? (result = maps.map((mes) => {
         if (mes.from === handle) {
-          return <Others text={mes.message} />;
+          return <Others key={mes._id} text={mes.message} />;
         } else {
-          return <Self text={mes.message} />;
+          return <Self key={mes._id} text={mes.message} />;
         }
       }))
     : "";
@@ -50,7 +49,7 @@ export default function Message() {
       </div>
 
       <div className="message other flex-col flex mt-16 gap-y-10 p-2 ">
-        {Object.keys(messages[0]).length && result}
+        {Object.keys(maps[0]).length && result}
         <Hr />
       </div>
       <div className="fixed bottom-0 dark:bg-black dark:text-white bg-slate-200 w-full p-2">
@@ -72,12 +71,8 @@ export default function Message() {
                   content: [{ from: users.handle, message: content }],
                 })
                 .then((res) => {
-                  console.log(res.data);
-                  if (Object.keys(message)) {
-                    setMessages([message, res.data]);
-                  } else {
-                    setMessages([res.data]);
-                  }
+                  console.log(res.data.content);
+                  setMaps(res.data.content);
                 });
 
               setContent("");

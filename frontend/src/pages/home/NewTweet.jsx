@@ -53,7 +53,8 @@ const NewTweet = () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
           console.log("File available at", downloadURL);
           setImageUrl(downloadURL);
-          setUploadStatus("");
+          setUploadStatus("Uploaded");
+          document.getElementById("file").setAttribute("readOnly", true);
         });
       }
     );

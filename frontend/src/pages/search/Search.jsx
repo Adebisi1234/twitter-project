@@ -23,7 +23,7 @@ const Search = () => {
       </div>
 
       <div className="trends p-1 rounded-2xl mr-2 flex flex-col gap-2">
-        <Link to="/searchPage">
+        <Link to="/searchPage/hireMe">
           <div className="trend mr-3 p-2 rounded-2xl  mb-2">
             <div className="trending flex justify-between items-center">
               <small className="opacity-70 ">Trending now</small>
@@ -38,7 +38,7 @@ const Search = () => {
           </div>
         </Link>
 
-        <Link to="/searchPage">
+        <Link to="/searchPage/hireMe">
           <div className="trend mr-3 p-2 rounded-2xl mb-2">
             <div className="trending flex justify-between items-center">
               <small className=" opacity-70 ">Trending now</small>
@@ -53,7 +53,7 @@ const Search = () => {
           </div>
         </Link>
 
-        <Link to="/searchPage">
+        <Link to="/searchPage/hireMe">
           <div className="trend mr-3 p-2 rounded-2xl mb-2">
             <div className="trending flex justify-between items-center">
               <small className="opacity-70 ">Trending now</small>
@@ -68,7 +68,7 @@ const Search = () => {
           </div>
         </Link>
 
-        <Link to="/searchPage">
+        <Link to="/searchPage/hireMe">
           <div className="trend mr-3 p-2 rounded-2xl mb-2">
             <div className="trending flex justify-between items-center">
               <small className="opacity-70 ">Trending now</small>

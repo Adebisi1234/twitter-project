@@ -35,11 +35,15 @@ export default function MessagePage() {
         ? (handle[i] = message.receiver)
         : (handle[i] = message.owner);
       console.log(handle);
+      handle[i].includes("@")
+        ? (handle[i] = handle[i].replace("@", ""))
+        : (handle[i] = handle[i]);
       axios
-        .get(`https://my-twitter-backend.onrender.com/users/get/${handle[i]}`)
+        .get(`https://my-twitter-backend.onrender.com/users/get/@${handle[i]}`)
         .then((res) => {
           setPp(res.data.pp);
           setUsername(res.data.user);
+          console.log(res.data);
         });
       return (
         <div className="flex gap-3 mb-8 pl-3" key={handle[i]}>

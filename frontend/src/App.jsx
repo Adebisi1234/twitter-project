@@ -34,33 +34,29 @@ function App() {
       <div className="hidden lg:block">
         <Sidebar />
       </div>
-      <div className="lg:marker:border-x ">
+      <div className="lg:border-x ">
         <Routes>
-          <Route path="/">
-            <Route
-              index
-              element={Object.keys(user).length ? <HomePage /> : <Login />}
-            />
-            <Route path="/home" element={<HomePage />} />
-            <Route path="/mobile" element={<MobileTweet />} />
-            <Route path="profile">
-              <Route index element={<User />} />
-              <Route path="edit" element={<EditProfile />} />
-              <Route path="poster/:handle" element={<Poster />} />
-            </Route>
-            <Route path="signin" element={<Signin />} />
-            <Route path="login" element={<Login />} />
+          <Route
+            path="/"
+            element={Object.keys(user).length ? <HomePage /> : <Login />}
+          />
+          <Route path="/home" element={<HomePage />} />
+          <Route path="/mobile" element={<MobileTweet />} />
+          <Route path="profile">
+            <Route index element={<User />} />
+            <Route path="edit" element={<EditProfile />} />
+            <Route path="poster/:handle" element={<Poster />} />
           </Route>
+          <Route path="signin" element={<Signin />} />
+          <Route path="login" element={<Login />} />
           <Route path="notifications" element={<Notifications />} />
           <Route path="tweetPage/:id" element={<TweetPage />} />
           <Route path="newtweet" element={<NewTweet />} />
           <Route path="search" element={<Search />} />
           <Route path="searchPage/:id" element={<SearchPage />} />
-          <Route path="messages">
-            <Route index element={<MessagePage />} />
-            <Route path="people" element={<People />} />
-            <Route path="message/:object" element={<Message />} />
-          </Route>
+          <Route path="messages" element={<MessagePage />} />
+          <Route path="messages/people" element={<People />} />
+          <Route path="messages/message/:object" element={<Message />} />
           <Route path="*" element={<ErrorPage />} />
         </Routes>
       </div>

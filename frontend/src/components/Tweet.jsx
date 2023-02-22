@@ -11,7 +11,7 @@ const Tweet = ({ post }) => {
   const user = useSelector((state) => state.user.user);
   const dispatch = useDispatch();
   return Object.keys(user).length ? (
-    <div className="border-b pl-2 scroll-mb-20 m-auto max-w-2xl flex pt-2 dark:bg-black dark:text-white bg-white text-black ">
+    <div className="border-b-[0.1px] pl-2 scroll-mb-20 m-auto max-w-2xl flex pt-2 dark:bg-black dark:text-white bg-white text-black ">
       <ProfilePix pp={post.pp} handle={post.handle} />
       <div className="flex flex-col w-full h-full">
         <Link

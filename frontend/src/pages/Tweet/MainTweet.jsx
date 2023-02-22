@@ -38,7 +38,7 @@ const MainTweet = ({ id }) => {
           <p>{post.retweets ? post.retweets : 0} Retweets</p>
           <p>{post.likes} Likes</p>
         </div>
-        <div className="buttons border-y-2 py-2 w-full flex justify-between items-center">
+        <div className="buttons border-y-[0.2px] py-2 w-full flex justify-between items-center">
           <div className="contain gap-2 flex">
             <div className="w-7 dark:bg-[url('/src/assets/tweetsDark.png')] bg-[url('/src/assets/tweets.png')] bg-left bg-cover h-7"></div>
             {post.commentCount}
