@@ -89,7 +89,7 @@ const signin = async (req, res, next) => {
 
         res.cookie("access_token", token,
             {
-                httpOnly: true, sameSite: "None" //,secure: true 
+                httpOnly: true, sameSite: "None", secure: true
             }
         )
         res.status(200).json({ ...others, access_token: token })
@@ -105,7 +105,7 @@ const logout = async (req, res) => {
     console.log(cookies)
     if (!cookies?.access_token) return res.sendStatus(204)
     res.clearCookie("access_token", {
-        httpOnly: true, sameSite: "None" //,secure: true
+        httpOnly: true, sameSite: "None", secure: true
     })
     return res.sendStatus(200)
 
