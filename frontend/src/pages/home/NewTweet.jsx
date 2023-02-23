@@ -102,8 +102,8 @@ const NewTweet = () => {
             <button
               className=" !bg-[var(--button-primary)] dark:!bg-[var(--button-secondary)] px-5 !text-white py-1 rounded-3xl"
               onClick={() => {
-                const fetchNew = async () => {
-                  const data = await axios
+                const fetchNew = () => {
+                  axios
                     .post(
                       "https://my-twitter-backend.onrender.com/posts/newPost",
                       {
@@ -117,7 +117,7 @@ const NewTweet = () => {
                         img: imageUrl,
                       }
                     )
-                    .then(() => {
+                    .then((data) => {
                       dispatch(newPost({ ...data.data }));
                     });
                   if (window.innerWidth < 1024) {
