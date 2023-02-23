@@ -55,6 +55,9 @@ const like = async (req, res, next) => {
             await Post.findByIdAndUpdate(req.body.id, {
                 $inc: { likes: 1 }
             })
+            await User.findOneAndUpdate({ like: req.body.id }, {
+                $push: { like: req.body.id }
+            })
         }
         res.sendStatus(200)
     } catch (err) {
@@ -71,6 +74,9 @@ const retweet = async (req, res, next) => {
 
             await Post.findByIdAndUpdate(req.body.id, {
                 $inc: { retweet: 1 }
+            })
+            await User.findOneAndUpdate({ like: req.body.id }, {
+                $push: { retweet: req.body.id }
             })
         }
         res.sendStatus(200)
