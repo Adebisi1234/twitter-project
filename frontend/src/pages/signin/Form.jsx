@@ -44,7 +44,7 @@ const Form = () => {
         const pass = document.getElementById("password");
         pass.classList.add("!hidden");
         const label = document.getElementById("ppLabel");
-        labe.classList.add("!hidden");
+        label.classList.add("!hidden");
       })
       .catch((err) => console.log(err));
   };
