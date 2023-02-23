@@ -35,7 +35,7 @@ const Tweet = ({ post }) => {
         <div className="buttons w-full flex justify-between items-center mr-1">
           <div className="contain gap-2 flex">
             <div
-              className="w-7 dark:bg-[url('/src/assets/heart.png')] bg-[url('/src/assets/heartDark.png')]  bg-cover h-7"
+              className="w-7 bg-[url('/src/assets/like.png')] dark:bg-[url('/src/assets/likeDark.png')]  bg-cover h-7"
               onClick={() => {
                 axios
                   .post("https://my-twitter-backend.onrender.com/posts/like", {
@@ -44,32 +44,29 @@ const Tweet = ({ post }) => {
                   .then(() => {
                     dispatch(like({ id: post._id }));
                   })
-                  .catch(() => {
+                  .catch((err) => {
+                    console.log(err);
+                    axios.post(
+                      "https://my-twitter-backend.onrender.com/notifications/new",
+                      {
+                        actionHandle: user.handle,
+                        handle: post.handle,
+                        username: user.username,
+                        action: "unlike your post",
+                        PostId: post._id,
+                        pp: user.pp,
+                        text: post.content.slice(0, 100),
+                      }
+                    );
                     dispatch(dislike({ id: post._id }));
                   });
-
-                axios.post(
-                  "https://my-twitter-backend.onrender.com/notifications/new",
-                  {
-                    actionHandle: user.handle,
-                    handle: post.handle,
-                    username: user.username,
-                    action: "liked your post",
-                    PostId: post._id,
-                    pp: user.pp,
-                    text: post.content.slice(0, 100),
-                  }
-                );
               }}
             ></div>
             {post.likes}
           </div>
           <div className="contain gap-2 flex">
-            <Link
-              to={`/tweetPage/${post._id}`}
-              className="tweet flex flex-col w-full p-2 pt-0"
-            >
-              <div className="w-7 dark:bg-[url('/src/assets/tweetsDark.png')] bg-[url('/src/assets/tweets.png')] bg-left bg-cover h-7"></div>
+            <Link to={`/tweetPage/${post._id}`} className="tweet flex w-full">
+              <div className="w-7 dark:bg-[url('/src/assets/commentDark.png')] bg-[url('/src/assets/comment.png')] bg-left bg-cover h-7"></div>
             </Link>
             {post.commentCount}
           </div>
@@ -87,21 +84,22 @@ const Tweet = ({ post }) => {
                   .then(() => {
                     dispatch(retweet({ id: post._id }));
                   })
-                  .catch(() => {
+                  .catch((err) => {
+                    console.log(err);
+                    axios.post(
+                      "https://my-twitter-backend.onrender.com/notifications/new",
+                      {
+                        actionHandle: user.handle,
+                        handle: post.handle,
+                        username: user.username,
+                        action: "un-tweet your post",
+                        PostId: post._id,
+                        pp: user.pp,
+                        text: post.content.slice(0, 100),
+                      }
+                    );
                     dispatch(untweet({ id: post._id }));
                   });
-                axios.post(
-                  "https://my-twitter-backend.onrender.com/notifications/new",
-                  {
-                    actionHandle: user.handle,
-                    handle: post.handle,
-                    username: user.username,
-                    action: "retweeted your post",
-                    PostId: post._id,
-                    pp: user.pp,
-                    text: post.content.slice(0, 100),
-                  }
-                );
               }}
             ></div>
             {post.retweet}

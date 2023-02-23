@@ -17,7 +17,7 @@ export default function Notifications() {
       )
       .then((res) => {
         console.log("notification", res.data);
-        res.data.length ? setNotifications(res.data) : "";
+        res.data.length ? setNotifications(res.data.reverse()) : "";
         setloading(false);
         console.log(notifications);
       });
