@@ -59,10 +59,10 @@ const userSchema = new Schema({
         default: false
     },
     like: {
-        type: String
+        type: [String]
     },
     retweet: {
-        type: String
+        type: [String]
     }
 },
     { timestamps: true }

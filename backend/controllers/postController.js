@@ -46,14 +46,16 @@ const getPost = async (req, res, next) => {
 
 const like = async (req, res, next) => {
     try {
-        const user = await User.findOne({ liked: req.body.id })
+        const user = await User.findOne({ like: req.body.id })
         if (user) {
             user.update({ like: { $pull: req.body.id } })
             return res.status(401).json("You've liked")
+        } else {
+
+            await Post.findByIdAndUpdate(req.body.id, {
+                $inc: { likes: 1 }
+            })
         }
-        await Post.findByIdAndUpdate(req.body.id, {
-            $inc: { likes: 1 }
-        })
         res.sendStatus(200)
     } catch (err) {
         next(err)
@@ -65,10 +67,12 @@ const retweet = async (req, res, next) => {
         if (user) {
             user.update({ retweet: { $pull: req.body.id } })
             return res.status(401).json("You've retweet")
+        } else {
+
+            await Post.findByIdAndUpdate(req.body.id, {
+                $inc: { retweet: 1 }
+            })
         }
-        await Post.findByIdAndUpdate(req.body.id, {
-            $inc: { retweet: 1 }
-        })
         res.sendStatus(200)
     } catch (err) {
         next(err)
