@@ -32,8 +32,8 @@ export default function TweetPage() {
       <div className="p-3">
         <MainTweet id={post._id} />
       </div>
-      <div className="flex mt-2 mb-3 p-2 h-10 items-center gap-2">
-        <ProfilePix pp={post.pp} />
+      <div className="flex mt-2 mx-auto mb-3 p-2 max-w-2xl h-10 items-center gap-2">
+        <ProfilePix pp={user.pp} />
         <textarea
           className="w-full h-full rounded-2xl"
           value={content}

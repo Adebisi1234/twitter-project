@@ -15,13 +15,15 @@ const Tweet = ({ post }) => {
   const [count, setCount] = useState(0);
   const [recount, setRecount] = useState(0);
   const user = useSelector((state) => state.user.user);
+  const posts = useSelector((state) => state.post);
+  const isComment = posts[1].find((comment) => comment._id === post._id);
   const dispatch = useDispatch();
   return Object.keys(user).length ? (
     <div className="border-b-[0.1px] pl-2 scroll-mb-20 m-auto max-w-2xl flex pt-2 dark:bg-black dark:text-white bg-white text-black ">
       <ProfilePix pp={post.pp} handle={post.handle} />
       <div className="flex flex-col w-full h-full">
         <Link
-          to={`/tweetPage/${post._id}`}
+          to={!isComment && `/tweetPage/${post._id}`}
           className="tweet flex flex-col w-full p-2 pt-0"
         >
           <h3 className="text-xl font-bold">
@@ -82,13 +84,16 @@ const Tweet = ({ post }) => {
                 }
               }}
             ></div>
-            {post.likes}
+            {isComment ? isComment.likes : post.likes}
           </div>
           <div className="contain gap-2 flex">
-            <Link to={`/tweetPage/${post._id}`} className="tweet flex w-full">
+            <Link
+              to={!isComment && `/tweetPage/${post._id}`}
+              className="tweet flex w-full"
+            >
               <div className="w-7 dark:bg-[url('/src/assets/commentDark.png')] bg-[url('/src/assets/comment.png')] bg-left bg-cover h-7"></div>
             </Link>
-            {post.commentCount}
+            {isComment ? isComment.commentCount : post.commentCount}
           </div>
           <div className="contain gap-2 flex">
             <div
@@ -133,7 +138,7 @@ const Tweet = ({ post }) => {
                 }
               }}
             ></div>
-            {post.retweet}
+            {isComment ? isComment.retweet : post.retweet}
           </div>
           <div className="contain gap-2 flex ml-2">
             <div className="w-7 dark:bg-[url('/src/assets/shareDark.png')] bg-[url('/src/assets/share.png')] bg-cover h-7 ml-2"></div>

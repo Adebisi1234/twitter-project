@@ -28,7 +28,13 @@ export const postSlice = createSlice({
             const { id } = action.payload
             const existing = state[0].find(posts => posts._id === id)
             if (existing) {
+                if (!existing.likes) {
+                    existing.likes = 0
+                }
                 existing.likes++
+            } else {
+                const commentExisting = state[1].find(comments => comments._id === id)
+                commentExisting.likes++
             }
         },
         retweet: (state, action) => {
@@ -40,13 +46,21 @@ export const postSlice = createSlice({
                 }
                 existing.retweet++
             } else {
+                const commentExisting = state[1].find(comments => comments._id === id)
+                commentExisting.retweet++
             }
         },
         dislike: (state, action) => {
             const { id } = action.payload
             const existing = state[0].find(posts => posts._id === id)
             if (existing) {
+                if (!existing.likes) {
+                    existing.likes = 0
+                }
                 existing.likes--
+            } else {
+                const commentExisting = state[1].find(comments => comments._id === id)
+                commentExisting.likes--
             }
         },
         undoRetweet: (state, action) => {
@@ -58,6 +72,8 @@ export const postSlice = createSlice({
                 }
                 existing.retweet--
             } else {
+                const commentExisting = state[1].find(comments => comments._id === id)
+                commentExisting.retweet--
             }
         },
     }
