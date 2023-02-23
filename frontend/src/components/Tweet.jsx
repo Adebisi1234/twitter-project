@@ -125,7 +125,7 @@ const Tweet = ({ post }) => {
                     .catch((err) => {
                       console.log(err);
                     });
-                  setRecount((count + 1) % 2);
+                  setRecount((recount + 1) % 2);
                 } else {
                   dispatch(undoRetweet({ id: post._id }));
                   axios.post(
