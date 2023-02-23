@@ -2,7 +2,7 @@ const Notification = require("../model/Notification")
 const User = require("../model/User")
 const getAllNotifications = async (req, res, next) => {
     try {
-        const { handle } = req.params.handle
+        const { handle } = req.params
         console.log(handle)
         const notifications = await Notification.find({
             handle: handle
