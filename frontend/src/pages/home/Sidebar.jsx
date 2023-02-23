@@ -101,7 +101,7 @@ const Sidebar = () => {
       </ul>
       <div className="mt-auto mb-14 md:mb-0">
         <button
-          className=" w-full !text-white border-slate-300 border !bg-red-500 h-10 flex p-3 gap-1 justify-center items-center rounded-3xl"
+          className=" w-full !text-white border-slate-300 border !bg-red-500 h-10 flex p-3 gap-1 mb-20 lg:mb-0 justify-center items-center rounded-3xl"
           onClick={() => {
             localStorage.clear();
             dispatch(logout());

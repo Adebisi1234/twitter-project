@@ -308,13 +308,15 @@ const Form = () => {
                   navigate("/home");
                 })
                 .catch((err) => {
-                  console.log(err);
+                  document.getElementById("err").textContent =
+                    err.response.data.message;
                 });
             }
           }}
         >
           Create account
         </button>
+        <span id="err"></span>
         <div className="h-7 w-full hidden justify-center items-center" id="img">
           <Skeleton />
         </div>

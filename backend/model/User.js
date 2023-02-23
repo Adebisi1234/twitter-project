@@ -57,12 +57,6 @@ const userSchema = new Schema({
     fromGoogle: {
         type: Boolean,
         default: false
-    },
-    like: {
-        type: [String]
-    },
-    retweet: {
-        type: [String]
     }
 },
     { timestamps: true }

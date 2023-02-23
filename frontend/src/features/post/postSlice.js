@@ -49,7 +49,7 @@ export const postSlice = createSlice({
                 existing.likes--
             }
         },
-        untweet: (state, action) => {
+        undoRetweet: (state, action) => {
             const { id } = action.payload
             const existing = state[0].find(posts => posts._id === id)
             if (existing) {
@@ -63,6 +63,6 @@ export const postSlice = createSlice({
     }
 })
 
-export const { update, like, untweet, dislike, retweet, newPost, addComment } = postSlice.actions
+export const { update, like, undoRetweet, dislike, retweet, newPost, addComment } = postSlice.actions
 
 export default postSlice.reducer

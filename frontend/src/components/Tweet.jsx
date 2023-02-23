@@ -1,13 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 import ProfilePix from "../components/ProfilePix";
-import reactLogo from "../assets/react.svg";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { like, retweet, untweet, dislike } from "../features/post/postSlice";
+import {
+  like,
+  retweet,
+  dislike,
+  undoRetweet,
+} from "../features/post/postSlice";
 import Skeleton from "./Skeleton";
 import axios from "axios";
 
 const Tweet = ({ post }) => {
+  const [count, setCount] = useState(0);
+  const [recount, setRecount] = useState(0);
   const user = useSelector((state) => state.user.user);
   const dispatch = useDispatch();
   return Object.keys(user).length ? (
@@ -37,29 +43,37 @@ const Tweet = ({ post }) => {
             <div
               className="w-7 bg-[url('/src/assets/like.png')] dark:bg-[url('/src/assets/likeDark.png')]  bg-cover h-7"
               onClick={() => {
-                axios
-                  .post("https://my-twitter-backend.onrender.com/posts/like", {
-                    id: post._id,
-                  })
-                  .then(() => {
-                    dispatch(like({ id: post._id }));
-                  })
-                  .catch((err) => {
-                    console.log(err);
-                    axios.post(
-                      "https://my-twitter-backend.onrender.com/notifications/new",
+                if (count === 0) {
+                  dispatch(like({ id: post._id }));
+                  axios
+                    .post(
+                      "https://my-twitter-backend.onrender.com/posts/like",
                       {
-                        actionHandle: user.handle,
-                        handle: post.handle,
-                        username: user.username,
-                        action: "unlike your post",
-                        PostId: post._id,
-                        pp: user.pp,
-                        text: post.content.slice(0, 100),
+                        id: post._id,
                       }
-                    );
-                    dispatch(dislike({ id: post._id }));
-                  });
+                    )
+                    .then(() => {
+                      axios.post(
+                        "https://my-twitter-backend.onrender.com/notifications/new",
+                        {
+                          actionHandle: user.handle,
+                          handle: post.handle,
+                          username: user.username,
+                          action: "liked your post",
+                          PostId: post._id,
+                          pp: user.pp,
+                          text: post.content.slice(0, 100),
+                        }
+                      );
+                    })
+                    .catch((err) => {
+                      console.log(err);
+                    });
+                  setCount((count + 1) % 2);
+                } else {
+                  dispatch(dislike({ id: post._id }));
+                  setCount((count + 1) % 2);
+                }
               }}
             ></div>
             {post.likes}
@@ -74,32 +88,37 @@ const Tweet = ({ post }) => {
             <div
               className="w-7 dark:bg-[url('/src/assets/retweetDark.png')] bg-[url('/src/assets/retweet.png')] bg-left bg-cover h-7"
               onClick={() => {
-                axios
-                  .post(
-                    "https://my-twitter-backend.onrender.com/posts/retweet",
-                    {
-                      id: post._id,
-                    }
-                  )
-                  .then(() => {
-                    dispatch(retweet({ id: post._id }));
-                  })
-                  .catch((err) => {
-                    console.log(err);
-                    axios.post(
-                      "https://my-twitter-backend.onrender.com/notifications/new",
+                if (recount === 0) {
+                  dispatch(retweet({ id: post._id }));
+                  axios
+                    .post(
+                      "https://my-twitter-backend.onrender.com/posts/retweet",
                       {
-                        actionHandle: user.handle,
-                        handle: post.handle,
-                        username: user.username,
-                        action: "un-tweet your post",
-                        PostId: post._id,
-                        pp: user.pp,
-                        text: post.content.slice(0, 100),
+                        id: post._id,
                       }
-                    );
-                    dispatch(untweet({ id: post._id }));
-                  });
+                    )
+                    .then(() => {
+                      axios.post(
+                        "https://my-twitter-backend.onrender.com/notifications/new",
+                        {
+                          actionHandle: user.handle,
+                          handle: post.handle,
+                          username: user.username,
+                          action: "retweet your post",
+                          PostId: post._id,
+                          pp: user.pp,
+                          text: post.content.slice(0, 100),
+                        }
+                      );
+                    })
+                    .catch((err) => {
+                      console.log(err);
+                    });
+                  setRecount((count + 1) % 2);
+                } else {
+                  dispatch(dislike({ id: post._id }));
+                  setRecount((count + 1) % 2);
+                }
               }}
             ></div>
             {post.retweet}
