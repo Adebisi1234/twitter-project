@@ -42,9 +42,27 @@ export const postSlice = createSlice({
             } else {
             }
         },
+        dislike: (state, action) => {
+            const { id } = action.payload
+            const existing = state[0].find(posts => posts._id === id)
+            if (existing) {
+                existing.likes--
+            }
+        },
+        untweet: (state, action) => {
+            const { id } = action.payload
+            const existing = state[0].find(posts => posts._id === id)
+            if (existing) {
+                if (!existing.retweet) {
+                    existing.retweet = 0
+                }
+                existing.retweet--
+            } else {
+            }
+        },
     }
 })
 
-export const { update, like, retweet, newPost, addComment } = postSlice.actions
+export const { update, like, untweet, dislike, retweet, newPost, addComment } = postSlice.actions
 
 export default postSlice.reducer

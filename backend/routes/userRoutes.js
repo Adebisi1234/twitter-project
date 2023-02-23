@@ -1,5 +1,5 @@
 const express = require("express")
-const { getUser, newFollowers, newFollowing, editProfile, unFollow, getSomeUser } = require("../controllers/userController")
+const { getUser, newFollowers, newFollowing, liked, retweet, editProfile, unFollow, getSomeUser } = require("../controllers/userController")
 const router = express.Router()
 
 router.get("/some", getSomeUser)

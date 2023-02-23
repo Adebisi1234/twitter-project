@@ -3,7 +3,7 @@ import ProfilePix from "../components/ProfilePix";
 import reactLogo from "../assets/react.svg";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { like, retweet } from "../features/post/postSlice";
+import { like, retweet, untweet, dislike } from "../features/post/postSlice";
 import Skeleton from "./Skeleton";
 import axios from "axios";
 
@@ -37,13 +37,16 @@ const Tweet = ({ post }) => {
             <div
               className="w-7 dark:bg-[url('/src/assets/heart.png')] bg-[url('/src/assets/heartDark.png')]  bg-cover h-7"
               onClick={() => {
-                dispatch(like({ id: post._id }));
-                axios.post(
-                  "https://my-twitter-backend.onrender.com/posts/like",
-                  {
+                axios
+                  .post("https://my-twitter-backend.onrender.com/posts/like", {
                     id: post._id,
-                  }
-                );
+                  })
+                  .then(() => {
+                    dispatch(like({ id: post._id }));
+                  })
+                  .catch(() => {
+                    dispatch(dislike({ id: post._id }));
+                  });
 
                 axios.post(
                   "https://my-twitter-backend.onrender.com/notifications/new",
@@ -74,14 +77,19 @@ const Tweet = ({ post }) => {
             <div
               className="w-7 dark:bg-[url('/src/assets/retweetDark.png')] bg-[url('/src/assets/retweet.png')] bg-left bg-cover h-7"
               onClick={() => {
-                console.log("tweets");
-                dispatch(retweet({ id: post._id }));
-                axios.post(
-                  "https://my-twitter-backend.onrender.com/posts/retweet",
-                  {
-                    id: post._id,
-                  }
-                );
+                axios
+                  .post(
+                    "https://my-twitter-backend.onrender.com/posts/retweet",
+                    {
+                      id: post._id,
+                    }
+                  )
+                  .then(() => {
+                    dispatch(retweet({ id: post._id }));
+                  })
+                  .catch(() => {
+                    dispatch(untweet({ id: post._id }));
+                  });
                 axios.post(
                   "https://my-twitter-backend.onrender.com/notifications/new",
                   {

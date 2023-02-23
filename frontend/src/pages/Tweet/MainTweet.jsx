@@ -2,7 +2,7 @@ import React from "react";
 import ProfilePix from "../../components/ProfilePix";
 import reactLogo from "../../assets/react.svg";
 import { useSelector, useDispatch } from "react-redux";
-import { retweet, like } from "../../features/post/postSlice";
+import { retweet, untweet, dislike, like } from "../../features/post/postSlice";
 import Skeleton from "../../components/Skeleton";
 
 const MainTweet = ({ id }) => {
@@ -52,7 +52,12 @@ const MainTweet = ({ id }) => {
                   .post("https://my-twitter-backend.onrender.com/posts/like", {
                     id: post._id,
                   })
-                  .then(() => console.log("liked"));
+                  .then(() => {
+                    dispatch(like({ id: post._id }));
+                  })
+                  .catch(() => {
+                    dispatch(dislike({ id: post._id }));
+                  });
 
                 axios.post(
                   "https://my-twitter-backend.onrender.com/notifications/new",
@@ -75,12 +80,19 @@ const MainTweet = ({ id }) => {
               className="w-7 dark:bg-[url('/src/assets/retweetDark.png')] bg-[url('/src/assets/retweet.png')] bg-left bg-cover h-7"
               onClick={() => {
                 dispatch(retweet({ id: post._id }));
-                axios.post(
-                  "https://my-twitter-backend.onrender.com/posts/retweet",
-                  {
-                    id: post._id,
-                  }
-                );
+                axios
+                  .post(
+                    "https://my-twitter-backend.onrender.com/posts/retweet",
+                    {
+                      id: post._id,
+                    }
+                  )
+                  .then(() => {
+                    dispatch(retweet({ id: post._id }));
+                  })
+                  .catch(() => {
+                    dispatch(untweet({ id: post._id }));
+                  });
 
                 axios.post(
                   "https://my-twitter-backend.onrender.com/notifications/new",

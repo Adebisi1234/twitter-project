@@ -76,6 +76,7 @@ const newFollowing = async (req, res, next) => {
 }
 
 
+
 const getUser = async (req, res, next) => {
     try {
         const handle = req.params.handle
