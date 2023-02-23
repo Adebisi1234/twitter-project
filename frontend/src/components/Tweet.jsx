@@ -72,6 +72,12 @@ const Tweet = ({ post }) => {
                   setCount((count + 1) % 2);
                 } else {
                   dispatch(dislike({ id: post._id }));
+                  axios.post(
+                    "https://my-twitter-backend.onrender.com/posts/dislike",
+                    {
+                      id: post._id,
+                    }
+                  );
                   setCount((count + 1) % 2);
                 }
               }}
@@ -116,7 +122,13 @@ const Tweet = ({ post }) => {
                     });
                   setRecount((count + 1) % 2);
                 } else {
-                  dispatch(dislike({ id: post._id }));
+                  dispatch(undoRetweet({ id: post._id }));
+                  axios.post(
+                    "https://my-twitter-backend.onrender.com/posts/undoretweet",
+                    {
+                      id: post._id,
+                    }
+                  );
                   setRecount((count + 1) % 2);
                 }
               }}
