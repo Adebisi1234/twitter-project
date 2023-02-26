@@ -18,7 +18,6 @@ export default function Poster() {
         `https://my-twitter-backend.onrender.com/users/get/${handle}`
       );
       setUser(data);
-      console.log("data", data);
     };
     getUser(handle);
   }, []);

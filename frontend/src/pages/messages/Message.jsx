@@ -23,7 +23,6 @@ export default function Message() {
     Object.keys(message).length !== 0 ? message.content : {}
   );
 
-  console.log("map", maps);
   useEffect(() => {
     axios
       .get(`https://my-twitter-backend.onrender.com/users/get/@${handle}`)
@@ -74,7 +73,6 @@ export default function Message() {
                   content: [{ from: users.handle, message: content }],
                 })
                 .then((res) => {
-                  console.log(res.data.content);
                   setMaps(res.data.content);
                 });
 

@@ -11,6 +11,7 @@ import { update } from "../../features/post/postSlice";
 import axios from "axios";
 import Post from "../../components/Post";
 import { Link } from "react-router-dom";
+import Hr from "../../components/Hr";
 
 const HomePage = () => {
   const post = useSelector((state) => state.post);
@@ -22,7 +23,6 @@ const HomePage = () => {
   useEffect(() => {
     const fetchPost = async () => {
       setLoading(true);
-      console.log("effect");
       try {
         const data = await axios.get(
           "https://my-twitter-backend.onrender.com/posts/allPosts"
@@ -43,11 +43,12 @@ const HomePage = () => {
   return (
     <>
       <div className="w-full h-full">
-        <Header imgs={user.length && user.pp} />
+        <Header imgs={Object.keys(user).length && user.pp} />
         <div className="hidden md:block">
           <NewTweet />
         </div>
         {loading ? <Skeleton /> : repeat}
+        <Hr />
       </div>
       <div
         className=" fixed lg:hidden top-0 left-0 dark:bg-black dark:text-white bg-white text-black -translate-x-full max-w-full min-w-[280px] transition-all duration-300"

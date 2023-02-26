@@ -19,14 +19,18 @@ const Tweet = ({ post }) => {
   const isComment = posts[1].find((comment) => comment._id === post._id);
   const dispatch = useDispatch();
   return Object.keys(user).length ? (
-    <div className="border-b-[0.1px] pl-2 scroll-mb-20 m-auto max-w-2xl flex pt-2 dark:bg-black dark:text-white bg-white text-black ">
-      <ProfilePix pp={post.pp} handle={post.handle} />
+    <div className="border-b-[0.1px] pl-2 m-auto max-w-2xl flex pt-2 dark:bg-black dark:text-white bg-white text-black ">
+      {post.pp ? (
+        <ProfilePix pp={post.pp} handle={post.handle} />
+      ) : (
+        <div className="w-9 dark:bg-[url('/src/assets/profileDark.png')] bg-[url('/src/assets/profile.png')] bg-left-bottom bg-cover h-9"></div>
+      )}
       <div className="flex flex-col w-full h-full">
         <Link
           to={!isComment && `/tweetPage/${post._id}`}
           className="tweet flex flex-col w-full p-2 pt-0"
         >
-          <h3 className="text-xl font-bold">
+          <h3 className="font-bold">
             {post.username}{" "}
             <span className="text-sm block font-thin ">{post.handle}</span>
           </h3>
@@ -41,9 +45,9 @@ const Tweet = ({ post }) => {
           )}
         </Link>
         <div className="buttons w-full flex justify-between items-center mr-1">
-          <div className="contain gap-2 flex">
+          <div className="contain gap-2 flex justify-center items-center">
             <div
-              className="w-7 bg-[url('/src/assets/like.png')] dark:bg-[url('/src/assets/likeDark.png')]  bg-cover h-7"
+              className="w-5 bg-[url('/src/assets/like.png')] dark:bg-[url('/src/assets/likeDark.png')]  bg-cover h-5"
               onClick={() => {
                 if (count === 0) {
                   dispatch(like({ id: post._id }));
@@ -86,18 +90,18 @@ const Tweet = ({ post }) => {
             ></div>
             {isComment ? isComment.likes : post.likes}
           </div>
-          <div className="contain gap-2 flex">
+          <div className="contain gap-2 flex justify-center items-center">
             <Link
               to={!isComment && `/tweetPage/${post._id}`}
               className="tweet flex w-full"
             >
-              <div className="w-7 dark:bg-[url('/src/assets/commentDark.png')] bg-[url('/src/assets/comment.png')] bg-left bg-cover h-7"></div>
+              <div className="w-5 dark:bg-[url('/src/assets/commentDark.png')] bg-[url('/src/assets/comment.png')] bg-left bg-cover h-5"></div>
             </Link>
             {isComment ? isComment.commentCount : post.commentCount}
           </div>
-          <div className="contain gap-2 flex">
+          <div className="contain gap-2 flex justify-center items-center">
             <div
-              className="w-7 dark:bg-[url('/src/assets/retweetDark.png')] bg-[url('/src/assets/retweet.png')] bg-left bg-cover h-7"
+              className="w-5 dark:bg-[url('/src/assets/retweetDark.png')] bg-[url('/src/assets/retweet.png')] bg-left bg-cover h-5"
               onClick={() => {
                 if (recount === 0) {
                   dispatch(retweet({ id: post._id }));
@@ -134,14 +138,14 @@ const Tweet = ({ post }) => {
                       id: post._id,
                     }
                   );
-                  setRecount((count + 1) % 2);
+                  setRecount((recount + 1) % 2);
                 }
               }}
             ></div>
             {isComment ? isComment.retweet : post.retweet}
           </div>
-          <div className="contain gap-2 flex ml-2">
-            <div className="w-7 dark:bg-[url('/src/assets/shareDark.png')] bg-[url('/src/assets/share.png')] bg-cover h-7 ml-2"></div>
+          <div className="contain gap-2 flex justify-center items-center ml-2">
+            <div className="w-5 dark:bg-[url('/src/assets/shareDark.png')] bg-[url('/src/assets/share.png')] bg-cover h-5 ml-2"></div>
           </div>
         </div>
       </div>

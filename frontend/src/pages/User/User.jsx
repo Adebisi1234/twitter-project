@@ -7,7 +7,6 @@ import { useSelector } from "react-redux";
 import Skeleton from "../../components/Skeleton";
 export default function User() {
   const user = useSelector((state) => state.user.user);
-  console.log(user);
   const post = useSelector((state) => state.post);
   const userPost = post[0].filter((post) => post.username === user.username);
   const tweets = userPost.map((post) => {
@@ -48,10 +47,8 @@ export default function User() {
           </div>
 
           <div className="follow-count dark:bg-black dark:text-white mb-4 flex gap-4">
-            <div className="following">{user.followersCount} Following</div>
-            <div className="following">
-              {!user.followingCount && 0} Following
-            </div>
+            <div className="following">{user.followersCount} followers</div>
+            <div className="following">{user.followingCount} Following</div>
           </div>
 
           <div className="tweets dark:bg-black dark:text-white flex items-center justify-evenly w-full gap-11">

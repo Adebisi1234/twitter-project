@@ -20,8 +20,6 @@ const NewTweet = () => {
   const [imageUrl, setImageUrl] = useState("");
   const [content, setContent] = useState("");
   const [uploadStatus, setUploadStatus] = useState("");
-  console.log(image);
-  console.log(uploadStatus);
   const navigate = useNavigate();
 
   const uploadImg = (file) => {
@@ -51,7 +49,6 @@ const NewTweet = () => {
       (error) => {},
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          console.log("File available at", downloadURL);
           setImageUrl(downloadURL);
           setUploadStatus("Uploaded");
           document.getElementById("file").setAttribute("readOnly", true);
@@ -72,7 +69,6 @@ const NewTweet = () => {
               value={content}
               onChange={(e) => {
                 setContent(e.target.value);
-                console.log(content);
               }}
             ></textarea>
           </div>
@@ -91,7 +87,6 @@ const NewTweet = () => {
                   onChange={(e) => {
                     setImage(e.target.files[0]);
                     const images = e.target.files[0];
-                    console.log(images);
 
                     uploadImg(images);
                   }}

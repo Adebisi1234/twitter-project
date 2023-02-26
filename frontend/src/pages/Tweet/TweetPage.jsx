@@ -62,7 +62,6 @@ export default function TweetPage() {
               })
             );
             setComments([data.data, ...comments]);
-            console.log(comments.length);
           }}
         >
           Post

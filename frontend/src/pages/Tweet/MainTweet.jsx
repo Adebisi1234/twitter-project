@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import ProfilePix from "../../components/ProfilePix";
-import reactLogo from "../../assets/react.svg";
 import { useSelector, useDispatch } from "react-redux";
 import {
   retweet,
@@ -21,8 +20,12 @@ const MainTweet = ({ id }) => {
   return Object.keys(post).length ? (
     <div className="border-b scroll-mb-20 m-auto max-w-2xl flex flex-col pt-2 dark:bg-black dark:text-white bg-white text-black ">
       <div className="details">
-        <ProfilePix pp={post.pp ? post.pp : reactLogo} handle={post.handle} />
-        <h3 className="text-xl font-bold">
+        {post.pp ? (
+          <ProfilePix pp={post.pp} handle={post.handle} />
+        ) : (
+          <div className="w-9 dark:bg-[url('/src/assets/profileDark.png')] bg-[url('/src/assets/profile.png')] bg-left-bottom bg-cover h-9"></div>
+        )}
+        <h3 className="font-bold">
           {post.username}{" "}
           <span className=" block text-sm font-thin ">{post.handle}</span>
         </h3>
@@ -47,13 +50,13 @@ const MainTweet = ({ id }) => {
           <p>{post.likes} Likes</p>
         </div>
         <div className="buttons border-y-[0.2px] py-2 w-full flex justify-between items-center">
-          <div className="contain gap-2 flex">
-            <div className="w-7 dark:bg-[url('/src/assets/commentDark.png')] bg-[url('/src/assets/comment.png')] bg-left bg-cover h-7"></div>
+          <div className="contain gap-2 flex justify-center items-center">
+            <div className="w-5 dark:bg-[url('/src/assets/commentDark.png')] bg-[url('/src/assets/comment.png')] bg-left bg-cover h-5"></div>
             {post.commentCount}
           </div>
-          <div className="contain gap-2 flex">
+          <div className="contain gap-2 flex justify-center items-center">
             <div
-              className="w-7 bg-[url('/src/assets/like.png')] dark:bg-[url('/src/assets/likeDark.png')] bg-cover h-7"
+              className="w-5 bg-[url('/src/assets/like.png')] dark:bg-[url('/src/assets/likeDark.png')] bg-cover h-5"
               onClick={() => {
                 if (count === 0) {
                   dispatch(like({ id: post._id }));
@@ -96,9 +99,9 @@ const MainTweet = ({ id }) => {
             ></div>
             {post.likes}
           </div>
-          <div className="contain gap-2 flex">
+          <div className="contain gap-2 flex justify-center items-center">
             <div
-              className="w-7 dark:bg-[url('/src/assets/retweetDark.png')] bg-[url('/src/assets/retweet.png')] bg-left bg-cover h-7"
+              className="w-5 dark:bg-[url('/src/assets/retweetDark.png')] bg-[url('/src/assets/retweet.png')] bg-left bg-cover h-5"
               onClick={() => {
                 if (recount === 0) {
                   dispatch(retweet({ id: post._id }));
@@ -135,14 +138,14 @@ const MainTweet = ({ id }) => {
                       id: post._id,
                     }
                   );
-                  setRecount((count + 1) % 2);
+                  setRecount((recount + 1) % 2);
                 }
               }}
             ></div>
             {post.retweet}
           </div>
-          <div className="contain gap-2 flex">
-            <div className="w-7 dark:bg-[url('/src/assets/shareDark.png')] bg-[url('/src/assets/share.png')] bg-cover h-7"></div>
+          <div className="contain gap-2 flex justify-center items-center">
+            <div className="w-5 dark:bg-[url('/src/assets/shareDark.png')] bg-[url('/src/assets/share.png')] bg-cover h-5"></div>
           </div>
         </div>
       </div>

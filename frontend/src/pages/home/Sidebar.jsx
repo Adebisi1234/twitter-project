@@ -28,15 +28,15 @@ const Sidebar = () => {
           <div className="user">
             <div className="details mb-3">
               {user.pp ? (
-                <img src={user.pp} className="h-9 w-9 !bg-cover rounded-full" />
+                <img src={user.pp} className="h-7 w-7 !bg-cover rounded-full" />
               ) : (
-                <div className="w-7 dark:bg-[url('/src/assets/profileDark.png')] bg-[url('/src/assets/profile.png')] bg-left-bottom bg-cover h-7"></div>
+                <div className="w-9 dark:bg-[url('/src/assets/profileDark.png')] bg-[url('/src/assets/profile.png')] bg-left-bottom bg-cover h-9"></div>
               )}
               <h1>{user.username ? user.username : "owner"}</h1>
               <small>{user.handle ? user.handle : "owner"}</small>
             </div>
             <div className="follow-count mb-4 flex gap-4">
-              <div className="following">1 Following</div>
+              <div className="following">{user.followingCount} Following</div>
               <div className="followers">{user.followersCount} Followers</div>
             </div>
           </div>

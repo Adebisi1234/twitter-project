@@ -16,10 +16,8 @@ export default function Notifications() {
         `https://my-twitter-backend.onrender.com/notifications/all/${user.handle}`
       )
       .then((res) => {
-        console.log("notification", res.data);
         res.data.length ? setNotifications(res.data.reverse()) : "";
         setloading(false);
-        console.log(notifications);
       });
   }, []);
 

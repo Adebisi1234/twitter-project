@@ -220,7 +220,6 @@ const Form = () => {
                 accept="image/*"
                 onChange={(e) => {
                   const images = e.target.files[0];
-                  console.log(images);
 
                   uploadPP(images);
                 }}
@@ -246,7 +245,6 @@ const Form = () => {
                   accept="image/*"
                   onChange={(e) => {
                     const images = e.target.files[0];
-                    console.log(images);
 
                     uploadCover(images);
                   }}
@@ -272,7 +270,6 @@ const Form = () => {
                   location: "Nigeria",
                 })
                 .then((data) => {
-                  console.log(data.data);
                   dispatch(
                     login({
                       ...data.data,
@@ -297,7 +294,6 @@ const Form = () => {
                   location: "Nigeria",
                 })
                 .then((data) => {
-                  console.log(data.data);
                   dispatch(
                     login({
                       ...data.data,

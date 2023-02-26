@@ -109,7 +109,6 @@ export default function User() {
                   accept="image/*"
                   onChange={(e) => {
                     const images = e.target.files[0];
-                    console.log(images);
 
                     uploadCover(images);
                   }}
@@ -134,7 +133,6 @@ export default function User() {
                     accept="image/*"
                     onChange={(e) => {
                       const images = e.target.files[0];
-                      console.log(images);
 
                       uploadPP(images);
                     }}
@@ -194,7 +192,6 @@ export default function User() {
       <button
         className="w-full !text-white border-slate-300 border !bg-green-500 h-10 flex p-3 gap-1 justify-center items-center rounded-3xl"
         onClick={() => {
-          console.log(username, bio, location, pp, CoverImg);
           axios
             .post("https://my-twitter-backend.onrender.com/users/editProfile", {
               handle: user.handle,
@@ -203,9 +200,6 @@ export default function User() {
               location: location ? location : user.location,
               pp: pp ? pp : user.pp,
               coverImg: CoverImg ? CoverImg : user.coverImg,
-            })
-            .then((res) => {
-              console.log(res.data);
             })
             .then((res) => {
               dispatch(login(res.data));

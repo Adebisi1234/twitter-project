@@ -14,7 +14,6 @@ export default function MessagePage() {
   const [pp, setPp] = useState([]);
   const [username, setUsername] = useState([]);
   const handle = [];
-  console.log("user handle", user.handle);
   useEffect(() => {
     axios
       .get("https://my-twitter-backend.onrender.com/messages/all", {
@@ -27,14 +26,12 @@ export default function MessagePage() {
       })
       .catch((err) => console.log(err));
   }, []);
-  console.log("data", data);
   const result =
     data &&
     data.map((message, i) => {
       message.owner === user.handle
         ? (handle[i] = message.receiver)
         : (handle[i] = message.owner);
-      console.log(handle);
       handle[i].includes("@")
         ? (handle[i] = handle[i].replace("@", ""))
         : (handle[i] = handle[i]);
@@ -43,7 +40,6 @@ export default function MessagePage() {
         .then((res) => {
           setPp(res.data.pp);
           setUsername(res.data.user);
-          console.log(res.data);
         });
       return (
         <div className="flex gap-3 mb-8 pl-3" key={handle[i]}>
