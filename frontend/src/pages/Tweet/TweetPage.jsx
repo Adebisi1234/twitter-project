@@ -62,6 +62,7 @@ export default function TweetPage() {
               })
             );
             setComments([data.data, ...comments]);
+            setContent("");
           }}
         >
           Post
