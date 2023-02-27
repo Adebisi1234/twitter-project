@@ -28,9 +28,9 @@ const addPost = async (req, res, next) => {
       const post = await Post.findOne({ content: req.body.content });
       const noteFunction = async (hash) => {
         const note = new Notification({
-          actionHandle: req.body.handle,
+          actionHandle: post.handle,
           handle: hash,
-          username: req.body.username,
+          username: post.username,
           action: "mentioned you in a post",
           PostId: post._id,
           pp: post.pp,
