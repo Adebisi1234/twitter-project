@@ -1,6 +1,6 @@
 import React from "react";
 
-const Header = ({ imgs }) => {
+const Header = ({ imgs, setIsFollowing }) => {
   return (
     <header className="w-full dark:bg-black dark:text-white bg-white text-black">
       <div className="flex w-full p-2">
@@ -37,8 +37,8 @@ const Header = ({ imgs }) => {
             forYou.classList.add("border-b-4");
 
             const follow = document.getElementById("follow");
-
             follow.classList.remove("border-b-4");
+            setIsFollowing(false);
           }}
         >
           <span className="pb-[6px] border-b-blue-600 border-b-4" id="you">
@@ -52,8 +52,8 @@ const Header = ({ imgs }) => {
             forYou.classList.remove("border-b-4");
 
             const follow = document.getElementById("follow");
-
             follow.classList.add("border-b-4");
+            setIsFollowing(true);
           }}
         >
           <span className="pb-[6px] border-b-blue-600" id="follow">

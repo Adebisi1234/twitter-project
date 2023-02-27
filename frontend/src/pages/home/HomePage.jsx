@@ -17,7 +17,13 @@ const HomePage = () => {
   const post = useSelector((state) => state.post);
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.user);
+  const [followedPosts, setFollowedPosts] = useState([]);
+  for (const following of user.following) {
+    const follow = post.filter((post) => post.handle === following);
+    setFollowedPosts(follow);
+  }
 
+  const [isFollowing, setIsFollowing] = useState(false);
   const [loading, setLoading] = useState();
 
   useEffect(() => {
@@ -39,15 +45,21 @@ const HomePage = () => {
   const repeat = post[0].map((post) => {
     return <Tweet post={post} key={post._id} />;
   });
+  const followTweet = followedPosts.map((post) => {
+    return <Tweet post={post} key={post._id} />;
+  });
 
   return (
     <>
       <div className="w-full h-full">
-        <Header imgs={Object.keys(user).length && user.pp} />
+        <Header
+          imgs={Object.keys(user).length && user.pp}
+          setIsFollowing={setIsFollowing}
+        />
         <div className="hidden md:block">
           <NewTweet />
         </div>
-        {loading ? <Skeleton /> : repeat}
+        {loading ? <Skeleton /> : isFollowing ? followTweet : repeat}
         <Hr />
       </div>
       <div
