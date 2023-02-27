@@ -114,10 +114,14 @@ const NewTweet = () => {
                     )
                     .then((data) => {
                       dispatch(newPost({ ...data.data }));
+                      if (window.innerWidth < 1024) {
+                        navigate(-1);
+                      }
+                    })
+                    .catch((err) => {
+                      console.log(err);
+                      setUploadStatus(err.response.data.message);
                     });
-                  if (window.innerWidth < 1024) {
-                    navigate(-1);
-                  }
                 };
 
                 fetchNew();

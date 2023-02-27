@@ -10,13 +10,9 @@ MESSAGES
 Each message is a new document containing handles[sender, receiver], from: sender|| receiver, content then update messageCount on User?
 
 
-//Quick regex
-\b word break
-str.replace(/\b/, "\n")
 
 /Hashtag
 #\S+
 
 
 tag
-63ea88303b106ebf7d409e04

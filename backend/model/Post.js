@@ -38,7 +38,9 @@ const postSchema = new Schema({
     },
     img: {
         type: String,
-    }
+    },
+    audioUrl: String,
+    title: String
 
 }, { timestamps: true })
 

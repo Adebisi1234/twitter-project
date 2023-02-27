@@ -8,7 +8,7 @@ import Skeleton from "../../components/Skeleton";
 
 export default function Notifications() {
   const [notifications, setNotifications] = useState([]);
-  const [loading, setloading] = useState(true);
+  const [loading, setLoading] = useState(true);
   const user = useSelector((state) => state.user.user);
   useEffect(() => {
     axios
@@ -17,7 +17,7 @@ export default function Notifications() {
       )
       .then((res) => {
         res.data.length ? setNotifications(res.data.reverse()) : "";
-        setloading(false);
+        setLoading(false);
       });
   }, []);
 

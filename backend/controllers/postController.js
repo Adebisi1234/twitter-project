@@ -1,21 +1,45 @@
+const Notification = require("../model/Notification")
 const Post = require("../model/Post")
 const User = require("../model/User")
 const addPost = async (req, res, next) => {
     try {
+        const wordRegex = /\w/
+        if (!wordRegex.test(req.body.content) && !req.body.audioUrl) {
+            return res.status(400).json("Post must contain some words or be an audio")
+        }
+        const hashTag = /@\S+/
+        const hashes = req.body.content.match(hashTag) || re.body.title.match(hashTag)
+
         const newPost = new Post({
-            ...req.body,
-            username: req.body.username,
-            handle: req.body.handle,
+            ...req.body
         })
         await User.findOneAndUpdate({ handle: req.body.handle }, {
             $inc: { posts: 1 }
         })
-        newPost.save()
+        await newPost.save()
+
+        if (hashes.length) {
+            const post = await Post.findOne({ content: req.body.content })
+            hashes.forEach(async (x) => {
+                const note = new Notification({
+                    actionHandle: req.body.handle,
+                    handle: x,
+                    username: req.body.username,
+                    action: "mentioned you in a post",
+                    PostId: post._id,
+                    pp: post.pp,
+                    text: post.content.slice(1, 100)
+                })
+
+                await note.save()
+            })
+        }
         res.status(200).json(newPost)
     } catch (err) {
         next(err)
     }
 }
+
 const getAllPosts = async (req, res, next) => {
     try {
         const handle = req.query.handle

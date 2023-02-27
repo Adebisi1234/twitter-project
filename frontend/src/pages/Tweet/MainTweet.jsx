@@ -46,7 +46,7 @@ const MainTweet = ({ id }) => {
           <p>{post.createdAt.slice(11, -8)}</p>
         </div>
         <div className="stats my-3 flex gap-3 w-full">
-          <p>{post.retweets ? post.retweets : 0} Retweets</p>
+          <p>{post.retweet} Retweets</p>
           <p>{post.likes} Likes</p>
         </div>
         <div className="buttons border-y-[0.2px] py-2 w-full flex justify-between items-center">

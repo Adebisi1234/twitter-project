@@ -78,12 +78,16 @@ const Sidebar = () => {
         </Link>
         <Link to="/notifications">
           <li
-            className="flex gap-6  p-2 rounded-3xl"
+            className="flex gap-6 p-2 rounded-3xl"
             onClick={() => {
               const slide = document.getElementById("slide");
             }}
           >
-            <div className="w-7 dark:bg-[url('/src/assets/notificationsDark.png')] bg-[url('/src/assets/notifications.png')] bg-left bg-cover bg-no-repeat h-7"></div>
+            <div className="w-7 dark:bg-[url('/src/assets/notificationsDark.png')] relative bg-[url('/src/assets/notifications.png')] bg-left bg-cover bg-no-repeat h-7">
+              <div className="absolute -top-1 -right-1 rounded-full w-4 h-4 !bg-blue-500 text-xs !text-white flex justify-center items-center">
+                {user.notification ? user.notification : 0}
+              </div>
+            </div>
             Notifications
           </li>
         </Link>
