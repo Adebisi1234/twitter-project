@@ -45,9 +45,11 @@ const HomePage = () => {
   const repeat = post[0].map((post) => {
     return <Tweet post={post} key={post._id} />;
   });
-  const followTweet = followedPosts.map((post) => {
-    return <Tweet post={post} key={post._id} />;
-  });
+  const followTweet = followedPosts.length
+    ? followedPosts.map((post) => {
+        return <Tweet post={post} key={post._id} />;
+      })
+    : "Follow people to see posts here";
 
   return (
     <>
@@ -59,7 +61,13 @@ const HomePage = () => {
         <div className="hidden md:block">
           <NewTweet />
         </div>
-        {loading ? <Skeleton /> : isFollowing ? followTweet : repeat}
+        {loading ? (
+          <Skeleton />
+        ) : isFollowing ? (
+          <div className="text-center">followTweet</div>
+        ) : (
+          repeat
+        )}
         <Hr />
       </div>
       <div
