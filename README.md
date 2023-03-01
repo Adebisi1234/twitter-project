@@ -13,9 +13,9 @@ A full stack twitter clone.
 - Receiving Notifications
 
 **Features I plan on implementing:**
-- Ability to tag users
+- Ability to tag users ☑️
 - Making audio posts
-- Adding indicator for new notifications
+- Adding indicator for new notifications☑️
 - Adding unit testing
 - Replacing all javascript with typescript
 - Adding more functionality
