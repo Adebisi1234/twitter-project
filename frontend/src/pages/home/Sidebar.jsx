@@ -36,8 +36,8 @@ const Sidebar = () => {
               <small>{user.handle ? user.handle : "owner"}</small>
             </div>
             <div className="follow-count mb-4 flex gap-4">
-              <div className="following">{user.followingCount} Following</div>
-              <div className="followers">{user.followersCount} Followers</div>
+              <div className="following">{user.followingCount} followers</div>
+              <div className="followers">{user.followersCount} following</div>
             </div>
           </div>
         </div>
@@ -84,9 +84,11 @@ const Sidebar = () => {
             }}
           >
             <div className="w-7 dark:bg-[url('/src/assets/notificationsDark.png')] relative bg-[url('/src/assets/notifications.png')] bg-left bg-cover bg-no-repeat h-7">
-              <div className="absolute -top-1 -right-1 rounded-full w-4 h-4 !bg-blue-500 text-xs !text-white flex justify-center items-center">
-                {user.notification ? user.notification : 0}
-              </div>
+              {user.notification !== 0 && (
+                <div className="absolute -top-1 -right-1 rounded-full w-4 h-4 !bg-blue-500 text-xs !text-white flex justify-center items-center">
+                  {user.notification ? user.notification : 0}
+                </div>
+              )}
             </div>
             Notifications
           </li>

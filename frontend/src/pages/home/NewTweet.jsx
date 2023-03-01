@@ -11,12 +11,12 @@ import {
 } from "firebase/storage";
 import app from "../../firebase";
 import { useNavigate } from "react-router-dom";
+import Tag from "../../components/Tag";
 
 const NewTweet = () => {
   const user = useSelector((state) => state.user.user);
-
+  const [match, setMatch] = useState("");
   const dispatch = useDispatch();
-  const [image, setImage] = useState({});
   const [imageUrl, setImageUrl] = useState("");
   const [content, setContent] = useState("");
   const [uploadStatus, setUploadStatus] = useState("");
@@ -65,12 +65,45 @@ const NewTweet = () => {
           <div className="input h-24 ">
             <textarea
               placeholder="What's happening?"
+              id="newTweet"
               className="w-full bg-transparent outline-none"
               value={content}
               onChange={(e) => {
                 setContent(e.target.value);
+                const regex = e.target.value
+                  .slice(e.target.value.lastIndexOf("@"))
+                  .match(/@\S+/);
+                if (regex) {
+                  setMatch(regex[0]);
+                }
+              }}
+              onKeyDown={(e) => {
+                if (e.key === "@") {
+                  document
+                    .getElementById("newTags")
+                    .classList.remove("!hidden");
+                } else if (
+                  e.key === " " ||
+                  (content === "" && e.key === "Backspace") ||
+                  content === ""
+                ) {
+                  document.getElementById("newTags").classList.add("!hidden");
+                  setMatch("");
+                }
               }}
             ></textarea>
+            <div className="relative w-full">
+              <div
+                className="absolute !hidden top-0 z-50 -left-7"
+                id="newTags"
+                onClick={() => {
+                  document.getElementById("newTweet").focus();
+                  document.getElementById("newTags").classList.add("!hidden");
+                }}
+              >
+                <Tag query={match} content={content} setContent={setContent} />
+              </div>
+            </div>
           </div>
           <div className="options flex justify-between items-center">
             <div className="buttons w-7 h-9 flex gap-2 justify-between">
@@ -85,7 +118,6 @@ const NewTweet = () => {
                   type="file"
                   accept="image/*"
                   onChange={(e) => {
-                    setImage(e.target.files[0]);
                     const images = e.target.files[0];
 
                     uploadImg(images);
@@ -126,7 +158,6 @@ const NewTweet = () => {
 
                 fetchNew();
                 setContent("");
-                setImage({});
               }}
             >
               Post

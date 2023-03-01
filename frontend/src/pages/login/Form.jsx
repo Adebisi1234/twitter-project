@@ -5,6 +5,10 @@ import { login } from "../../features/auth/userSlice";
 import axios from "axios";
 import HomePage from "../home/HomePage";
 import Skeleton from "../../components/Skeleton";
+import Button from "../../components/Button";
+import { auth, provider } from "../../firebase";
+import { signInWithPopup } from "firebase/auth";
+import google from "../../assets/google.svg";
 
 const Form = () => {
   const navigate = useNavigate();
@@ -12,6 +16,33 @@ const Form = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
+
+  const signInWithGoogle = () => {
+    signInWithPopup(auth, provider)
+      .then((result) => {
+        const pass = document.getElementById("password");
+        pass.classList.add("!hidden");
+        axios
+          .post("https://my-twitter-backend.onrender.com/auth/googleLogin", {
+            username: result.user.displayName,
+            handle: `@${result.user.email}`,
+          })
+          .then((data) => {
+            const details = data.data;
+            dispatch(login(details));
+          })
+
+          .then(() => {
+            navigate("/home");
+          })
+          .catch((err) => {
+            document.getElementById("err").textContent =
+              err.response.data.message;
+          });
+      })
+      .catch((err) => console.log(err));
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -39,6 +70,16 @@ const Form = () => {
         <h1 className=" text-3xl text-black dark:text-white font-bold mb-2">
           Sign in to Clone
         </h1>
+        <Button
+          onClick={() => signInWithGoogle}
+          word="Sign in with google"
+          svg={google}
+        />
+        <div className="flex w-full items-center">
+          <div className="border w-full"></div>
+          <div>or</div>
+          <div className="border w-full"></div>
+        </div>
         <form
           onSubmit={(e) => {
             handleSubmit(e);
@@ -57,6 +98,7 @@ const Form = () => {
           <input
             required
             type="password"
+            id="password"
             placeholder="password"
             className="w-full pl-2 h-14 border border-1 border-slate-300 "
             onChange={(e) => {

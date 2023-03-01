@@ -294,11 +294,7 @@ const Form = () => {
                   location: "Nigeria",
                 })
                 .then((data) => {
-                  dispatch(
-                    login({
-                      ...data.data,
-                    })
-                  );
+                  dispatch(login(data.data));
                 })
                 .then(() => {
                   navigate("/home");

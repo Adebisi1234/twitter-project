@@ -6,6 +6,7 @@ import Sidebar from "./Sidebar";
 import Bottom from "../../components/Bottom";
 import profile from "../../assets/profile.png";
 import Skeleton from "../../components/Skeleton";
+import { login } from "../../features/auth/userSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { update } from "../../features/post/postSlice";
 import axios from "axios";
@@ -17,13 +18,6 @@ const HomePage = () => {
   const post = useSelector((state) => state.post);
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.user);
-  const [followedPosts, setFollowedPosts] = useState([]);
-  for (const following of user.following) {
-    const follow = post.filter((post) => post.handle === following);
-    setFollowedPosts(follow);
-  }
-
-  const [isFollowing, setIsFollowing] = useState(false);
   const [loading, setLoading] = useState();
 
   useEffect(() => {
@@ -40,34 +34,26 @@ const HomePage = () => {
       }
     };
     fetchPost();
+    axios
+      .get(`https://my-twitter-backend.onrender.com/users/get/${user.handle}`)
+      .then((data) => {
+        console.log(data.data);
+        dispatch(login(data.data));
+      });
   }, []);
 
   const repeat = post[0].map((post) => {
     return <Tweet post={post} key={post._id} />;
   });
-  const followTweet = followedPosts.length
-    ? followedPosts.map((post) => {
-        return <Tweet post={post} key={post._id} />;
-      })
-    : "Follow people to see posts here";
 
   return (
     <>
       <div className="w-full h-full">
-        <Header
-          imgs={Object.keys(user).length && user.pp}
-          setIsFollowing={setIsFollowing}
-        />
+        <Header imgs={Object.keys(user).length && user.pp} />
         <div className="hidden md:block">
           <NewTweet />
         </div>
-        {loading ? (
-          <Skeleton />
-        ) : isFollowing ? (
-          <div className="text-center">followTweet</div>
-        ) : (
-          repeat
-        )}
+        {loading ? <Skeleton /> : repeat}
         <Hr />
       </div>
       <div

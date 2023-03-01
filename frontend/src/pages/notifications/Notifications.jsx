@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Bottom from "../../components/Bottom";
 import Header from "./Header";
 import axios from "axios";
 import Note from "./Note";
 import Skeleton from "../../components/Skeleton";
+import { login } from "../../features/auth/userSlice";
 
 export default function Notifications() {
   const [notifications, setNotifications] = useState([]);
   const [loading, setLoading] = useState(true);
   const user = useSelector((state) => state.user.user);
+  const dispatch = useDispatch();
   useEffect(() => {
     axios
       .get(
@@ -18,6 +20,11 @@ export default function Notifications() {
       .then((res) => {
         res.data.length ? setNotifications(res.data.reverse()) : "";
         setLoading(false);
+      });
+    axios
+      .get(`https://my-twitter-backend.onrender.com/users/get/${user.handle}`)
+      .then((data) => {
+        dispatch(login(data.data));
       });
   }, []);
 

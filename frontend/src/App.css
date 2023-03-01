@@ -14,11 +14,13 @@ input, textarea {
 #root * {
     color: black;
     background-color: white;
+    border-color: rgba(95, 93, 93, 0.256);
 }
 
 @media (prefers-color-scheme: dark) {
     #root * {
         color: white;
+        border-color: rgba(255, 255, 255, 0.256);
         background-color: black;
     }
 }
@@ -47,7 +49,7 @@ input, textarea {
 
 :root {
     --button-primary: rgb(38, 144, 38);
-    --button-secondary: rgb(27, 70, 27);
+    --button-secondary: rgb(36, 142, 36);
     --bg-dark: black;
     --bg-light: white;
     --color-light: black;
@@ -84,10 +86,10 @@ input, textarea {
     width: 50px;
     height: 50px;
     margin: 110px auto 0;
-    border: solid 10px #8822aa;
+    border: solid 5px rgb(35, 123, 35) !important;
     border-radius: 50%;
-    border-right-color: transparent;
-    border-bottom-color: transparent;
+    border-right-color: transparent !important;
+    border-bottom-color: transparent !important;
     -webkit-transition: all 0.5s ease-in;
     -webkit-animation-name: rotate;
     -webkit-animation-duration: 1s;
@@ -99,3 +101,7 @@ input, textarea {
     animation-iteration-count: infinite;
     animation-timing-function: linear;
   }
+
+.tagging {
+  box-shadow: rgba(101, 119, 134, 0.2) 0px 0px 15px, rgba(101, 119, 134, 0.15) 0px 0px 3px 1px;
+}

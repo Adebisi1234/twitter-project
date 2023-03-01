@@ -3,15 +3,27 @@ import Tweet from "../../components/Tweet";
 import Header from "./Header";
 import Hr from "../../components/Hr";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Skeleton from "../../components/Skeleton";
+import { useEffect } from "react";
+import axios from "axios";
+import { login } from "../../features/auth/userSlice";
+
 export default function User() {
   const user = useSelector((state) => state.user.user);
+  const dispatch = useDispatch();
   const post = useSelector((state) => state.post);
   const userPost = post[0].filter((post) => post.username === user.username);
   const tweets = userPost.map((post) => {
     return <Tweet key={post._id} post={post} />;
   });
+  useEffect(() => {
+    axios
+      .get(`https://my-twitter-backend.onrender.com/users/get/${user.handle}`)
+      .then((data) => {
+        dispatch(login(data.data));
+      });
+  }, []);
   return Object.keys(user).length ? (
     <div className="w-full">
       <Header user={user.username} tweets={user.posts} />
@@ -47,8 +59,8 @@ export default function User() {
           </div>
 
           <div className="follow-count dark:bg-black dark:text-white mb-4 flex gap-4">
-            <div className="following">{user.followersCount} followers</div>
-            <div className="following">{user.followingCount} Following</div>
+            <div className="following">{user.followersCount} following</div>
+            <div className="following">{user.followingCount} followers</div>
           </div>
 
           <div className="tweets dark:bg-black dark:text-white flex items-center justify-evenly w-full gap-11">

@@ -36,7 +36,12 @@ const addPost = async (req, res, next) => {
           pp: post.pp,
           text: post.content.slice(1, 100),
         });
+        const noteUser = await User.findOneAndUpdate(
+          { handle: hash },
+          { $inc: { notification: 1 } }
+        );
         await note.save();
+        await noteUser.save();
       };
       for (const hash of hashes) {
         noteFunction(hash);
