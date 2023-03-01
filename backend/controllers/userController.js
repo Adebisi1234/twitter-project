@@ -113,7 +113,9 @@ const getUser = async (req, res, next) => {
 const getSomeUser = async (req, res, next) => {
   try {
     const handle = req.params.handle;
-    const users = await User.find({ handle: handle });
+    const users = await User.find({
+      handle: { $regex: handle, $options: "i" },
+    });
     res.status(200).json(users);
   } catch (err) {
     next(err);
