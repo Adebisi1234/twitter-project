@@ -131,9 +131,27 @@ const NewTweet = () => {
                 className=" w-7 h-7 !bg-[url('/src/assets/sound.png')] dark:!bg-[url('/src/assets/soundDark.png')] cursor-pointer !bg-cover"
                 id="record"
                 onMouseLeave={() => {
+                  const record = document.getElementById("record");
+                  record.classList.replace(
+                    "dark:!bg-[url('/src/assets/uploadImg.png')]",
+                    "dark:!bg-[url('/src/assets/uploadDarkImg.png')]"
+                  );
+                  record.classList.replace(
+                    "!bg-[url('/src/assets/uploadDarkImg.png')]",
+                    "!bg-[url('/src/assets/uploadImg.png')]"
+                  );
                   stopRecorder();
                 }}
                 onMouseDown={() => {
+                  const record = document.getElementById("record");
+                  record.classList.replace(
+                    "dark:!bg-[url('/src/assets/uploadDarkImg.png')]",
+                    "dark:!bg-[url('/src/assets/uploadImg.png')]"
+                  );
+                  record.classList.replace(
+                    "!bg-[url('/src/assets/uploadImg.png')]",
+                    "!bg-[url('/src/assets/uploadDarkImg.png')]"
+                  );
                   const device = navigator.mediaDevices.getUserMedia({
                     audio: true,
                   });
@@ -165,9 +183,27 @@ const NewTweet = () => {
                   });
                 }}
                 onTouchEnd={() => {
+                  const record = document.getElementById("record");
+                  record.classList.replace(
+                    "dark:!bg-[url('/src/assets/uploadImg.png')]",
+                    "dark:!bg-[url('/src/assets/uploadDarkImg.png')]"
+                  );
+                  record.classList.replace(
+                    "!bg-[url('/src/assets/uploadDarkImg.png')]",
+                    "!bg-[url('/src/assets/uploadImg.png')]"
+                  );
                   stopRecorder();
                 }}
                 onTouchStart={() => {
+                  const record = document.getElementById("record");
+                  record.classList.replace(
+                    "dark:!bg-[url('/src/assets/uploadDarkImg.png')]",
+                    "dark:!bg-[url('/src/assets/uploadImg.png')]"
+                  );
+                  record.classList.replace(
+                    "!bg-[url('/src/assets/uploadImg.png')]",
+                    "!bg-[url('/src/assets/uploadDarkImg.png')]"
+                  );
                   const device = navigator.mediaDevices.getUserMedia({
                     audio: true,
                   });

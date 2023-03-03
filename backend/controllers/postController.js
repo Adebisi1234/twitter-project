@@ -8,8 +8,7 @@ const addPost = async (req, res, next) => {
       return res.status(400).json("Post must contain some words");
     }
     const hashTag = /@\S+/gi;
-    let hashes = [];
-    hashes = req.body.content.match(hashTag);
+    const hashes = req.body.content.match(hashTag);
 
     const newPost = new Post({
       ...req.body,
@@ -22,7 +21,7 @@ const addPost = async (req, res, next) => {
     );
     await newPost.save();
 
-    if (hashes.length > 0) {
+    if (hashes) {
       const post = await Post.findOne({ content: req.body.content });
       const noteFunction = async (hash) => {
         const note = new Notification({
