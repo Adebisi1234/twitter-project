@@ -129,34 +129,31 @@ const NewTweet = () => {
             <button
               className=" !bg-[var(--button-primary)] dark:!bg-[var(--button-secondary)] px-5 !text-white py-1 rounded-3xl"
               onClick={() => {
-                const fetchNew = () => {
-                  axios
-                    .post(
-                      "https://my-twitter-backend.onrender.com/posts/newPost",
-                      {
-                        likes: 0,
-                        comment: false,
-                        commentCount: 0,
-                        content: content,
-                        handle: user.handle,
-                        username: user.username,
-                        pp: user.pp,
-                        img: imageUrl,
-                      }
-                    )
-                    .then((data) => {
-                      dispatch(newPost({ ...data.data }));
-                      if (window.innerWidth < 1024) {
-                        navigate(-1);
-                      }
-                    })
-                    .catch((err) => {
-                      console.log(err);
-                      setUploadStatus(err.response.data.message);
-                    });
-                };
+                axios
+                  .post(
+                    "https://my-twitter-backend.onrender.com/posts/newPost",
+                    {
+                      likes: 0,
+                      comment: false,
+                      commentCount: 0,
+                      content: content,
+                      handle: user.handle,
+                      username: user.username,
+                      pp: user.pp,
+                      img: imageUrl,
+                    }
+                  )
+                  .then((data) => {
+                    dispatch(newPost(data.data));
+                    if (window.innerWidth < 1024) {
+                      navigate(-1);
+                    }
+                  })
+                  .catch((err) => {
+                    console.log(err);
+                    setUploadStatus(err.response.data.message);
+                  });
 
-                fetchNew();
                 setContent("");
               }}
             >

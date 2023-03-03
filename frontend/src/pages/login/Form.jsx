@@ -23,9 +23,11 @@ const Form = () => {
         const pass = document.getElementById("password");
         pass.classList.add("!hidden");
         axios
-          .post("https://my-twitter-backend.onrender.com/auth/googleLogin", {
+          .post("https://my-twitter-backend.onrender.com/auth/google", {
             username: result.user.displayName,
             handle: `@${result.user.email}`,
+            bio: "This profile is from google",
+            location: "Nigeria",
           })
           .then((data) => {
             const details = data.data;

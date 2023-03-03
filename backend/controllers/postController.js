@@ -11,7 +11,7 @@ const addPost = async (req, res, next) => {
     }
     const hashTag = /@\S+/;
     const hashes =
-      req.body.content.match(hashTag) || re.body.title.match(hashTag);
+      req.body.content.match(hashTag) || req.body.title.match(hashTag);
 
     const newPost = new Post({
       ...req.body,
