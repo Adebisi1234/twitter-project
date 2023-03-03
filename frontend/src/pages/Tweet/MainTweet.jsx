@@ -41,8 +41,9 @@ const MainTweet = ({ id }) => {
           />
         )}
         {post.audioUrl && (
-          <audio>
+          <audio controls>
             <source src={post.audioUrl} type="audio/mp3"></source>
+            Somethings going on
           </audio>
         )}
         <div className="time my-3 flex gap-3 w-full">

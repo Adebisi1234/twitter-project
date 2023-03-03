@@ -27,7 +27,6 @@ const NewTweet = () => {
   const navigate = useNavigate();
 
   const uploadFile = (file, setUrl) => {
-    console.log(file);
     const storage = getStorage(app);
     const fileName = new Date().getTime() + file.name;
     const storageRef = ref(storage, fileName);
@@ -124,7 +123,6 @@ const NewTweet = () => {
                   accept="image/*"
                   onChange={(e) => {
                     const images = e.target.files[0];
-                    console.log(images);
                     uploadFile(images, setImageUrl);
                   }}
                 ></input>
@@ -133,14 +131,12 @@ const NewTweet = () => {
                 className=" w-7 h-7 !bg-[url('/src/assets/sound.png')] dark:!bg-[url('/src/assets/soundDark.png')] cursor-pointer !bg-cover"
                 id="record"
                 onMouseLeave={() => {
-                  console.log("fuck");
                   stopRecorder();
                 }}
                 onMouseDown={() => {
                   const device = navigator.mediaDevices.getUserMedia({
                     audio: true,
                   });
-                  window.localStream = device;
                   const items = [];
                   device.then((stream) => {
                     const recorder = new MediaRecorder(stream);
@@ -150,7 +146,6 @@ const NewTweet = () => {
                         const blob = new Blob(items, { type: "audio/mp3" });
                         blob.name = "new audio";
                         blob.webkitRelativePath = "";
-                        console.log(blob);
                         uploadFile(blob, setAudioUrl);
                       }
                     };
@@ -170,7 +165,6 @@ const NewTweet = () => {
                   });
                 }}
                 onTouchEnd={() => {
-                  console.log("fuck");
                   stopRecorder();
                 }}
                 onTouchStart={() => {
@@ -186,7 +180,6 @@ const NewTweet = () => {
                         const blob = new Blob(items, { type: "audio/mp3" });
                         blob.name = "new audio";
                         blob.webkitRelativePath = "";
-                        console.log(blob);
                         uploadFile(blob, setAudioUrl);
                       }
                     };
@@ -209,7 +202,6 @@ const NewTweet = () => {
             <button
               className=" !bg-[var(--button-primary)] dark:!bg-[var(--button-secondary)] px-5 !text-white py-1 rounded-3xl"
               onClick={() => {
-                window.localStream.getTracks()[0].stop();
                 axios
                   .post(
                     "https://my-twitter-backend.onrender.com/posts/newPost",

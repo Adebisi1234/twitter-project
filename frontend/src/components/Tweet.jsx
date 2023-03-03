@@ -44,7 +44,7 @@ const Tweet = ({ post }) => {
             />
           )}
           {post.audioUrl && (
-            <audio>
+            <audio controls>
               <source src={post.audioUrl} type="audio/mp3"></source>
             </audio>
           )}
