@@ -78,6 +78,7 @@ const NewTweet = () => {
                 }
               }}
               onKeyDown={(e) => {
+                console.log(e.key);
                 if (e.key === "@") {
                   document
                     .getElementById("newTags")
