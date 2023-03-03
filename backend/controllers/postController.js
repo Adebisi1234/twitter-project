@@ -7,8 +7,9 @@ const addPost = async (req, res, next) => {
     if (!wordRegex.test(req.body.content) && !req.body.audioUrl) {
       return res.status(400).json("Post must contain some words");
     }
-    const hashTag = /@\S+/;
-    const hashes = req.body.content.match(hashTag);
+    const hashTag = /@\S+/gi;
+    let hashes = [];
+    hashes = req.body.content.match(hashTag);
 
     const newPost = new Post({
       ...req.body,
@@ -21,7 +22,7 @@ const addPost = async (req, res, next) => {
     );
     await newPost.save();
 
-    if (hashes.length) {
+    if (hashes.length > 0) {
       const post = await Post.findOne({ content: req.body.content });
       const noteFunction = async (hash) => {
         const note = new Notification({

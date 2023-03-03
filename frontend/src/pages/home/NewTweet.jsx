@@ -62,8 +62,6 @@ const NewTweet = () => {
     );
   };
 
-  console.log(audioUrl);
-
   return (
     <div className="w-full m-auto max-w-2xl">
       <div className="gap-3 flex pl-2 w-full pt-2 dark:bg-slate-900 p-1 border-b-2 max-w-2xl">
@@ -84,20 +82,6 @@ const NewTweet = () => {
                   setMatch(regex[0]);
                 }
               }}
-              // onKeyDown={(e) => {
-              //   if (e.key === "@") {
-              //     document
-              //       .getElementById("newTags")
-              //       .classList.remove("!hidden");
-              //   } else if (
-              //     e.key === " " ||
-              //     (content === "" && e.key === "Backspace") ||
-              //     content === ""
-              //   ) {
-              //     document.getElementById("newTags").classList.add("!hidden");
-              //     setMatch("");
-              //   }
-              // }}
               onBeforeInput={(e) => {
                 if (e.data === "@") {
                   document
@@ -156,6 +140,7 @@ const NewTweet = () => {
                   const device = navigator.mediaDevices.getUserMedia({
                     audio: true,
                   });
+                  window.localStream = device;
                   const items = [];
                   device.then((stream) => {
                     const recorder = new MediaRecorder(stream);
@@ -224,6 +209,7 @@ const NewTweet = () => {
             <button
               className=" !bg-[var(--button-primary)] dark:!bg-[var(--button-secondary)] px-5 !text-white py-1 rounded-3xl"
               onClick={() => {
+                window.localStream.getTracks()[0].stop();
                 axios
                   .post(
                     "https://my-twitter-backend.onrender.com/posts/newPost",
