@@ -32,9 +32,7 @@ const Form = () => {
           .then((data) => {
             const details = data.data;
             dispatch(login(details));
-          })
-
-          .then(() => {
+            document.getElementById("img").classList.replace("hidden", "flex");
             navigate("/home");
           })
           .catch((err) => {

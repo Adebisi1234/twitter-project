@@ -48,26 +48,25 @@ const google = async (req, res, next) => {
         secure: true,
       });
       return res.status(200).json({ ...others, access_token: token });
-    } else {
-      const newUser = new User({
-        fromGoogle: true,
-        ...req.body,
-      });
-      await newUser.save();
-      const present = await User.findOne({ username: req.body.username });
-      const { password, ...others } = present._doc;
-      const token = jwt.sign(
-        { id: present._id },
-        process.env.ACCESS_TOKEN_SECRET
-      );
-
-      res.cookie("access_token", token, {
-        httpOnly: true,
-        sameSite: "None",
-        secure: true,
-      });
-      return res.status(200).json({ ...others, access_token: token });
     }
+    const newUser = new User({
+      fromGoogle: true,
+      ...req.body,
+    });
+    await newUser.save();
+    const present = await User.findOne({ handle: req.body.handle });
+    const { password, ...others } = present._doc;
+    const token = jwt.sign(
+      { id: present._id },
+      process.env.ACCESS_TOKEN_SECRET
+    );
+
+    res.cookie("access_token", token, {
+      httpOnly: true,
+      sameSite: "None",
+      secure: true,
+    });
+    return res.status(200).json({ ...others, access_token: token });
   } catch (err) {
     console.log(err);
     res.status(401).json(err);

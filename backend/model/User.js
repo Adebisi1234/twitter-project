@@ -1,65 +1,65 @@
-const mongoose = require("mongoose")
-const Schema = mongoose.Schema
+const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 
-const userSchema = new Schema({
+const userSchema = new Schema(
+  {
     username: {
-        type: String,
-        required: true,
-        unique: true
+      type: String,
+      required: true,
     },
     password: {
-        type: String
+      type: String,
     },
     notification: {
-        type: Number,
-        default: 0
+      type: Number,
+      default: 0,
     },
     handle: {
-        type: String,
-        required: true,
-        unique: true
+      type: String,
+      required: true,
+      unique: true,
     },
     bio: {
-        type: String,
-        required: true,
+      type: String,
+      required: true,
     },
     followers: {
-        type: [String],
+      type: [String],
     },
     followersCount: {
-        type: Number,
-        default: 0
+      type: Number,
+      default: 0,
     },
     following: {
-        type: [String],
+      type: [String],
     },
     followingCount: {
-        type: Number,
-        default: 0
+      type: Number,
+      default: 0,
     },
     pp: {
-        type: String
+      type: String,
     },
     coverImg: {
-        type: String
+      type: String,
     },
     posts: {
-        type: Number,
-        default: 0
+      type: Number,
+      default: 0,
     },
     location: {
-        type: String
+      type: String,
     },
     messageCount: {
-        type: Number,
-        default: 0
+      type: Number,
+      default: 0,
     },
     fromGoogle: {
-        type: Boolean,
-        default: false
-    }
-},
-    { timestamps: true }
-)
+      type: Boolean,
+      default: false,
+    },
+  },
+  { timestamps: true }
+);
 
-module.exports = mongoose.model("User", userSchema)
+module.exports = mongoose.model("User", userSchema);
