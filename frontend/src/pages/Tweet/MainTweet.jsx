@@ -40,7 +40,11 @@ const MainTweet = ({ id }) => {
             loading="lazy"
           />
         )}
-
+        {post.audioUrl && (
+          <audio>
+            <source src={post.audioUrl} type="audio/mp3"></source>
+          </audio>
+        )}
         <div className="time my-3 flex gap-3 w-full">
           <p>{post.createdAt.slice(0, 10)}</p>
           <p>{post.createdAt.slice(11, -8)}</p>

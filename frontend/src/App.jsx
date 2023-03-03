@@ -26,7 +26,7 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 import MobileTweet from "./pages/home/MobileTweet";
 import Poster from "./pages/User/Poster";
-import Tag from "./components/Tag";
+import Counter from "./components/Counter";
 
 function App() {
   const user = useSelector((state) => state.user.user);
@@ -42,7 +42,6 @@ function App() {
             element={Object.keys(user).length ? <HomePage /> : <Login />}
           />
           <Route path="/home" element={<HomePage />} />
-          <Route path="/tag" element={<Tag />} />
           <Route path="/mobile" element={<MobileTweet />} />
           <Route path="profile">
             <Route index element={<User />} />

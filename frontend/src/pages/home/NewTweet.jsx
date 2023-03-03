@@ -14,15 +14,20 @@ import { useNavigate } from "react-router-dom";
 import Tag from "../../components/Tag";
 
 const NewTweet = () => {
+  let stopRecorder = () => {
+    console.log("let's what happens");
+  };
   const user = useSelector((state) => state.user.user);
   const [match, setMatch] = useState("");
   const dispatch = useDispatch();
   const [imageUrl, setImageUrl] = useState("");
+  const [audioUrl, setAudioUrl] = useState("");
   const [content, setContent] = useState("");
   const [uploadStatus, setUploadStatus] = useState("");
   const navigate = useNavigate();
 
-  const uploadImg = (file) => {
+  const uploadFile = (file, setUrl) => {
+    console.log(file);
     const storage = getStorage(app);
     const fileName = new Date().getTime() + file.name;
     const storageRef = ref(storage, fileName);
@@ -49,13 +54,15 @@ const NewTweet = () => {
       (error) => {},
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          setImageUrl(downloadURL);
+          setUrl(downloadURL);
           setUploadStatus("Uploaded");
           document.getElementById("file").setAttribute("readOnly", true);
         });
       }
     );
   };
+
+  console.log(audioUrl);
 
   return (
     <div className="w-full m-auto max-w-2xl">
@@ -77,14 +84,28 @@ const NewTweet = () => {
                   setMatch(regex[0]);
                 }
               }}
-              onKeyDown={(e) => {
-                if (e.key === "@" || e.data === "@") {
+              // onKeyDown={(e) => {
+              //   if (e.key === "@") {
+              //     document
+              //       .getElementById("newTags")
+              //       .classList.remove("!hidden");
+              //   } else if (
+              //     e.key === " " ||
+              //     (content === "" && e.key === "Backspace") ||
+              //     content === ""
+              //   ) {
+              //     document.getElementById("newTags").classList.add("!hidden");
+              //     setMatch("");
+              //   }
+              // }}
+              onBeforeInput={(e) => {
+                if (e.data === "@") {
                   document
                     .getElementById("newTags")
                     .classList.remove("!hidden");
                 } else if (
-                  e.key === " " ||
-                  (content === "" && e.key === "Backspace") ||
+                  e.data === " " ||
+                  (content === "" && e.data === "Backspace") ||
                   content === ""
                 ) {
                   document.getElementById("newTags").classList.add("!hidden");
@@ -106,10 +127,10 @@ const NewTweet = () => {
             </div>
           </div>
           <div className="options flex justify-between items-center">
-            <div className="buttons w-7 h-9 flex gap-2 justify-between">
+            <div className="buttons w-auto h-9 flex gap-3 items-center justify-between">
               <label
                 htmlFor="file"
-                className=" w-7 h-7 !bg-[url('/src/assets/uploadImg.png')] dark:!bg-[url('/src/assets/uploadImgDark.png')] !bg-cover"
+                className=" w-7 h-7 cursor-pointer !bg-[url('/src/assets/uploadImg.png')] dark:!bg-[url('/src/assets/uploadImgDark.png')] !bg-cover"
               >
                 <input
                   className="hidden"
@@ -119,11 +140,85 @@ const NewTweet = () => {
                   accept="image/*"
                   onChange={(e) => {
                     const images = e.target.files[0];
-
-                    uploadImg(images);
+                    console.log(images);
+                    uploadFile(images, setImageUrl);
                   }}
                 ></input>
               </label>
+              <div
+                className=" w-7 h-7 !bg-[url('/src/assets/sound.png')] dark:!bg-[url('/src/assets/soundDark.png')] cursor-pointer !bg-cover"
+                id="record"
+                onMouseLeave={() => {
+                  console.log("fuck");
+                  stopRecorder();
+                }}
+                onMouseDown={() => {
+                  const device = navigator.mediaDevices.getUserMedia({
+                    audio: true,
+                  });
+                  const items = [];
+                  device.then((stream) => {
+                    const recorder = new MediaRecorder(stream);
+                    recorder.ondataavailable = (e) => {
+                      items.push(e.data);
+                      if (recorder.state == "inactive") {
+                        const blob = new Blob(items, { type: "audio/mp3" });
+                        blob.name = "new audio";
+                        blob.webkitRelativePath = "";
+                        console.log(blob);
+                        uploadFile(blob, setAudioUrl);
+                      }
+                    };
+                    recorder.start();
+
+                    stopRecorder = () => {
+                      if (recorder.state !== "inactive") {
+                        recorder.stop();
+                      }
+                    };
+
+                    setTimeout(() => {
+                      if (recorder.state !== "inactive") {
+                        recorder.stop();
+                      }
+                    }, 5000);
+                  });
+                }}
+                onTouchEnd={() => {
+                  console.log("fuck");
+                  stopRecorder();
+                }}
+                onTouchStart={() => {
+                  const device = navigator.mediaDevices.getUserMedia({
+                    audio: true,
+                  });
+                  const items = [];
+                  device.then((stream) => {
+                    const recorder = new MediaRecorder(stream);
+                    recorder.ondataavailable = (e) => {
+                      items.push(e.data);
+                      if (recorder.state == "inactive") {
+                        const blob = new Blob(items, { type: "audio/mp3" });
+                        blob.name = "new audio";
+                        blob.webkitRelativePath = "";
+                        console.log(blob);
+                        uploadFile(blob, setAudioUrl);
+                      }
+                    };
+                    recorder.start();
+
+                    stopRecorder = () => {
+                      recorder.stop();
+                    };
+
+                    setTimeout(() => {
+                      if (recorder.state !== "inactive") {
+                        recorder.stop();
+                      }
+                    }, 5000);
+                  });
+                }}
+              ></div>
             </div>
             <span>{uploadStatus}</span>
             <button
@@ -141,6 +236,7 @@ const NewTweet = () => {
                       username: user.username,
                       pp: user.pp,
                       img: imageUrl,
+                      audioUrl: audioUrl,
                     }
                   )
                   .then((data) => {

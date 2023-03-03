@@ -5,13 +5,10 @@ const addPost = async (req, res, next) => {
   try {
     const wordRegex = /\w/;
     if (!wordRegex.test(req.body.content) && !req.body.audioUrl) {
-      return res
-        .status(400)
-        .json("Post must contain some words or be an audio");
+      return res.status(400).json("Post must contain some words");
     }
     const hashTag = /@\S+/;
-    const hashes =
-      req.body.content.match(hashTag) || req.body.title.match(hashTag);
+    const hashes = req.body.content.match(hashTag);
 
     const newPost = new Post({
       ...req.body,

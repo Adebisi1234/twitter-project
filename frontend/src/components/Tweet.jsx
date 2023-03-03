@@ -43,6 +43,11 @@ const Tweet = ({ post }) => {
               loading="lazy"
             />
           )}
+          {post.audioUrl && (
+            <audio>
+              <source src={post.audioUrl} type="audio/mp3"></source>
+            </audio>
+          )}
         </Link>
         <div className="buttons w-full flex justify-between items-center mr-1">
           <div className="contain gap-2 flex justify-center items-center">
