@@ -68,8 +68,6 @@ const google = async (req, res, next) => {
     });
     return res.status(200).json({ ...others, access_token: token });
   } catch (err) {
-    console.log(err);
-    res.status(401).json(err);
     next(err);
   }
 };
