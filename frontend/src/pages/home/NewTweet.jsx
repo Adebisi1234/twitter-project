@@ -79,7 +79,7 @@ const NewTweet = () => {
               }}
               onKeyDown={(e) => {
                 console.log(e.key);
-                if (e.key === "@") {
+                if (e.key === "@" || e.data === "@") {
                   document
                     .getElementById("newTags")
                     .classList.remove("!hidden");
