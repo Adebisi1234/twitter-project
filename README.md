@@ -14,7 +14,7 @@ A full stack twitter clone.
 
 **Features I plan on implementing:**
 - Ability to tag users ☑️
-- Making audio posts
+- Making audio posts ☑️
 - Adding indicator for new notifications☑️
 - Adding unit testing
 - Replacing all javascript with typescript
