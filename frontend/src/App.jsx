@@ -42,7 +42,6 @@ function App() {
             element={Object.keys(user).length ? <HomePage /> : <Login />}
           />
           <Route path="/home" element={<HomePage />} />
-          <Route path="/mobile" element={<MobileTweet />} />
           <Route path="profile">
             <Route index element={<User />} />
             <Route path="edit" element={<EditProfile />} />
@@ -52,7 +51,7 @@ function App() {
           <Route path="login" element={<Login />} />
           <Route path="notifications" element={<Notifications />} />
           <Route path="tweetPage/:id" element={<TweetPage />} />
-          <Route path="newtweet" element={<NewTweet />} />
+          <Route path="newtweet" element={<MobileTweet />} />
           <Route path="search" element={<Search />} />
           <Route path="searchPage/:id" element={<SearchPage />} />
           <Route path="messages" element={<MessagePage />} />

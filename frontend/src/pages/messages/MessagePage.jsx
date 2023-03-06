@@ -1,7 +1,5 @@
-import reactLogo from "../../assets/react.svg";
 import Header from "../../components/Header";
 import { useEffect, useState } from "react";
-import ProfilePix from "../../components/ProfilePix";
 import Bottom from "../../components/Bottom";
 import { Link } from "react-router-dom";
 import axios from "axios";
@@ -11,8 +9,6 @@ import Post from "../../components/Post";
 export default function MessagePage() {
   const user = useSelector((state) => state.user.user);
   const [data, setData] = useState([]);
-  const [pp, setPp] = useState([]);
-  const [username, setUsername] = useState([]);
   const handle = [];
   useEffect(() => {
     axios
@@ -23,45 +19,36 @@ export default function MessagePage() {
       })
       .then((res) => {
         setData(res.data);
+        console.log(res.data);
       })
       .catch((err) => console.log(err));
   }, []);
-  const result =
-    data &&
-    data.map((message, i) => {
-      message.owner === user.handle
-        ? (handle[i] = message.receiver)
-        : (handle[i] = message.owner);
-      handle[i].includes("@")
-        ? (handle[i] = handle[i].replace("@", ""))
-        : (handle[i] = handle[i]);
-      axios
-        .get(`https://my-twitter-backend.onrender.com/users/get/@${handle[i]}`)
-        .then((res) => {
-          setPp(res.data.pp);
-          setUsername(res.data.user);
-        });
-      return (
-        <div className="flex gap-3 mb-8 pl-3" key={handle[i]}>
-          <ProfilePix pp={pp ? pp : reactLogo} />
-          <Link
-            to={`/messages/message/${JSON.stringify({
-              message: message,
-              handle: handle[i],
-            })}`}
-          >
-            <div className="flex-col w-full">
-              <h1 className=" flex gap-3">
-                {username} <span>{handle[i]}</span>
-              </h1>
-              <p className="opacity-70">
-                {message.content[message.content.length - 1].message}
-              </p>
-            </div>
-          </Link>
-        </div>
-      );
-    });
+
+  const result = data.map((message, i) => {
+    message.owner === user.handle
+      ? (handle[i] = message.receiver)
+      : (handle[i] = message.owner);
+    handle[i].includes("@") && (handle[i] = handle[i].replace("@", ""));
+    return (
+      <div className="flex gap-3 mb-8 pl-3" key={handle[i]}>
+        <Link
+          to={`/messages/message/${JSON.stringify({
+            message: message,
+            handle: handle[i],
+          })}`}
+        >
+          <div className="flex-col w-full">
+            <h1 className=" flex gap-3">
+              <span>{handle[i]}</span>
+            </h1>
+            <p className="opacity-70">
+              {message.content[message.content.length - 1].message}
+            </p>
+          </div>
+        </Link>
+      </div>
+    );
+  });
 
   return (
     <div className="dark:bg-black lg:relative dark:text-white bg-white h-full text-black">
@@ -75,7 +62,9 @@ export default function MessagePage() {
           className="w-full bg-transparent outline-none "
         />
       </div>
-      {result}
+      {result.length
+        ? result
+        : "There's currently no messages please send a message by clicking the button below"}
       <Bottom />
       <Link to="people">
         <Post />

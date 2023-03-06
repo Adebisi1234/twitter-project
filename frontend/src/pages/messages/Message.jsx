@@ -1,8 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
-import reactLogo from "../../assets/react.svg";
+import { Link, useParams } from "react-router-dom";
 import Header from "../../components/Header";
 import ProfilePix from "../../components/ProfilePix";
 import Skeleton from "../../components/Skeleton";
@@ -16,17 +15,19 @@ export default function Message() {
   const { object } = useParams();
   const { message, handle } = JSON.parse(object);
   const [content, setContent] = useState("");
-  // const [messages, setMessages] = useState([
-  //   Object.keys(message).length ? message : {},
-  // ]);
+
   const [maps, setMaps] = useState(
     Object.keys(message).length !== 0 ? message.content : {}
   );
 
   useEffect(() => {
-    axios
-      .get(`https://my-twitter-backend.onrender.com/users/get/@${handle}`)
-      .then((res) => setUser(res.data));
+    !handle.includes("@")
+      ? axios
+          .get(`https://my-twitter-backend.onrender.com/users/get/@${handle}`)
+          .then((res) => setUser(res.data))
+      : axios
+          .get(`https://my-twitter-backend.onrender.com/users/get/${handle}`)
+          .then((res) => setUser(res.data));
   }, []);
   let result = [];
   Object.keys(maps).length
@@ -43,7 +44,13 @@ export default function Message() {
       <Header />
 
       <div className="mt-7 px-10 flex w-full justify-center items-center flex-col gap-1">
-        <ProfilePix pp={user.pp ? user.pp : reactLogo} />
+        {user.pp ? (
+          <ProfilePix pp={user.pp} handle={user.handle} />
+        ) : (
+          <Link to={`/profile/poster/${handle}`}>
+            <div className="w-9 dark:bg-[url('/src/assets/profileDark.png')] bg-[url('/src/assets/profile.png')] bg-left-bottom bg-cover h-9"></div>
+          </Link>
+        )}
         <h1>{user.username}</h1>
         <p>{user.handle}</p>
         <p className="whitespace-pre-wrap ">{user.bio}</p>

@@ -15,7 +15,7 @@ const ProfilePix = ({ pp, handle }) => {
     >
       <div
         className=" h-9 w-9 rounded-full !bg-cover "
-        style={{ background: `url(${pp})` }}
+        style={{ background: `url('${pp}')` }}
       ></div>
     </Link>
   );

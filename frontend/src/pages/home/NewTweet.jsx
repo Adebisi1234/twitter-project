@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import ProfilePix from "../../components/ProfilePix";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
@@ -13,7 +13,9 @@ import app from "../../firebase";
 import { useNavigate } from "react-router-dom";
 import Tag from "../../components/Tag";
 
-const NewTweet = () => {
+const NewTweet = ({ status, record }) => {
+  const reference = useRef("");
+
   let stopRecorder = () => {
     console.log("let's what happens");
   };
@@ -23,10 +25,11 @@ const NewTweet = () => {
   const [imageUrl, setImageUrl] = useState("");
   const [audioUrl, setAudioUrl] = useState("");
   const [content, setContent] = useState("");
-  const [uploadStatus, setUploadStatus] = useState("");
+  const [uploadStatus, setUploadStatus] = useState(status ? status : "");
   const navigate = useNavigate();
 
   const uploadFile = (file, setUrl) => {
+    console.log("uploading");
     const storage = getStorage(app);
     const fileName = new Date().getTime() + file.name;
     const storageRef = ref(storage, fileName);
@@ -55,11 +58,16 @@ const NewTweet = () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
           setUrl(downloadURL);
           setUploadStatus("Uploaded");
-          document.getElementById("file").setAttribute("readOnly", true);
         });
       }
     );
   };
+
+  useEffect(() => {
+    if (typeof record === "object") {
+      uploadFile(record, setAudioUrl);
+    }
+  }, [record]);
 
   return (
     <div className="w-full m-auto max-w-2xl">
@@ -127,114 +135,53 @@ const NewTweet = () => {
                   }}
                 ></input>
               </label>
-              <div
-                className=" w-7 h-7 !bg-[url('/src/assets/sound.png')] dark:!bg-[url('/src/assets/soundDark.png')] cursor-pointer !bg-cover"
-                id="record"
-                onMouseLeave={() => {
-                  const record = document.getElementById("record");
-                  record.classList.replace(
-                    "dark:!bg-[url('/src/assets/uploadImg.png')]",
-                    "dark:!bg-[url('/src/assets/uploadDarkImg.png')]"
-                  );
-                  record.classList.replace(
-                    "!bg-[url('/src/assets/uploadDarkImg.png')]",
-                    "!bg-[url('/src/assets/uploadImg.png')]"
-                  );
-                  stopRecorder();
-                }}
-                onMouseDown={() => {
-                  const record = document.getElementById("record");
-                  record.classList.replace(
-                    "dark:!bg-[url('/src/assets/uploadDarkImg.png')]",
-                    "dark:!bg-[url('/src/assets/uploadImg.png')]"
-                  );
-                  record.classList.replace(
-                    "!bg-[url('/src/assets/uploadImg.png')]",
-                    "!bg-[url('/src/assets/uploadDarkImg.png')]"
-                  );
-                  const device = navigator.mediaDevices.getUserMedia({
-                    audio: true,
-                  });
-                  const items = [];
-                  device.then((stream) => {
-                    const recorder = new MediaRecorder(stream);
-                    recorder.ondataavailable = (e) => {
-                      items.push(e.data);
-                      if (recorder.state == "inactive") {
-                        const blob = new Blob(items, { type: "audio/mp3" });
-                        blob.name = "new audio";
-                        blob.webkitRelativePath = "";
-                        uploadFile(blob, setAudioUrl);
-                      }
-                    };
-                    recorder.start();
+              {window.innerWidth > 756 && (
+                <div
+                  ref={reference}
+                  className=" w-7 h-7 !bg-[url('/src/assets/sound.png')] dark:!bg-[url('/src/assets/soundDark.png')] cursor-pointer !bg-cover"
+                  id="record"
+                  onMouseLeave={() => {
+                    reference.current.classList.remove("animate-pulse");
+                    stopRecorder();
+                  }}
+                  onMouseDown={() => {
+                    reference.current.classList.add("animate-pulse");
+                    const device = navigator.mediaDevices.getUserMedia({
+                      audio: true,
+                    });
+                    setUploadStatus("recording");
+                    const items = [];
+                    device.then((stream) => {
+                      const recorder = new MediaRecorder(stream);
+                      recorder.ondataavailable = (e) => {
+                        items.push(e.data);
+                        if (recorder.state == "inactive") {
+                          stream.getAudioTracks().forEach((x) => x.stop());
+                          const blob = new Blob(items, { type: "audio/mp3" });
+                          blob.name = "new audio";
+                          blob.webkitRelativePath = "";
+                          uploadFile(blob, setAudioUrl);
+                        }
+                      };
+                      recorder.start();
 
-                    stopRecorder = () => {
-                      if (recorder.state !== "inactive") {
-                        recorder.stop();
-                      }
-                    };
+                      stopRecorder = () => {
+                        if (recorder.state !== "inactive") {
+                          recorder.stop();
+                        }
+                      };
 
-                    setTimeout(() => {
-                      if (recorder.state !== "inactive") {
-                        recorder.stop();
-                      }
-                    }, 5000);
-                  });
-                }}
-                onTouchEnd={() => {
-                  const record = document.getElementById("record");
-                  record.classList.replace(
-                    "dark:!bg-[url('/src/assets/uploadImg.png')]",
-                    "dark:!bg-[url('/src/assets/uploadDarkImg.png')]"
-                  );
-                  record.classList.replace(
-                    "!bg-[url('/src/assets/uploadDarkImg.png')]",
-                    "!bg-[url('/src/assets/uploadImg.png')]"
-                  );
-                  stopRecorder();
-                }}
-                onTouchStart={() => {
-                  const record = document.getElementById("record");
-                  record.classList.replace(
-                    "dark:!bg-[url('/src/assets/uploadDarkImg.png')]",
-                    "dark:!bg-[url('/src/assets/uploadImg.png')]"
-                  );
-                  record.classList.replace(
-                    "!bg-[url('/src/assets/uploadImg.png')]",
-                    "!bg-[url('/src/assets/uploadDarkImg.png')]"
-                  );
-                  const device = navigator.mediaDevices.getUserMedia({
-                    audio: true,
-                  });
-                  const items = [];
-                  device.then((stream) => {
-                    const recorder = new MediaRecorder(stream);
-                    recorder.ondataavailable = (e) => {
-                      items.push(e.data);
-                      if (recorder.state == "inactive") {
-                        const blob = new Blob(items, { type: "audio/mp3" });
-                        blob.name = "new audio";
-                        blob.webkitRelativePath = "";
-                        uploadFile(blob, setAudioUrl);
-                      }
-                    };
-                    recorder.start();
-
-                    stopRecorder = () => {
-                      recorder.stop();
-                    };
-
-                    setTimeout(() => {
-                      if (recorder.state !== "inactive") {
-                        recorder.stop();
-                      }
-                    }, 5000);
-                  });
-                }}
-              ></div>
+                      setTimeout(() => {
+                        if (recorder.state !== "inactive") {
+                          recorder.stop();
+                        }
+                      }, 5000);
+                    });
+                  }}
+                ></div>
+              )}
             </div>
-            <span>{uploadStatus}</span>
+            <span>{uploadStatus !== "" ? uploadStatus : status}</span>
             <button
               className=" !bg-[var(--button-primary)] dark:!bg-[var(--button-secondary)] px-5 !text-white py-1 rounded-3xl"
               onClick={() => {

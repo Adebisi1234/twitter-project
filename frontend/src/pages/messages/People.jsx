@@ -7,7 +7,7 @@ import Bottom from "../../components/Bottom";
 export default function People() {
   const user = useSelector((state) => state.user.user);
 
-  const people = user.followers.map((follower) => {
+  const people = user.following.map((follower) => {
     return (
       <Link
         to={`/messages/message/${JSON.stringify({
@@ -36,7 +36,7 @@ export default function People() {
           className="w-full bg-transparent outline-none "
         />
       </div>
-      {people
+      {people.length
         ? people
         : "No followers found, someone needs to follow you to send a message"}
       <Bottom />
