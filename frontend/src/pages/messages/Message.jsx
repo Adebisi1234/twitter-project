@@ -20,6 +20,7 @@ export default function Message() {
     Object.keys(message).length !== 0 ? message.content : {}
   );
 
+  console.log(maps);
   useEffect(() => {
     !handle.includes("@")
       ? axios
@@ -32,7 +33,7 @@ export default function Message() {
   let result = [];
   Object.keys(maps).length
     ? (result = maps.map((mes) => {
-        if (mes.from === handle) {
+        if (mes.from === users.handle) {
           return <Others key={mes._id} text={mes.message} />;
         } else {
           return <Self key={mes._id} text={mes.message} />;

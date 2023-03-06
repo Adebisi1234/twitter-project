@@ -4,8 +4,11 @@ const getMessages = async (req, res, next) => {
   try {
     const { owner, receiver } = req.query;
     const all = await Message.find({ owner: owner, receiver: receiver });
+    const rest = await Message.find({ owner: receiver, receiver: owner });
     if (!all) return res.status(404).json("No messages");
-    res.status(200).json(all.sort((a, b) => a.createdAt - b.createdAt));
+    res
+      .status(200)
+      .json([...all, ...rest].sort((a, b) => a.createdAt - b.createdAt));
   } catch (err) {
     next(err);
   }
