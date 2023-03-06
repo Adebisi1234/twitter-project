@@ -52,12 +52,6 @@ export default function MobileTweet() {
                   console.log("Stopped");
                 }
               };
-
-              setTimeout(() => {
-                if (recorder.state !== "inactive") {
-                  recorder.stop();
-                }
-              }, 5000);
             });
           }}
         >

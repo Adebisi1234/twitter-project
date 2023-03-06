@@ -170,12 +170,6 @@ const NewTweet = ({ status, record }) => {
                           recorder.stop();
                         }
                       };
-
-                      setTimeout(() => {
-                        if (recorder.state !== "inactive") {
-                          recorder.stop();
-                        }
-                      }, 5000);
                     });
                   }}
                 ></div>
