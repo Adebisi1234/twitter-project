@@ -1,5 +1,6 @@
 import { useRef, useState } from "react";
 import Header from "../../components/Header";
+import sound from "../../assets/sound.svg";
 import NewTweet from "./NewTweet";
 export default function MobileTweet() {
   const ref = useRef("test");
@@ -60,7 +61,7 @@ export default function MobileTweet() {
             });
           }}
         >
-          <img src="/src/assets/sound.svg" className="!bg-transparent" />
+          <img src={sound} className="!bg-transparent rounded-full" />
         </div>
       </div>
     </div>
