@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import Header from "../../components/Header";
 import MainTweet from "./MainTweet";
 import ProfilePix from "../../components/ProfilePix";
@@ -10,14 +10,17 @@ import Skeleton from "../../components/Skeleton";
 import { useSelector, useDispatch } from "react-redux";
 import { addComment } from "../../features/post/postSlice";
 import axios from "axios";
+import Tag from "../../components/Tag";
 
 export default function TweetPage() {
   const user = useSelector((state) => state.user.user);
+  const [match, setMatch] = useState("");
   const dispatch = useDispatch();
   const [content, setContent] = useState("");
   const { id } = useParams();
+  const tags = useRef("");
+  const input = useRef("");
   const posts = useSelector((state) => state.post);
-
   const [comments, setComments] = useState(
     posts[1].filter((post) => post.PostId === id)
   );
@@ -37,11 +40,32 @@ export default function TweetPage() {
         <textarea
           className="w-full h-full rounded-2xl"
           value={content}
-          onChange={(e) => setContent(e.target.value)}
+          ref={input}
+          onChange={(e) => {
+            setContent(e.target.value);
+            const regex = e.target.value
+              .slice(e.target.value.lastIndexOf("@"))
+              .match(/@\S+/);
+            if (regex) {
+              setMatch(regex[0]);
+            }
+          }}
+          onBeforeInput={(e) => {
+            if (e.data === "@") {
+              tags.current.classList.remove("!hidden");
+            } else if (
+              e.data === " " ||
+              (content === "" && e.data === "Backspace") ||
+              content === ""
+            ) {
+              tags.current.classList.add("!hidden");
+              setMatch("");
+            }
+          }}
           placeholder="Post your reply"
         ></textarea>
         <button
-          className="py-2 !bg-green-500 !text-white px-4 rounded-3xl font-bold border"
+          className="py-2 !bg-[var(--button-primary)] !text-white px-4 rounded-3xl font-bold border"
           onClick={async () => {
             const data = await axios.post(
               "https://my-twitter-backend.onrender.com/comments",
@@ -67,6 +91,18 @@ export default function TweetPage() {
         >
           Post
         </button>
+      </div>
+      <div className="mx-w-2xl relative">
+        <div
+          className="absolute !hidden top-0 z-50"
+          ref={tags}
+          onClick={() => {
+            input.current.focus();
+            tags.current.classList.add("!hidden");
+          }}
+        >
+          <Tag query={match} content={content} setContent={setContent} />
+        </div>
       </div>
       {comment}
       <Hr />

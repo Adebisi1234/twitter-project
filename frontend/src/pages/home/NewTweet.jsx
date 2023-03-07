@@ -14,7 +14,36 @@ import { useNavigate } from "react-router-dom";
 import Tag from "../../components/Tag";
 
 const NewTweet = ({ status, record }) => {
+  const recorder = () => {
+    const device = navigator.mediaDevices.getUserMedia({
+      audio: true,
+    });
+    setUploadStatus("recording");
+    const items = [];
+    device.then((stream) => {
+      const recorder = new MediaRecorder(stream);
+      recorder.ondataavailable = (e) => {
+        items.push(e.data);
+        if (recorder.state == "inactive") {
+          stream.getAudioTracks().forEach((x) => x.stop());
+          const blob = new Blob(items, { type: "audio/mp3" });
+          blob.name = "new audio";
+          blob.webkitRelativePath = "";
+          uploadFile(blob, setAudioUrl);
+        }
+      };
+      recorder.start();
+
+      stopRecorder = () => {
+        if (recorder.state !== "inactive") {
+          recorder.stop();
+        }
+      };
+    });
+  };
   const reference = useRef("");
+  const tags = useRef("");
+  const input = useRef("");
 
   let stopRecorder = () => {
     console.log("let's what happens");
@@ -77,6 +106,7 @@ const NewTweet = ({ status, record }) => {
           <div className="input h-24 ">
             <textarea
               placeholder="What's happening?"
+              ref={input}
               id="newTweet"
               className="w-full bg-transparent outline-none"
               value={content}
@@ -91,15 +121,13 @@ const NewTweet = ({ status, record }) => {
               }}
               onBeforeInput={(e) => {
                 if (e.data === "@") {
-                  document
-                    .getElementById("newTags")
-                    .classList.remove("!hidden");
+                  tags.current.classList.remove("!hidden");
                 } else if (
                   e.data === " " ||
                   (content === "" && e.data === "Backspace") ||
                   content === ""
                 ) {
-                  document.getElementById("newTags").classList.add("!hidden");
+                  tags.current.classList.add("!hidden");
                   setMatch("");
                 }
               }}
@@ -107,10 +135,10 @@ const NewTweet = ({ status, record }) => {
             <div className="relative w-full">
               <div
                 className="absolute !hidden top-0 z-50 -left-7"
-                id="newTags"
+                ref={tags}
                 onClick={() => {
-                  document.getElementById("newTweet").focus();
-                  document.getElementById("newTags").classList.add("!hidden");
+                  input.current.focus();
+                  tags.current.classList.add("!hidden");
                 }}
               >
                 <Tag query={match} content={content} setContent={setContent} />
@@ -121,7 +149,7 @@ const NewTweet = ({ status, record }) => {
             <div className="buttons w-auto h-9 flex gap-3 items-center justify-between">
               <label
                 htmlFor="file"
-                className=" w-7 h-7 cursor-pointer !bg-[url('/src/assets/uploadImg.png')] dark:!bg-[url('/src/assets/uploadImgDark.png')] !bg-cover"
+                className=" w-7 h-7 cursor-pointer !bg-[url('/src/assets/image.svg')] dark:!bg-[url('/src/assets/image.svg')] !bg-cover"
               >
                 <input
                   className="hidden"
@@ -139,38 +167,13 @@ const NewTweet = ({ status, record }) => {
                 <div
                   ref={reference}
                   className=" w-7 h-7 !bg-[url('/src/assets/sound.png')] dark:!bg-[url('/src/assets/soundDark.png')] cursor-pointer !bg-cover"
-                  id="record"
                   onMouseLeave={() => {
                     reference.current.classList.remove("animate-pulse");
                     stopRecorder();
                   }}
                   onMouseDown={() => {
                     reference.current.classList.add("animate-pulse");
-                    const device = navigator.mediaDevices.getUserMedia({
-                      audio: true,
-                    });
-                    setUploadStatus("recording");
-                    const items = [];
-                    device.then((stream) => {
-                      const recorder = new MediaRecorder(stream);
-                      recorder.ondataavailable = (e) => {
-                        items.push(e.data);
-                        if (recorder.state == "inactive") {
-                          stream.getAudioTracks().forEach((x) => x.stop());
-                          const blob = new Blob(items, { type: "audio/mp3" });
-                          blob.name = "new audio";
-                          blob.webkitRelativePath = "";
-                          uploadFile(blob, setAudioUrl);
-                        }
-                      };
-                      recorder.start();
-
-                      stopRecorder = () => {
-                        if (recorder.state !== "inactive") {
-                          recorder.stop();
-                        }
-                      };
-                    });
+                    recorder();
                   }}
                 ></div>
               )}

@@ -1,7 +1,7 @@
 import axios from "axios";
-import React, { useState } from "react";
+import { useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { login } from "../../features/auth/userSlice";
 import HomePage from "../home/HomePage";
 import { auth, provider } from "../../firebase";
@@ -32,6 +32,11 @@ const Form = () => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const pass = useRef();
+  const ppLabel = useRef();
+  const coverLabel = useRef();
+  const img = useRef();
+  const errs = useRef();
   const user = useSelector((state) => state.user.user);
 
   const signInWithGoogle = () => {
@@ -41,10 +46,9 @@ const Form = () => {
         setHandle(`@${result.user.email}`);
         setBio("This profile is from google");
         setFromGoogle(true);
-        const pass = document.getElementById("password");
-        pass.classList.add("!hidden");
-        const label = document.getElementById("ppLabel");
-        label.classList.add("!hidden");
+
+        pass.current.classList.add("!hidden");
+        ppLabel.current.classList.add("!hidden");
       })
       .catch((err) => console.log(err));
   };
@@ -79,7 +83,7 @@ const Form = () => {
           console.log("File available at", downloadURL);
           setPp(downloadURL);
           setUploadPPStatus("Uploaded");
-          document.getElementById("ppReal").setAttribute("readOnly", true);
+          ppLabel.current.setAttribute("readOnly", true);
         });
       }
     );
@@ -114,9 +118,8 @@ const Form = () => {
           console.log("File available at", downloadURL);
           setCoverImg(downloadURL);
           setUploadCoverStatus("Uploaded");
-          document
-            .getElementById("coverImgReal")
-            .setAttribute("readOnly", true);
+
+          coverLabel.current.setAttribute("readOnly", true);
         });
       }
     );
@@ -182,6 +185,7 @@ const Form = () => {
             }}
             type="password"
             id="password"
+            ref={pass}
             name="password"
             className="border-b w-full"
           />
@@ -216,6 +220,7 @@ const Form = () => {
                 className="hidden"
                 name="ppReal"
                 id="ppReal"
+                ref={ppLabel}
                 type="file"
                 accept="image/*"
                 onChange={(e) => {
@@ -240,6 +245,7 @@ const Form = () => {
                   required
                   className="hidden"
                   name="coverImgReal"
+                  ref={coverLabel}
                   id="coverImgReal"
                   type="file"
                   accept="image/*"
@@ -257,7 +263,7 @@ const Form = () => {
         <button
           className=" bg-black hover:!bg-[var(--button-primary)] hover:dark:!bg-[var(--button-primary)] p-3 my-3 dark:bg-white dark:text-black text-white w-full font-bold rounded-3xl"
           onClick={() => {
-            document.getElementById("img").classList.replace("hidden", "flex");
+            img.current.classList.replace("hidden", "flex");
             if (!fromGoogle) {
               axios
                 .post("https://my-twitter-backend.onrender.com/auth/signup", {
@@ -300,16 +306,19 @@ const Form = () => {
                   navigate("/home");
                 })
                 .catch((err) => {
-                  document.getElementById("err").textContent =
-                    err.response.data.message;
+                  errs.current.textContent = err.response.data.message;
                 });
             }
           }}
         >
           Create account
         </button>
-        <span id="err"></span>
-        <div className="h-7 w-full hidden justify-center items-center" id="img">
+        <span id="errs" ref={errs}></span>
+        <div
+          className="h-7 w-full hidden justify-center items-center"
+          id="img"
+          ref={img}
+        >
           <Skeleton />
         </div>
       </div>

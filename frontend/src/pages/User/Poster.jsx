@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import Bottom from "../../components/Bottom";
@@ -9,6 +9,9 @@ import Tweet from "../../components/Tweet";
 import Header from "./Header";
 
 export default function Poster() {
+  const posts = useRef();
+  const likes = useRef();
+  const follow = useRef();
   const { handle } = useParams();
   const users = useSelector((state) => state.user.user);
   const [user, setUser] = useState(undefined);
@@ -45,8 +48,9 @@ export default function Poster() {
             <button
               className="border dark:border-white border-black py-3 px-4 rounded-3xl mt-1"
               id="follow"
+              ref={follow}
               onClick={() => {
-                document.getElementById("follow").textContent = "Following";
+                follow.current.textContent = "Following";
                 axios.post(
                   `https://my-twitter-backend.onrender.com/users/new-following/${users.handle}`,
                   {
@@ -88,13 +92,11 @@ export default function Poster() {
             <h1
               className="post font-extrabold border-b-4 border-b-blue-500"
               id="posts"
+              ref={posts}
               onClick={() => {
-                const posts = document.getElementById("posts");
-                posts.classList.add("border-b-4");
+                posts.current.classList.add("border-b-4");
 
-                const likes = document.getElementById("likes");
-
-                likes.classList.remove("border-b-4");
+                likes.current.classList.remove("border-b-4");
               }}
             >
               Posts
@@ -102,13 +104,11 @@ export default function Poster() {
             <h1
               className="likes font-extrabold border-b-blue-500"
               id="likes"
+              ref={likes}
               onClick={() => {
-                const posts = document.getElementById("posts");
-                posts.classList.remove("border-b-4");
+                posts.current.classList.remove("border-b-4");
 
-                const likes = document.getElementById("likes");
-
-                likes.classList.add("border-b-4");
+                likes.current.classList.add("border-b-4");
               }}
             >
               Likes

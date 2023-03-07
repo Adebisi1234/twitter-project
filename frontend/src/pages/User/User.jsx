@@ -5,11 +5,13 @@ import Hr from "../../components/Hr";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Skeleton from "../../components/Skeleton";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import axios from "axios";
 import { login } from "../../features/auth/userSlice";
 
 export default function User() {
+  const posts = useRef();
+  const likes = useRef();
   const user = useSelector((state) => state.user.user);
   const dispatch = useDispatch();
   const post = useSelector((state) => state.post);
@@ -67,13 +69,11 @@ export default function User() {
             <h1
               className="post font-extrabold border-b-4 border-b-blue-500"
               id="posts"
+              ref={posts}
               onClick={() => {
-                const posts = document.getElementById("posts");
-                posts.classList.add("border-b-4");
+                posts.current.classList.add("border-b-4");
 
-                const likes = document.getElementById("likes");
-
-                likes.classList.remove("border-b-4");
+                likes.current.classList.remove("border-b-4");
               }}
             >
               Posts
@@ -81,13 +81,11 @@ export default function User() {
             <h1
               className="likes font-extrabold border-b-blue-500"
               id="likes"
+              ref={likes}
               onClick={() => {
-                const posts = document.getElementById("posts");
-                posts.classList.remove("border-b-4");
+                posts.current.classList.remove("border-b-4");
 
-                const likes = document.getElementById("likes");
-
-                likes.classList.add("border-b-4");
+                likes.current.classList.add("border-b-4");
               }}
             >
               Likes

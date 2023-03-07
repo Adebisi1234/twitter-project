@@ -10,6 +10,7 @@ import { login } from "../../features/auth/userSlice";
 export default function Notifications() {
   const [notifications, setNotifications] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [mentions, setMentions] = useState(false);
   const user = useSelector((state) => state.user.user);
   const dispatch = useDispatch();
   useEffect(() => {
@@ -27,6 +28,20 @@ export default function Notifications() {
         dispatch(login(data.data));
       });
   }, []);
+  const mention = notifications.map((note) => {
+    if (note.action.includes("mention")) {
+      return (
+        <Note
+          key={note._id}
+          text={note.text}
+          action={note.action}
+          name={note.actionHandle}
+          pp={note.pp}
+          PostId={note.PostId}
+        />
+      );
+    }
+  });
 
   const notes = notifications.map((note) => {
     return (
@@ -42,9 +57,15 @@ export default function Notifications() {
   });
   return !loading ? (
     <div className="dark:bg-black dark:text-white">
-      <Header />
+      <Header setMentions={setMentions} />
       {notifications.length ? (
-        <div className="pl-2">{notes}</div>
+        <div className="pl-2">
+          {!mentions
+            ? notes
+            : mention
+            ? mention
+            : "No mentions please check back later"}
+        </div>
       ) : (
         <p className="text-center">No notifications check back later</p>
       )}

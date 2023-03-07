@@ -1,10 +1,12 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Skeleton from "./Skeleton";
 
 export default function Tag({ query, setContent, content }) {
   const [loading, setLoading] = useState(true);
   const [users, setUsers] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     try {
@@ -22,30 +24,55 @@ export default function Tag({ query, setContent, content }) {
   }, [query]);
 
   const result = users.map((user) => {
-    return (
-      <div
-        className="user flex py-1 border-b-2 cursor-pointer"
-        key={user._id}
-        onClick={() => {
-          const newContent = content.replace(query, user.handle);
-          setContent(newContent);
-          setUsers([]);
-        }}
-      >
-        {user.pp ? (
-          <img src={user.pp} className="h-14 w-14 rounded-full" />
-        ) : (
-          <div className="w-14 dark:bg-[url('/src/assets/profileDark.png')] bg-[url('/src/assets/profile.png')] bg-left-bottom bg-cover h-14"></div>
-        )}
-        <div>
-          <h1 className="font-semibold">{user.username}</h1>
-          <p>{user.handle}</p>
-          <p className="text-ellipsis overflow-hidden whitespace-nowrap max-w-xs">
-            {user.bio}
-          </p>
+    if (content) {
+      return (
+        <div
+          className="user flex py-1 border-b-2 cursor-pointer"
+          key={user._id}
+          onClick={() => {
+            const newContent = content.replace(query, user.handle);
+            setContent(newContent);
+            setUsers([]);
+          }}
+        >
+          {user.pp ? (
+            <img src={user.pp} className="h-14 w-14 rounded-full" />
+          ) : (
+            <div className="w-14 dark:bg-[url('/src/assets/profileDark.png')] bg-[url('/src/assets/profile.png')] bg-left-bottom bg-cover h-14"></div>
+          )}
+          <div>
+            <h1 className="font-semibold">{user.username}</h1>
+            <p>{user.handle}</p>
+            <p className="text-ellipsis overflow-hidden whitespace-nowrap max-w-xs">
+              {user.bio}
+            </p>
+          </div>
         </div>
-      </div>
-    );
+      );
+    } else {
+      return (
+        <div
+          className="user flex py-1 border-b-2 cursor-pointer"
+          key={user._id}
+          onClick={() => {
+            navigate(`/profile/poster/${user.handle}`);
+          }}
+        >
+          {user.pp ? (
+            <img src={user.pp} className="h-14 w-14 rounded-full" />
+          ) : (
+            <div className="w-14 dark:bg-[url('/src/assets/profileDark.png')] bg-[url('/src/assets/profile.png')] bg-left-bottom bg-cover h-14"></div>
+          )}
+          <div>
+            <h1 className="font-semibold">{user.username}</h1>
+            <p>{user.handle}</p>
+            <p className="text-ellipsis overflow-hidden whitespace-nowrap max-w-xs">
+              {user.bio}
+            </p>
+          </div>
+        </div>
+      );
+    }
   });
   return loading || !users.length ? (
     <div

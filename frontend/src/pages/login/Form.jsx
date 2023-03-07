@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../../features/auth/userSlice";
@@ -11,6 +11,10 @@ import { signInWithPopup } from "firebase/auth";
 import google from "../../assets/google.svg";
 
 const Form = () => {
+  const img = useRef();
+  const errs = useRef();
+  const pass = useRef();
+  const userInput = useRef();
   const navigate = useNavigate();
   const user = useSelector((state) => state.user.user);
   const [username, setUsername] = useState("");
@@ -20,8 +24,8 @@ const Form = () => {
   const signInWithGoogle = () => {
     signInWithPopup(auth, provider)
       .then((result) => {
-        const pass = document.getElementById("password");
-        pass.classList.add("!hidden");
+        pass.current.classList.add("!hidden");
+        user.current.classList.add("!hidden");
         axios
           .post("https://my-twitter-backend.onrender.com/auth/google", {
             username: result.user.displayName,
@@ -32,12 +36,11 @@ const Form = () => {
           .then((data) => {
             const details = data.data;
             dispatch(login(details));
-            document.getElementById("img").classList.replace("hidden", "flex");
+            img.current.classList.replace("hidden", "flex");
             navigate("/home");
           })
           .catch((err) => {
-            document.getElementById("err").textContent =
-              err.response.data.message;
+            errs.current.textContent = err.response.data.message;
           });
       })
       .catch((err) => console.log(err));
@@ -60,7 +63,7 @@ const Form = () => {
         navigate("/home");
       })
       .catch((err) => {
-        document.getElementById("err").textContent = err.response.data.message;
+        errs.current.textContent = err.response.data.message;
       });
   };
 
@@ -89,6 +92,7 @@ const Form = () => {
             required
             type="text"
             placeholder="username"
+            ref={userInput}
             className="w-full pl-2 h-14 border border-1 border-slate-300 "
             onChange={(e) => {
               setUsername(e.target.value);
@@ -99,6 +103,7 @@ const Form = () => {
             required
             type="password"
             id="password"
+            ref={pass}
             placeholder="password"
             className="w-full pl-2 h-14 border border-1 border-slate-300 "
             onChange={(e) => {
@@ -109,9 +114,9 @@ const Form = () => {
 
           <button
             onClick={() => {
-              document
-                .getElementById("img")
-                .classList.replace("hidden", "flex");
+              if (userInput.current.value && pass.current.value) {
+                img.current.classList.replace("hidden", "flex");
+              }
             }}
             type="submit"
             className=" bg-black hover:!bg-green-600 dark:bg-white dark:text-black text-white w-full p-3 mt-2 font-bold rounded-3xl"
@@ -121,10 +126,11 @@ const Form = () => {
           <div
             className="h-7 w-full hidden justify-center items-center"
             id="img"
+            ref={img}
           >
             <Skeleton />
           </div>
-          <span id="err"></span>
+          <span id="err" ref={errs}></span>
         </form>
 
         <p className="dark:text-white text-black">

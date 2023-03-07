@@ -1,7 +1,9 @@
-import React from "react";
+import { useRef } from "react";
 import { Link } from "react-router-dom";
 
-export default function Header() {
+export default function Header({ setMentions }) {
+  const all = useRef();
+  const mentions = useRef();
   return (
     <header className="w-full flex flex-col p-2 dark:bg-black dark:text-white dark:border-b items-center gap-3">
       <div className="flex w-full h-12 gap-3">
@@ -16,26 +18,24 @@ export default function Header() {
       </div>
       <div className="flex w-3/4 justify-evenly gap-3">
         <div
-          id="all"
+          ref={all}
           onClick={() => {
-            const all = document.getElementById("all");
-            all.classList.add("border-b-4");
-            const mentions = document.getElementById("mentions");
-            mentions.classList.remove("border-b-4");
+            all.current.classList.add("border-b-4");
+            mentions.current.classList.remove("border-b-4");
+            setMentions(false);
           }}
-          className="border-b-4 border-b-blue-400"
+          className="border-b-4 !border-b-blue-400"
         >
           All
         </div>
         <div
-          id="mentions"
+          ref={mentions}
           onClick={() => {
-            const all = document.getElementById("all");
-            all.classList.remove("border-b-4");
-            const mentions = document.getElementById("mentions");
-            mentions.classList.add("border-b-4");
+            all.current.classList.remove("border-b-4");
+            mentions.current.classList.add("border-b-4");
+            setMentions(true);
           }}
-          className=" border-b-blue-400"
+          className=" !border-b-blue-400"
         >
           Mentions
         </div>
