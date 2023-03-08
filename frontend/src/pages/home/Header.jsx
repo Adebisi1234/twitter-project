@@ -4,7 +4,7 @@ const Header = ({ imgs, slide, setIsFollowing }) => {
   const you = useRef();
   const follow = useRef();
   return (
-    <header className="w-full dark:text-white border-b-2 bg-transparent backdrop-blur-lg sticky top-0 text-black">
+    <header className="w-full dark:text-white border-b-2 bg-transparent backdrop-blur-lg lg:z-50 sticky top-0 text-black">
       <div className="flex w-full p-2 border-b-2">
         {imgs && window.innerWidth < 756 ? (
           <img

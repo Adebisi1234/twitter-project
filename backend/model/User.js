@@ -58,6 +58,11 @@ const userSchema = new Schema(
       type: Boolean,
       default: false,
     },
+    likes: String,
+    rooms: {
+      type: [String],
+      default: ["room1"],
+    },
   },
   { timestamps: true }
 );

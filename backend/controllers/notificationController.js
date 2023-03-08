@@ -6,7 +6,7 @@ const getAllNotifications = async (req, res, next) => {
     const notifications = await Notification.find({
       handle: handle,
     })
-      .sort((a, b) => b.createdAt - a.createdAt)
+      .sort({ createdAt: -1 })
       .limit(40);
     await User.findOneAndUpdate(
       { handle: handle },
@@ -19,6 +19,8 @@ const getAllNotifications = async (req, res, next) => {
     next(err);
   }
 };
+
+// Pagination.skip()
 
 const newNotification = async (req, res, next) => {
   try {

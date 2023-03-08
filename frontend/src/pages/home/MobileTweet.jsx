@@ -56,6 +56,16 @@ export default function MobileTweet() {
             ref.current.classList.remove("!bg-green-500");
             stopRecorder();
           }}
+          onTouchCancle={() => {
+            ref.current.classList.remove("animate-pulse");
+            ref.current.classList.remove("!bg-green-500");
+            stopRecorder();
+          }}
+          onTouchMove={() => {
+            ref.current.classList.remove("animate-pulse");
+            ref.current.classList.remove("!bg-green-500");
+            stopRecorder();
+          }}
         >
           <div className=" !bg-[var(--button-primary)] bg-blend-multiply  cursor-pointer !bg-contain bg-bottom bg-no-repeat h-full w-full rounded-full">
             <svg

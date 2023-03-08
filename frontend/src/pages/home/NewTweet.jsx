@@ -149,8 +149,19 @@ const NewTweet = ({ status, record }) => {
             <div className="buttons w-auto h-9 flex gap-3 items-center justify-between">
               <label
                 htmlFor="file"
-                className=" w-7 h-7 cursor-pointer !bg-[url('/src/assets/image.svg')] dark:!bg-[url('/src/assets/image.svg')] !bg-cover"
+                className=" w-7 h-7 cursor-pointer relative !bg-[url('/src/assets/image.svg')] !bg-cover"
               >
+                <svg
+                  viewBox="0 0 24 24"
+                  className="absolute top-0 left-0 bottom-0 right-0"
+                  version="1.1"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <g>
+                    <path d="M3 5.5C3 4.119 4.119 3 5.5 3h13C19.881 3 21 4.119 21 5.5v13c0 1.381-1.119 2.5-2.5 2.5h-13C4.119 21 3 19.881 3 18.5v-13zM5.5 5c-.276 0-.5.224-.5.5v9.086l3-3 3 3 5-5 3 3V5.5c0-.276-.224-.5-.5-.5h-13zM19 15.414l-3-3-5 5-3-3-3 3V18.5c0 .276.224.5.5.5h13c.276 0 .5-.224.5-.5v-3.086zM9.75 7C8.784 7 8 7.784 8 8.75s.784 1.75 1.75 1.75 1.75-.784 1.75-1.75S10.716 7 9.75 7z"></path>
+                  </g>
+                </svg>
+
                 <input
                   className="hidden"
                   name="file"
@@ -166,8 +177,8 @@ const NewTweet = ({ status, record }) => {
               {window.innerWidth > 756 && (
                 <div
                   ref={reference}
-                  className=" w-7 h-7 !bg-[url('/src/assets/sound.png')] dark:!bg-[url('/src/assets/soundDark.png')] cursor-pointer !bg-cover"
-                  onMouseLeave={() => {
+                  className=" w-7 h-7 relative cursor-pointer !bg-cover"
+                  onMouseUp={() => {
                     reference.current.classList.remove("animate-pulse");
                     stopRecorder();
                   }}
@@ -175,12 +186,21 @@ const NewTweet = ({ status, record }) => {
                     reference.current.classList.add("animate-pulse");
                     recorder();
                   }}
-                ></div>
+                >
+                  <svg
+                    className="absolute top-0 left-0 right-0 bottom-0"
+                    viewBox="0 0 1024 1024"
+                    version="1.1"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path d="M512 1024a512 512 0 1 1 512-512 512 512 0 0 1-512 512z m0-992a480 480 0 1 0 480 480A480 480 0 0 0 512 32z m16 623.2V736h48a16 16 0 0 1 0 32h-128a16 16 0 0 1 0-32h48v-80.8A160 160 0 0 1 352 496a16 16 0 0 1 32 0 128 128 0 0 0 256 0 16 16 0 0 1 32 0 160 160 0 0 1-144 159.2zM512 592a96 96 0 0 1-96-96v-144a96 96 0 0 1 192 0v144a96 96 0 0 1-96 96z m64-240a64 64 0 0 0-128 0v144a64 64 0 0 0 128 0v-144z" />
+                  </svg>
+                </div>
               )}
             </div>
             <span>{uploadStatus !== "" ? uploadStatus : status}</span>
             <button
-              className=" !bg-[var(--button-primary)] dark:!bg-[var(--button-secondary)] px-5 !text-white py-1 rounded-3xl"
+              className=" !bg-[var(--button-primary)] px-5 !text-white py-1 rounded-3xl"
               onClick={() => {
                 axios
                   .post(

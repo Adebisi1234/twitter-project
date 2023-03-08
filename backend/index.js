@@ -1,24 +1,39 @@
 require("dotenv").config();
 const express = require("express");
 const verifyJwt = require("./middleware/verifyJwt");
-const app = express();
 const cors = require("cors");
 const credentials = require("./middleware/credentials");
 const cookieParser = require("cookie-parser");
 const mongoose = require("mongoose");
-const connectDB = require("./config/dbConn");
 const userRoutes = require("./routes/userRoutes");
 const authRoutes = require("./routes/authRoutes");
 const commentRoutes = require("./routes/commentRoutes");
 const messageRoutes = require("./routes/messageRoutes");
 const notificationRoutes = require("./routes/notificationRoutes");
 const postRoutes = require("./routes/postRoutes");
-mongoose.set("strictQuery", true);
+const { createServer } = require("http");
+const { Server } = require("socket.io");
 
+const app = express();
+const httpServer = createServer(app);
+const io = new Server(httpServer, { cors: "*" });
+mongoose.set("strictQuery", true);
 const PORT = process.env.PORT || 3000;
 
-// Connect to mongo
-// connectDB()
+// io.on("connection", (socket) => {
+//   console.log(socket.id);
+//   socket.on("send-message", (message, room) => {
+//     if (room) {
+//       socket.to(room).emit("new-message", message);
+//     }
+//   });
+//   socket.on("join-group", (room) => {
+//     socket.join(room);
+//   });
+//   socket.on("leave-group", (room) => {
+//     socket.leave(room);
+//   });
+// });
 
 app.use(credentials);
 app.use(express.urlencoded({ extended: false }));
@@ -52,7 +67,7 @@ const connect = () => {
     .connect(process.env.MONGO)
     .then(() => {
       console.log("Connected to DB");
-      app.listen(PORT, () => {
+      httpServer.listen(PORT, () => {
         console.log("Connected to Server");
       });
     })
@@ -61,3 +76,5 @@ const connect = () => {
     });
 };
 connect();
+
+// const rooms = io.of("/").adapter.rooms;

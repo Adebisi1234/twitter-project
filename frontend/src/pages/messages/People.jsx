@@ -24,6 +24,7 @@ export default function People() {
       </Link>
     );
   });
+
   return (
     <div className="dark:bg-black dark:text-white bg-white h-full text-black">
       <Header text="Messages" />
@@ -36,6 +37,20 @@ export default function People() {
           className="w-full bg-transparent outline-none "
         />
       </div>
+      <Link
+        to={`/messages/message/${JSON.stringify({
+          message: {},
+          room: "room1",
+          handle: follower,
+        })}`}
+        key={follower}
+      >
+        <div className="flex gap-3 mb-8 pl-3">
+          <div className="w-full">
+            <h1 className="font-bold">General group chat</h1>
+          </div>
+        </div>
+      </Link>
       {people.length
         ? people
         : "No followers found, someone needs to follow you to send a message"}

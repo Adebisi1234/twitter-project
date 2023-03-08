@@ -29,6 +29,9 @@ input, textarea {
     #svg {
       color: rgb(139, 152, 165);
     }
+    .buttons {
+      color: rgb(83, 100, 113)
+    }
 
     #sidebar {
       background-color: rgb(21, 32, 43);
@@ -90,7 +93,11 @@ svg {
 }
 #svg {
   background-color: transparent;
+  color: rgb(139, 152, 165);
 
+}
+.buttons {
+  color: rgb(139, 152, 165);
 }
 .trend * {
     background-color: inherit !important;
