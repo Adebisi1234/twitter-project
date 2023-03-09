@@ -1,35 +1,30 @@
-import reactLogo from "./assets/react.svg";
 import "./App.css";
 import Login from "./pages/login/Login";
-import Form from "./pages/login/Form";
 import Signin from "./pages/signin/Signin";
 import HomePage from "./pages/home/HomePage";
-import ProfilePix from "./components/ProfilePix";
-import NewTweet from "./pages/home/NewTweet";
+import Sidebar from "./pages/home/Sidebar";
 import Search from "./pages/search/Search";
 import SearchPage from "./pages/search/SearchPage";
 import EditProfile from "./pages/User/EditProfile";
 import User from "./pages/User/User";
 import Notifications from "./pages/notifications/Notifications";
-import MainTweet from "./pages/Tweet/MainTweet";
 import TweetPage from "./pages/Tweet/TweetPage";
-import MessagePage from "./pages/messages/MessagePage";
-import People from "./pages/messages/People";
-import Sidebar from "./pages/home/Sidebar";
-import Message from "./pages/messages/Message";
-import Header from "./components/Header";
 import { Route, Routes } from "react-router-dom";
 import ErrorPage from "./components/ErrorPage";
-import Skeleton from "./components/Skeleton";
-import { useEffect, useState } from "react";
-import axios from "axios";
+import { useRef } from "react";
 import { useSelector } from "react-redux";
 import MobileTweet from "./pages/home/MobileTweet";
 import Poster from "./pages/User/Poster";
-import Counter from "./components/Counter";
+import Messages from "./pages/messages/Messages";
+import { io } from "socket.io-client";
+import MessagePage from "./pages/messages/MessagePage";
 
 function App() {
+  const socket = useRef();
   const user = useSelector((state) => state.user.user);
+  socket.current = io("https://my-twitter-backend.onrender.com", {
+    autoConnect: false,
+  });
   return (
     <div className=" flex min-h-screen flex-col lg:grid lg:grid-cols-[1fr,2fr,1fr] dark:bg-black dark:text-white bg-white text-black">
       <div className="hidden lg:block">
@@ -54,9 +49,14 @@ function App() {
           <Route path="newtweet" element={<MobileTweet />} />
           <Route path="search" element={<Search />} />
           <Route path="searchPage/:id" element={<SearchPage />} />
-          <Route path="messages" element={<MessagePage />} />
-          <Route path="messages/people" element={<People />} />
-          <Route path="messages/message/:object" element={<Message />} />
+          <Route
+            path="messages"
+            element={<Messages socket={socket.current} />}
+          />
+          <Route
+            path="messages/message/:currentChat"
+            element={<MessagePage socket={socket.current} />}
+          />
           <Route path="*" element={<ErrorPage />} />
         </Routes>
       </div>

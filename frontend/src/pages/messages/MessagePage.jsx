@@ -1,80 +1,217 @@
-import Header from "../../components/Header";
-import { useEffect, useState } from "react";
-import Bottom from "../../components/Bottom";
-import { Link } from "react-router-dom";
+import { useRef, useState, useEffect } from "react";
 import axios from "axios";
 import { useSelector } from "react-redux";
-import Post from "../../components/Post";
+import { useParams, Link } from "react-router-dom";
+import Message from "./Message";
+import Header from "../../components/Header";
+import ProfilePix from "../../components/ProfilePix";
 
-export default function MessagePage() {
+export default function MessagePage({ socket }) {
   const user = useSelector((state) => state.user.user);
-  const [data, setData] = useState([]);
-  const handle = [];
+  const content = useRef();
+  const { currentChat } = useParams();
+  const [newMessage, setNewMessage] = useState(null);
+  const scrollRef = useRef();
+  const [messages, setMessages] = useState([]);
+  const [other, setOther] = useState({});
+  const [chat, setChat] = useState(JSON.parse(currentChat));
+
+  if (!socket.active) {
+    socket.connect();
+  }
+
+  const receiver = useRef(
+    chat.members.find((member) => member !== user.handle)
+  );
+
   useEffect(() => {
-    axios
-      .get("https://my-twitter-backend.onrender.com/messages/all", {
-        params: {
-          owner: user.handle,
-        },
-      })
-      .then((res) => {
-        setData(res.data);
-        console.log(res.data);
-      })
-      .catch((err) => console.log(err));
+    const getMessages = async () => {
+      try {
+        if (chat._id) {
+          const res = await axios.get(
+            `https://my-twitter-backend.onrender.com/messages/message/${chat._id}`
+          );
+          setMessages(res.data);
+        } else {
+          const res = await axios.get(
+            `https://my-twitter-backend.onrender.com/conversations/find/${chat.members[0]}/${chat.members[1]}`
+          );
+          if (res.data) {
+            setChat(res.data);
+            const data = await axios.get(
+              `https://my-twitter-backend.onrender.com/messages/message/${res.data._id}`
+            );
+            setMessages(data.data);
+          }
+        }
+
+        const data = await axios.get(
+          `https://my-twitter-backend.onrender.com/users/get/${receiver.current}`
+        );
+        setOther(data.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    getMessages();
+  }, [chat]);
+
+  useEffect(() => {
+    scrollRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
+  useEffect(() => {
+    socket.on("getMessage", (data) => {
+      setNewMessage({
+        sender: data.sender,
+        text: data.text,
+        createdAt: Date.now(),
+      });
+    });
   }, []);
 
-  const result = data.map((message, i) => {
-    message.owner === user.handle
-      ? (handle[i] = message.receiver)
-      : (handle[i] = message.owner);
-    handle[i].includes("@") && (handle[i] = handle[i].replace("@", ""));
+  useEffect(() => {
+    newMessage &&
+      chat.members.includes(newMessage.sender) &&
+      setMessages((prev) => [...prev, newMessage]);
+  }, [newMessage]);
+
+  const result = messages.map((message, i) => {
     return (
-      <div className="flex gap-3 mb-8 pl-3" key={handle[i]}>
-        <Link
-          to={`/messages/message/${JSON.stringify({
-            message: message,
-            handle: handle[i],
-          })}`}
-        >
-          <div className="flex-col w-full">
-            <h1 className=" flex gap-3">
-              <span>{handle[i]}</span>
-            </h1>
-            <p className="opacity-70">
-              {message.content[message.content.length - 1].message}
-            </p>
-          </div>
-        </Link>
+      <div key={i} ref={scrollRef}>
+        <Message
+          text={message.text}
+          self={message.sender === user.handle && true}
+        />
       </div>
     );
   });
 
   return (
-    <div className="dark:bg-black lg:relative dark:text-white bg-white h-full text-black">
-      <Header text="Messages" />
-      <div className="input dark:bg-black bg-white px-20 flex gap-3 rounded-3xl w-full p-2 mb-3 mt-3">
-        <div className="w-7 h-7">
-          <svg viewBox="0 0 24 24" aria-hidden="true">
-            <g>
-              <path d="M10.25 3.75c-3.59 0-6.5 2.91-6.5 6.5s2.91 6.5 6.5 6.5c1.795 0 3.419-.726 4.596-1.904 1.178-1.177 1.904-2.801 1.904-4.596 0-3.59-2.91-6.5-6.5-6.5zm-8.5 6.5c0-4.694 3.806-8.5 8.5-8.5s8.5 3.806 8.5 8.5c0 1.986-.682 3.815-1.824 5.262l4.781 4.781-1.414 1.414-4.781-4.781c-1.447 1.142-3.276 1.824-5.262 1.824-4.694 0-8.5-3.806-8.5-8.5z"></path>
-            </g>
-          </svg>
-        </div>
-
-        <input
-          type="text"
-          placeholder="Search Direct Messages"
-          className="w-full bg-transparent outline-none "
-        />
+    <div className="h-screen flex flex-col">
+      <Header />
+      <div className=" px-10 flex w-full justify-center items-center flex-col gap-1">
+        {other.pp ? (
+          <ProfilePix pp={other.pp} handle={other.handle} />
+        ) : (
+          <Link to={`/profile/poster/${other.handle}`}>
+            <div className="w-9 h-9">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <g>
+                  <path d="M5.651 19h12.698c-.337-1.8-1.023-3.21-1.945-4.19C15.318 13.65 13.838 13 12 13s-3.317.65-4.404 1.81c-.922.98-1.608 2.39-1.945 4.19zm.486-5.56C7.627 11.85 9.648 11 12 11s4.373.85 5.863 2.44c1.477 1.58 2.366 3.8 2.632 6.46l.11 1.1H3.395l.11-1.1c.266-2.66 1.155-4.88 2.632-6.46zM12 4c-1.105 0-2 .9-2 2s.895 2 2 2 2-.9 2-2-.895-2-2-2zM8 6c0-2.21 1.791-4 4-4s4 1.79 4 4-1.791 4-4 4-4-1.79-4-4z"></path>
+                </g>
+              </svg>
+            </div>
+          </Link>
+        )}
+        <h1>{other.username}</h1>
+        <p>{other.handle}</p>
+        <p className="whitespace-pre-wrap ">{other.bio}</p>
+        <p>{other.followersCount} followers</p>
       </div>
-      {result.length
-        ? result
-        : "There's currently no messages please send a message by clicking the button below"}
-      <Bottom />
-      <Link to="people">
-        <Post />
-      </Link>
+
+      <div className="message flex-col h-full overflow-y-scroll flex gap-y-10 p-2 ">
+        {result}
+      </div>
+      <div className="max-h-[60px] h-[60px] mt-2 dark:bg-black dark:text-white bg-slate-200 w-full p-2">
+        <div className="flex h-9 w-full bottom-0 gap-2 items-center">
+          <input
+            ref={content}
+            type="text"
+            placeholder="Send a new message"
+            className="w-full border-t"
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                socket.emit("sendMessage", {
+                  sender: user.handle,
+                  receiver: other.handle,
+                  text: content.current.value,
+                });
+                if (!chat._id) {
+                  axios
+                    .post(
+                      `https://my-twitter-backend.onrender.com/conversations/`,
+                      {
+                        sender: user.handle,
+                        receiver: other.handle,
+                      }
+                    )
+                    .then((data) => {
+                      setChat(data.data);
+                      axios.post(
+                        "https://my-twitter-backend.onrender.com/messages/new",
+                        {
+                          sender: user.handle,
+                          conversationId: data.data._id,
+                          text: content.current.value,
+                        }
+                      );
+                    });
+                } else {
+                  axios.post(
+                    "https://my-twitter-backend.onrender.com/messages/new",
+                    {
+                      sender: user.handle,
+                      conversationId: chat._id,
+                      text: content.current.value,
+                    }
+                  );
+                }
+                content.current.value = "";
+              }
+            }}
+          />
+          <div
+            className="w-7 h-7"
+            onClick={(e) => {
+              socket.emit("sendMessage", {
+                sender: user.handle,
+                receiver: other.handle,
+                text: content.current.value,
+              });
+              if (!chat._id) {
+                axios
+                  .post(
+                    `https://my-twitter-backend.onrender.com/conversations/`,
+                    {
+                      sender: user.handle,
+                      receiver: other.handle,
+                    }
+                  )
+                  .then((data) => {
+                    setChat(data.data);
+                    axios.post(
+                      "https://my-twitter-backend.onrender.com/messages/new",
+                      {
+                        sender: user.handle,
+                        conversationId: data.data._id,
+                        text: content.current.value,
+                      }
+                    );
+                  });
+              } else {
+                axios.post(
+                  "https://my-twitter-backend.onrender.com/messages/new",
+                  {
+                    sender: user.handle,
+                    conversationId: chat._id,
+                    text: content.current.value,
+                  }
+                );
+              }
+              content.current.value = "";
+            }}
+          >
+            <svg id="svg" viewBox="0 0 24 24" aria-hidden="true">
+              <g>
+                <path d="M2.504 21.866l.526-2.108C3.04 19.719 4 15.823 4 12s-.96-7.719-.97-7.757l-.527-2.109L22.236 12 2.504 21.866zM5.981 13c-.072 1.962-.34 3.833-.583 5.183L17.764 12 5.398 5.818c.242 1.349.51 3.221.583 5.183H10v2H5.981z"></path>
+              </g>
+            </svg>
+          </div>
+        </div>
+      </div>
     </div>
+    // ) : (
+    //   <Skeleton />
+    // );
   );
 }

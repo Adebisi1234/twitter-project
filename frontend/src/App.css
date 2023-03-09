@@ -144,22 +144,6 @@ svg {
   box-shadow: rgba(101, 119, 134, 0.2) 0px 0px 15px, rgba(101, 119, 134, 0.15) 0px 0px 3px 1px;
 }
 
-@keyframes sound {
-  from {
-    width: 25%;
-  }
-  to {
-    width: 50%;
-  }
-}
-
-#sound {
-  transition: all 0.5s ease-in;
-    animation-duration: 1s;
-    animation-iteration-count: infinite;
-    animation-timing-function: linear;
-}
-
-audio {
-  z-index: 0;
+#primary {
+  color: var(--button-primary);
 }

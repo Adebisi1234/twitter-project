@@ -1,60 +1,27 @@
-import Header from "../../components/Header";
+import React from "react";
+import ProfilePix from "../../components/ProfilePix";
 
-import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
-import Bottom from "../../components/Bottom";
-
-export default function People() {
-  const user = useSelector((state) => state.user.user);
-
-  const people = user.following.map((follower) => {
-    return (
-      <Link
-        to={`/messages/message/${JSON.stringify({
-          message: {},
-          handle: follower,
-        })}`}
-        key={follower}
-      >
-        <div className="flex gap-3 mb-8 pl-3">
-          <div className="w-full">
-            <h1 className="font-bold">{follower}</h1>
-          </div>
-        </div>
-      </Link>
-    );
-  });
-
+export default function People({ online, username, img, handle }) {
   return (
-    <div className="dark:bg-black dark:text-white bg-white h-full text-black">
-      <Header text="Messages" />
-      <div className="input dark:bg-black bg-white px-20 flex gap-3 rounded-3xl w-full p-2 mb-3 mt-3">
-        <div className="w-7 dark:bg-[url('/src/assets/searchDark.png')] bg-[url('/src/assets/search.png')] bg-left bg-cover h-7"></div>
-
-        <input
-          type="text"
-          placeholder="Search People"
-          className="w-full bg-transparent outline-none "
-        />
-      </div>
-      <Link
-        to={`/messages/message/${JSON.stringify({
-          message: {},
-          room: "room1",
-          handle: follower,
-        })}`}
-        key={follower}
-      >
-        <div className="flex gap-3 mb-8 pl-3">
-          <div className="w-full">
-            <h1 className="font-bold">General group chat</h1>
+    <div className="flex space space-x-2 items-center">
+      <div className="relative img">
+        {img ? (
+          <ProfilePix pp={img} handle={handle} />
+        ) : (
+          <div className="w-9 h-9">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <g>
+                <path d="M5.651 19h12.698c-.337-1.8-1.023-3.21-1.945-4.19C15.318 13.65 13.838 13 12 13s-3.317.65-4.404 1.81c-.922.98-1.608 2.39-1.945 4.19zm.486-5.56C7.627 11.85 9.648 11 12 11s4.373.85 5.863 2.44c1.477 1.58 2.366 3.8 2.632 6.46l.11 1.1H3.395l.11-1.1c.266-2.66 1.155-4.88 2.632-6.46zM12 4c-1.105 0-2 .9-2 2s.895 2 2 2 2-.9 2-2-.895-2-2-2zM8 6c0-2.21 1.791-4 4-4s4 1.79 4 4-1.791 4-4 4-4-1.79-4-4z"></path>
+              </g>
+            </svg>
           </div>
-        </div>
-      </Link>
-      {people.length
-        ? people
-        : "No followers found, someone needs to follow you to send a message"}
-      <Bottom />
+        )}
+        {online && <div className="relative w-1 h-1 rounded-full"></div>}
+      </div>
+      <div className="username">
+        {username}
+        <span id="primary">{handle}</span>
+      </div>
     </div>
   );
 }
