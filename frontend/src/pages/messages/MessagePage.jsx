@@ -106,7 +106,7 @@ export default function MessagePage({ socket }) {
         <h1>{other.username}</h1>
         <p>{other.handle}</p>
         <p className="whitespace-pre-wrap ">{other.bio}</p>
-        <p>{other.followersCount} followers</p>
+        <p>{other.followingCount} followers</p>
       </div>
 
       <div className="message flex-col h-full overflow-y-scroll flex gap-y-10 p-2 ">

@@ -31,11 +31,11 @@ export default function User() {
       <Header user={user.username} tweets={user.posts} />
       <div className="big flex flex-col dark:bg-black dark:text-black bg-white text-black">
         <div
-          className="cover-img relative h-52 w-full !bg-green-500 !dark:bg-red-500 !bg-cover "
+          className="cover-img relative h-48 lg:h-52 w-full !bg-green-500 !dark:bg-red-500 !bg-cover "
           style={{ background: `url(${user.coverImg})` }}
         >
           <div
-            className="pp h-28 absolute w-28 rounded-full translate-y-40 ml-4 border border-white !bg-cover bg-black"
+            className="pp h-24 absolute w-24 rounded-full translate-y-36 ml-4 border border-white !bg-cover bg-black"
             style={{ background: `url(${user.pp})` }}
           ></div>
         </div>
