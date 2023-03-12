@@ -43,7 +43,7 @@ export default function MobileTweet() {
       <div className="w-full h-full flex justify-center items-center">
         <div
           ref={ref}
-          className="h-[12%] w-1/4 rounded-full"
+          className="h-[12%] sm:h-1/4 w-1/4 rounded-full"
           onTouchStart={() => {
             setStatus("recording");
 
@@ -56,7 +56,7 @@ export default function MobileTweet() {
             ref.current.classList.remove("!bg-green-500");
             stopRecorder();
           }}
-          onTouchCancle={() => {
+          onTouchCancel={() => {
             ref.current.classList.remove("animate-pulse");
             ref.current.classList.remove("!bg-green-500");
             stopRecorder();
@@ -67,12 +67,14 @@ export default function MobileTweet() {
             stopRecorder();
           }}
         >
-          <div className=" !bg-[var(--button-primary)] bg-blend-multiply  cursor-pointer !bg-contain bg-bottom bg-no-repeat h-full w-full rounded-full">
+          <div className=" !bg-[var(--button-primary)] flex justify-center items-center cursor-pointer h-full w-fit rounded-full">
             <svg
               style={{
                 verticalAlign: "middle",
                 backgroundColor: "transparent",
                 fill: "currentColor",
+                width: "fit-content",
+                height: "inherit",
                 overflow: "hidden",
               }}
               viewBox="0 0 1024 1024"

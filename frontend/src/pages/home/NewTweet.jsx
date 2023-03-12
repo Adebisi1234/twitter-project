@@ -33,13 +33,12 @@ const NewTweet = ({ status, record }) => {
         }
       };
       recorder.start();
-
-      stopRecorder = () => {
-        if (recorder.state !== "inactive") {
-          recorder.stop();
-        }
-      };
     });
+    stopRecorder = () => {
+      if (recorder.state !== "inactive") {
+        recorder.stop();
+      }
+    };
   };
   const reference = useRef("");
   const tags = useRef("");

@@ -2,12 +2,6 @@ import React, { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../../features/auth/userSlice";
-import home from "../../assets/home.svg";
-import search from "../../assets/search.svg";
-import message from "../../assets/message.svg";
-import notification from "../../assets/notification.svg";
-import profile from "../../assets/profile.svg";
-
 const Sidebar = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();

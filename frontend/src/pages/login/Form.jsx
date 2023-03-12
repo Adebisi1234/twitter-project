@@ -25,18 +25,24 @@ const Form = () => {
     signInWithPopup(auth, provider)
       .then((result) => {
         pass.current.classList.add("!hidden");
-        user.current.classList.add("!hidden");
+        userInput.current.classList.add("!hidden");
+        let email = result.user.email.includes("@")
+          ? result.user.email
+          : `@${result.user.email}`;
+        img.current.classList.replace("hidden", "flex");
+        console.log(result);
         axios
           .post("https://my-twitter-backend.onrender.com/auth/google", {
             username: result.user.displayName,
-            handle: `@${result.user.email}`,
+            pp: result.user.photoURL,
+            handle: email,
             bio: "This profile is from google",
             location: "Nigeria",
+            fromGoogle: true,
           })
           .then((data) => {
-            const details = data.data;
-            dispatch(login(details));
-            img.current.classList.replace("hidden", "flex");
+            console.log(data.data);
+            dispatch(login(data.data));
             navigate("/home");
           })
           .catch((err) => {

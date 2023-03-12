@@ -4,7 +4,6 @@ const {
   signin,
   logout,
   google,
-  googleLogin,
 } = require("../controllers/authController");
 
 const router = express.Router();
@@ -13,7 +12,6 @@ const router = express.Router();
 router.post("/signup", signup);
 router.post("/signin", signin);
 router.post("/google", google);
-router.post("/googleLogin", googleLogin);
 router.get("/logout", logout);
 
 module.exports = router;

@@ -71,27 +71,6 @@ const google = async (req, res, next) => {
     next(err);
   }
 };
-const googleLogin = async (req, res, next) => {
-  try {
-    const user = await User.findOne({ handle: req.body.handle });
-    if (user) {
-      const token = jwt.sign({ id: user._id }, process.env.ACCESS_TOKEN_SECRET);
-      const { password, ...others } = user._doc;
-
-      res.cookie("access_token", token, {
-        httpOnly: true,
-        sameSite: "None",
-        secure: true,
-      });
-      return res.status(200).json({ ...others, access_token: token });
-    } else {
-      return re.status(400).json("User not found");
-    }
-  } catch (err) {
-    res.status(401).json(err);
-    next(err);
-  }
-};
 
 const signin = async (req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -137,4 +116,4 @@ const logout = async (req, res) => {
   return res.sendStatus(200);
 };
 
-module.exports = { signup, signin, logout, google, googleLogin };
+module.exports = { signup, signin, logout, google };
