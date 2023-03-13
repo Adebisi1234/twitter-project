@@ -30,14 +30,17 @@ export default function User() {
     <div className="w-full">
       <Header user={user.username} tweets={user.posts} />
       <div className="big flex flex-col dark:bg-black dark:text-black bg-white text-black">
-        <div
-          className="cover-img relative h-48 lg:h-52 w-full !bg-green-500 !dark:bg-red-500 !bg-cover "
-          style={{ background: `url(${user.coverImg})` }}
-        >
-          <div
-            className="pp h-24 absolute w-24 rounded-full translate-y-36 ml-4 border border-white !bg-cover bg-black"
-            style={{ background: `url(${user.pp})` }}
-          ></div>
+        <div className="cover-img relative h-48 lg:h-52 w-full !bg-green-500 !dark:bg-red-500 !bg-cover ">
+          <img
+            src={user.coverImg}
+            className="absolute top-0 left-0 right-0 bottom-0 object-fill"
+          />
+          <div className="pp h-24 absolute w-24 rounded-full translate-y-36 ml-4 border border-white !bg-cover bg-black">
+            <img
+              src={user.pp}
+              className="absolute top-0 left-0 right-0 bottom-0 object-fill rounded-full"
+            />
+          </div>
         </div>
         <div className=" dark:bg-black dark:text-white  options">
           <div className="edit-profile flex items-end justify-end pr-3">
@@ -67,7 +70,7 @@ export default function User() {
 
           <div className="tweets dark:bg-black dark:text-white flex items-center justify-evenly w-full gap-11">
             <h1
-              className="post font-extrabold border-b-4 border-b-blue-500"
+              className="post font-extrabold border-b-4 border-b-[var(--button-primary)]"
               id="posts"
               ref={posts}
               onClick={() => {
@@ -79,7 +82,7 @@ export default function User() {
               Posts
             </h1>
             <h1
-              className="likes font-extrabold border-b-blue-500"
+              className="likes font-extrabold border-b-[var(--button-primary)]"
               id="likes"
               ref={likes}
               onClick={() => {
