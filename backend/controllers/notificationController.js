@@ -2,11 +2,12 @@ const Notification = require("../model/Notification");
 const User = require("../model/User");
 const getAllNotifications = async (req, res, next) => {
   try {
-    const { handle } = req.params;
+    const { handle, page } = req.params;
     const notifications = await Notification.find({
       handle: handle,
     })
       .sort({ createdAt: -1 })
+      .skip(20 * page ? page : 0)
       .limit(40);
     await User.findOneAndUpdate(
       { handle: handle },

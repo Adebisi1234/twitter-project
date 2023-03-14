@@ -19,17 +19,17 @@ const NewTweet = ({ status, record }) => {
       audio: true,
     });
     setUploadStatus("recording");
-    const items = [];
+    let items = [];
     device.then((stream) => {
-      const recorder = new MediaRecorder(stream);
+      let recorder = new MediaRecorder(stream);
       recorder.ondataavailable = (e) => {
         items.push(e.data);
         if (recorder.state == "inactive") {
-          stream.getAudioTracks().forEach((x) => x.stop());
-          const blob = new Blob(items, { type: "audio/mp3" });
+          let blob = new Blob(items, { type: "audio/webm" });
           blob.name = "new audio";
           blob.webkitRelativePath = "";
           uploadFile(blob, setAudioUrl);
+          stream.getAudioTracks().forEach((x) => x.stop());
         }
       };
       recorder.start();

@@ -48,7 +48,7 @@ const MainTweet = ({ id }) => {
         )}
         {post.audioUrl && (
           <audio controls>
-            <source src={post.audioUrl} type="audio/mp3"></source>
+            <source src={post.audioUrl} type="video/webm"></source>
             Somethings going on
           </audio>
         )}
@@ -74,8 +74,9 @@ const MainTweet = ({ id }) => {
           <div className="contain gap-2 flex justify-center items-center">
             <div
               className="w-5 h-5"
-              onClick={() => {
+              onClick={(e) => {
                 if (count === 0) {
+                  e.target.classList.add("liked");
                   dispatch(like({ id: post._id }));
                   axios
                     .post(
@@ -104,6 +105,8 @@ const MainTweet = ({ id }) => {
                   setCount((count + 1) % 2);
                 } else {
                   dispatch(dislike({ id: post._id }));
+                  e.target.classList.remove("liked");
+
                   axios.post(
                     "https://my-twitter-backend.onrender.com/posts/dislike",
                     {
@@ -125,8 +128,9 @@ const MainTweet = ({ id }) => {
           <div className="contain gap-2 flex justify-center items-center">
             <div
               className="w-5 dark:bg-[url('/src/assets/retweetDark.png')] bg-[url('/src/assets/retweet.png')] bg-left bg-cover h-5"
-              onClick={() => {
+              onClick={(e) => {
                 if (recount === 0) {
+                  e.target.classList.add("retweet");
                   dispatch(retweet({ id: post._id }));
                   axios
                     .post(
@@ -155,6 +159,7 @@ const MainTweet = ({ id }) => {
                   setRecount((recount + 1) % 2);
                 } else {
                   dispatch(undoRetweet({ id: post._id }));
+                  e.target.classList.remove("retweet");
                   axios.post(
                     "https://my-twitter-backend.onrender.com/posts/undoretweet",
                     {

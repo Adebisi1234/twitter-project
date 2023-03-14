@@ -40,6 +40,14 @@ input, textarea {
     #sidebar svg {
       color: var(--svg-dark);
     }
+    #liked {
+      color: rgb(249, 24, 128) !important;
+      
+    }
+    
+    #retweet {
+      color: var(--button-primary) !important;
+    }
     
 
     
@@ -146,4 +154,20 @@ svg {
 
 #primary {
   color: var(--button-primary);
+}
+#liked {
+  color: rgb(249, 24, 128) !important;
+  
+}
+
+#retweet {
+  color: var(--button-primary) !important;
+}
+.liked {
+  color: rgb(249, 24, 128) !important;
+  
+}
+
+.retweet {
+  color: var(--button-primary) !important;
 }

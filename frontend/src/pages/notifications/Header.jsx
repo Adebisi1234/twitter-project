@@ -24,7 +24,7 @@ export default function Header({ setMentions }) {
             mentions.current.classList.remove("border-b-4");
             setMentions(false);
           }}
-          className="border-b-4 !border-b-blue-400"
+          className="border-b-4 !border-[var(--button-primary)]"
         >
           All
         </div>
@@ -35,7 +35,7 @@ export default function Header({ setMentions }) {
             mentions.current.classList.add("border-b-4");
             setMentions(true);
           }}
-          className=" !border-b-blue-400"
+          className=" !border-[var(--button-primary)]"
         >
           Mentions
         </div>

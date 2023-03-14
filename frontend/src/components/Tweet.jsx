@@ -63,7 +63,7 @@ const Tweet = ({ post }) => {
           )}
           {post.audioUrl && (
             <audio controls>
-              <source src={post.audioUrl} type="audio/mp3"></source>
+              <source src={post.audioUrl} type="video/webm"></source>
             </audio>
           )}
         </Link>
@@ -71,8 +71,9 @@ const Tweet = ({ post }) => {
           <div className="contain gap-2 flex justify-center items-center">
             <div
               className="w-5 h-5"
-              onClick={() => {
+              onClick={(e) => {
                 if (count === 0) {
+                  e.target.classList.add("liked");
                   dispatch(like({ id: post._id }));
                   axios
                     .post(
@@ -101,6 +102,7 @@ const Tweet = ({ post }) => {
                   setCount((count + 1) % 2);
                 } else {
                   dispatch(dislike({ id: post._id }));
+                  e.target.classList.remove("liked");
                   axios.post(
                     "https://my-twitter-backend.onrender.com/posts/dislike",
                     {
@@ -137,8 +139,9 @@ const Tweet = ({ post }) => {
           <div className="contain gap-2 flex justify-center items-center">
             <div
               className="w-5 h-5"
-              onClick={() => {
+              onClick={(e) => {
                 if (recount === 0) {
+                  e.target.classList.add("retweet");
                   dispatch(retweet({ id: post._id }));
                   axios
                     .post(
@@ -167,6 +170,7 @@ const Tweet = ({ post }) => {
                   setRecount((recount + 1) % 2);
                 } else {
                   dispatch(undoRetweet({ id: post._id }));
+                  e.target.classList.remove("retweet");
                   axios.post(
                     "https://my-twitter-backend.onrender.com/posts/undoretweet",
                     {

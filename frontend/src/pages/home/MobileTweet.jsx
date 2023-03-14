@@ -7,17 +7,17 @@ export default function MobileTweet() {
       audio: true,
     });
     window.localStream = device;
-    const items = [];
+    let items = [];
     device.then((stream) => {
-      const recorder = new MediaRecorder(stream);
+      let recorder = new MediaRecorder(stream);
       recorder.ondataavailable = (e) => {
         items.push(e.data);
         if (recorder.state == "inactive") {
-          stream.getAudioTracks().forEach((x) => x.stop());
           const blob = new Blob(items, { type: "audio/mp3" });
           blob.name = "new audio";
           blob.webkitRelativePath = "";
           setRecord(blob);
+          stream.getAudioTracks().forEach((x) => x.stop());
         }
       };
       recorder.start();

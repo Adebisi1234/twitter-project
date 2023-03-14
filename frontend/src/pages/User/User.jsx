@@ -32,11 +32,11 @@ export default function User() {
       <div className="big flex flex-col dark:bg-black dark:text-black bg-white text-black">
         <div
           className="cover-img relative h-48 lg:h-52 w-full !bg-green-500 !dark:bg-red-500 !bg-cover "
-          style={{ background: `url(${user.coverImg})` }}
+          style={{ background: `url("${user.coverImg}")` }}
         >
           <div
             className="pp h-24 absolute w-24 rounded-full translate-y-36 ml-4 border border-white !bg-cover bg-black"
-            style={{ background: `url(${user.pp})` }}
+            style={{ background: `url("${user.pp}")` }}
           ></div>
         </div>
         <div className=" dark:bg-black dark:text-white  options">
@@ -67,7 +67,7 @@ export default function User() {
 
           <div className="tweets dark:bg-black dark:text-white flex items-center justify-evenly w-full gap-11">
             <h1
-              className="post font-extrabold border-b-4 border-b-[var(--button-primary)]"
+              className="post font-extrabold border-b-4 !border-b-[var(--button-primary)]"
               id="posts"
               ref={posts}
               onClick={() => {
@@ -79,7 +79,7 @@ export default function User() {
               Posts
             </h1>
             <h1
-              className="likes font-extrabold border-b-[var(--button-primary)]"
+              className="likes font-extrabold !border-b-[var(--button-primary)]"
               id="likes"
               ref={likes}
               onClick={() => {

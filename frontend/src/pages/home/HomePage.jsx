@@ -10,11 +10,13 @@ import { useSelector, useDispatch } from "react-redux";
 import { update } from "../../features/post/postSlice";
 import axios from "axios";
 import Post from "../../components/Post";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import Hr from "../../components/Hr";
 
 const HomePage = () => {
   const slide = useRef();
+  let location = useLocation();
+  console.log(location);
   const post = useSelector((state) => state.post);
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.user);
