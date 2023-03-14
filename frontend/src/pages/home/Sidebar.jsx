@@ -156,7 +156,7 @@ const Sidebar = () => {
           </li>
         </Link>
       </ul>
-      <div className="mt-auto mb-14 md:mb-0">
+      <div className="md:absolute md:bottom-0 w-full ">
         <button
           className=" w-full !text-white border-slate-300 border !bg-red-500 h-10 flex p-3 gap-1 mb-20 lg:mb-0 justify-center items-center rounded-3xl"
           onClick={() => {

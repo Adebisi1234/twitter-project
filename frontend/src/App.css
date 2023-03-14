@@ -80,7 +80,7 @@ input, textarea {
     --svg-light: rgb(15, 20, 25);
     --svg-dark: rgb(247, 249, 249);
     --bg-dark: rgb(24,34,45);
-    --bg-lessDark: rgb(30,39,50);
+    --bg-lessDark: rgb(247, 249, 249);
     --bg-light: white;
     --bg-lighter: rgb(247, 249, 249);
     --color-light: black;
@@ -149,7 +149,7 @@ svg {
   }
 
 .tagging {
-  box-shadow: rgba(101, 119, 134, 0.2) 0px 0px 15px, rgba(101, 119, 134, 0.15) 0px 0px 3px 1px;
+  box-shadow: rgba(101, 119, 134, 0.8) 15px 15px 15px 15px;
 }
 
 #primary {

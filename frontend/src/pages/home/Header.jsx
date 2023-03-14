@@ -1,6 +1,5 @@
 import { useRef } from "react";
-import profile from "../../assets/profile.svg";
-const Header = ({ imgs, slide, setIsFollowing }) => {
+const Header = ({ imgs, slide, setIsFollowing, setNewTheme }) => {
   const you = useRef();
   const follow = useRef();
   return (
@@ -38,6 +37,9 @@ const Header = ({ imgs, slide, setIsFollowing }) => {
           <svg
             className="w-8 h-8"
             viewBox="0 0 1024 1024"
+            onClick={() => {
+              setNewTheme(true);
+            }}
             version="1.1"
             xmlns="http://www.w3.org/2000/svg"
           >

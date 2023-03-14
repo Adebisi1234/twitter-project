@@ -23,9 +23,6 @@ export default function Notifications() {
       .then((res) => {
         res.data.length ? setNotifications(res.data) : "";
         setLoading(false);
-        if (notifications.length) {
-          setLast(document.querySelector(".notes:last-child"));
-        }
       });
     axios
       .get(`https://my-twitter-backend.onrender.com/users/get/${user.handle}`)
@@ -34,35 +31,33 @@ export default function Notifications() {
       });
   }, []);
 
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(() => {
-      setPage(page + 1);
-      setIsFetching(true);
-      const getNewNotifications = async (page) => {
-        const { data } = await axios.get(
-          `https://my-twitter-backend.onrender.com/notifications/all/${user.handle}/${page}`
-        );
-        if (data.length) {
-          setNotifications((prev) => {
-            return [...prev, data];
-          });
-          setIsFetching(false);
-        } else {
-          observer.unobserve(last);
-        }
-      };
+  const observer = new IntersectionObserver(
+    (entries) => {
+      const lastCard = entries[0];
+      console.log(lastCard);
+      if (!lastCard.isIntersecting) return;
       getNewNotifications(page);
-    });
-  });
-
-  const [last, setLast] = useState(document.querySelector(".notes:last-child"));
-  useEffect(() => {
-    if (last) {
-      observer.observe(last);
+      observer.unobserve(last);
+      observer.observe(document.querySelector("#last"));
+    },
+    {
+      threshold: 1,
     }
-    console.log("last");
-  }, [last]);
-  console.log(last);
+  );
+
+  const getNewNotifications = async (page) => {
+    console.log("observing");
+    setIsFetching(true);
+    const { data } = await axios.get(
+      `https://my-twitter-backend.onrender.com/notifications/all/${user.handle}/${page}`
+    );
+    setNotifications((prev) => {
+      return [...prev, ...data];
+    });
+    console.log(data);
+    setIsFetching(false);
+    setPage(page + 1);
+  };
 
   const mention = notifications.map((note) => {
     if (note.action.includes("mention")) {
@@ -79,7 +74,20 @@ export default function Notifications() {
     }
   });
 
-  const notes = notifications.map((note) => {
+  const notes = notifications.map((note, i) => {
+    if (i === notifications.length - 1) {
+      return (
+        <div className="last" id="last" key={note._id}>
+          <Note
+            text={note.text}
+            action={note.action}
+            name={note.actionHandle}
+            pp={note.pp}
+            PostId={note.PostId}
+          />
+        </div>
+      );
+    }
     return (
       <Note
         key={note._id}
@@ -91,6 +99,13 @@ export default function Notifications() {
       />
     );
   });
+
+  let last = document.querySelector("#last");
+  console.log(last);
+  if (last) {
+    observer.observe(last);
+  }
+
   return (
     <>
       {!loading ? (
@@ -98,11 +113,7 @@ export default function Notifications() {
           <Header setMentions={setMentions} />
           {notifications.length ? (
             <div className="pl-2">
-              {!mentions
-                ? notes
-                : mention
-                ? mention
-                : "No mentions please check back later"}
+              {!mentions ? notes : mention ? mention : <p>No mentions</p>}
               {isFetching && <Skeleton />}
             </div>
           ) : (

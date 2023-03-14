@@ -10,17 +10,17 @@ import { useSelector, useDispatch } from "react-redux";
 import { update } from "../../features/post/postSlice";
 import axios from "axios";
 import Post from "../../components/Post";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Hr from "../../components/Hr";
+import Theme from "../../components/Theme";
 
 const HomePage = () => {
   const slide = useRef();
-  let location = useLocation();
-  console.log(location);
   const post = useSelector((state) => state.post);
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.user);
   const [loading, setLoading] = useState();
+  const [newTheme, setNewTheme] = useState();
   const [isFollowing, setIsFollowing] = useState(false);
 
   useEffect(() => {
@@ -42,7 +42,6 @@ const HomePage = () => {
     axios
       .get(`https://my-twitter-backend.onrender.com/users/get/${user.handle}`)
       .then((data) => {
-        console.log(data.data);
         dispatch(login(data.data));
       });
   }, []);
@@ -66,6 +65,7 @@ const HomePage = () => {
           imgs={Object.keys(user).length && user.pp}
           slide={slide}
           setIsFollowing={setIsFollowing}
+          setNewTheme={setNewTheme}
         />
         <div className="hidden md:block">
           <NewTweet />
@@ -92,6 +92,11 @@ const HomePage = () => {
         <Post />
       </Link>
       <Bottom />
+      {newTheme && (
+        <div className="fixed flex justify-center items-center inset-0 !bg-[var(--bg-lessDark)] z-50">
+          <Theme setNewTheme={setNewTheme} />
+        </div>
+      )}
     </>
   );
 };

@@ -18,6 +18,7 @@ import Poster from "./pages/User/Poster";
 import Messages from "./pages/messages/Messages";
 import { io } from "socket.io-client";
 import MessagePage from "./pages/messages/MessagePage";
+import Theme from "./components/Theme";
 
 function App() {
   const socket = useRef();
