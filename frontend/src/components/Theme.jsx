@@ -1,5 +1,4 @@
 import React from "react";
-import Tweet from "../components/Tweet";
 
 export default function Theme({ setNewTheme }) {
   function setColor(color) {
@@ -12,10 +11,26 @@ export default function Theme({ setNewTheme }) {
         "--bg-lessDark",
         "rgba(171, 182, 182, 0.574)"
       );
+      document
+        .getElementById("logo")
+        .classList.remove("dark:bg-[url('/src/assets/logo.jpg')]");
+      document
+        .getElementById("logo")
+        .classList.remove("bg-[url('/src/assets/logo.jpg')]");
+      document
+        .getElementById("logo")
+        .classList.add("bg-[url('/src/assets/logoDark.jpg')]");
       document.documentElement.style.setProperty("--bg-dark", color);
       document.documentElement.style.setProperty("--color-light", "black");
       document.documentElement.style.setProperty("--color-dark", "black");
     } else {
+      document
+        .getElementById("logo")
+        .classList.add("bg-[url('/src/assets/logo.jpg')]");
+      document
+        .getElementById("logo")
+        .classList.remove("bg-[url('/src/assets/logoDark.jpg')]");
+
       document.documentElement.style.setProperty("--bg-light", color);
       document.documentElement.style.setProperty("--bg-dark", color);
       document.documentElement.style.setProperty("--color-light", "white");
@@ -39,39 +54,39 @@ export default function Theme({ setNewTheme }) {
         <h3 className="mb-2">Color</h3>
         <div className="colors  gap-x-14 gap-y-3 grid grid-cols-3 !bg-[var(--bg-lessDark)] py-3 rounded-md px-4 justify-between w-full">
           <div
-            className="blue rounded-full w-9 h-9 !bg-blue-500"
+            className="blue rounded-full w-9 h-9 !bg-[#1d9bf0]"
             onClick={() => {
-              setColor("blue");
+              setColor("1d9bf0");
             }}
           ></div>
           <div
-            className="yellow rounded-full w-9 h-9 !bg-yellow-500"
+            className="yellow rounded-full w-9 h-9 !bg-[#FFD400]"
             onClick={() => {
-              setColor("yellow");
+              setColor("#FFD400");
             }}
           ></div>
           <div
-            className="pink rounded-full w-9 h-9 !bg-pink-500"
+            className="pink rounded-full w-9 h-9 !bg-[#F91880]"
             onClick={() => {
-              setColor("pink");
+              setColor("#F91880");
             }}
           ></div>
           <div
-            className="purple rounded-full w-9 h-9 !bg-purple-500"
+            className="purple rounded-full w-9 h-9 !bg-[#7856FF]"
             onClick={() => {
-              setColor("purple");
+              setColor("#7856FF");
             }}
           ></div>
           <div
-            className="orange rounded-full w-9 h-9 !bg-orange-500"
+            className="orange rounded-full w-9 h-9 !bg-[#ff7a00]"
             onClick={() => {
-              setColor("orange");
+              setColor("#ff7a00");
             }}
           ></div>
           <div
-            className="green rounded-full w-9 h-9 !bg-green-500"
+            className="green rounded-full w-9 h-9 !bg-[#00ba7c]"
             onClick={() => {
-              setColor("green");
+              setColor("#00ba7c");
             }}
           ></div>
         </div>
@@ -99,9 +114,11 @@ export default function Theme({ setNewTheme }) {
                 }}
               />
             </div>
-            <p className="!text-[var(--button-primary)] !bg-transparent">DAY</p>
+            <p className="!text-[var(--button-primary)] !bg-transparent">
+              Default
+            </p>
           </div>
-          <div className="!bg-black/70 w-full h-12 flex items-center gap-2 border-4">
+          <div className="!bg-[rgb(24,34,45)] w-full h-12 flex items-center gap-2 border-4">
             <div className="w-8 h-8 rounded-full overflow-hidden mx-[20%]">
               <input
                 type="checkbox"
@@ -121,7 +138,7 @@ export default function Theme({ setNewTheme }) {
                 }}
               />
             </div>
-            <p className="!text-[var(--button-primary)] !bg-transparent">DIM</p>
+            <p className="!text-[var(--button-primary)] !bg-transparent">Dim</p>
           </div>
           <div className="!bg-black w-full h-12 flex items-center gap-2 border-4">
             <div className="w-8 h-8 rounded-full overflow-hidden mx-[20%]">
@@ -144,13 +161,13 @@ export default function Theme({ setNewTheme }) {
               />
             </div>
             <p className="!text-[var(--button-primary)] !bg-transparent">
-              NIGHT
+              Night
             </p>
           </div>
         </div>
       </div>
       <button
-        className="rounded-2xl p-2 !bg-[var(--button-primary)]"
+        className="rounded-2xl p-2 !bg-[var(--button-primary)] !text-white"
         onClick={() => {
           setNewTheme(false);
         }}

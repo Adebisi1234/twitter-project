@@ -18,14 +18,14 @@ const NewTweet = ({ status, record }) => {
     const device = navigator.mediaDevices.getUserMedia({
       audio: true,
     });
-    setUploadStatus("recording");
+    window.localStream = device;
     let items = [];
     device.then((stream) => {
       let recorder = new MediaRecorder(stream);
       recorder.ondataavailable = (e) => {
         items.push(e.data);
         if (recorder.state == "inactive") {
-          let blob = new Blob(items, { type: "audio/webm" });
+          const blob = new Blob(items, { type: "audio/mp3" });
           blob.name = "new audio";
           blob.webkitRelativePath = "";
           uploadFile(blob, setAudioUrl);
@@ -33,19 +33,21 @@ const NewTweet = ({ status, record }) => {
         }
       };
       recorder.start();
+
+      stopRecorder = () => {
+        if (recorder.state !== "inactive") {
+          recorder.stop();
+          console.log("Stopped");
+        }
+      };
     });
-    stopRecorder = () => {
-      if (recorder.state !== "inactive") {
-        recorder.stop();
-      }
-    };
   };
   const reference = useRef("");
   const tags = useRef("");
   const input = useRef("");
 
   let stopRecorder = () => {
-    console.log("let's what happens");
+    return;
   };
   const user = useSelector((state) => state.user.user);
   const [match, setMatch] = useState("");

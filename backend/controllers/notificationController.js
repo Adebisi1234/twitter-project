@@ -8,7 +8,7 @@ const getAllNotifications = async (req, res, next) => {
     })
       .sort({ createdAt: -1 })
       .skip(20 * page ? page : 0)
-      .limit(40);
+      .limit(20);
     await User.findOneAndUpdate(
       { handle: handle },
       {

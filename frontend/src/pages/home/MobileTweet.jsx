@@ -32,7 +32,6 @@ export default function MobileTweet() {
   };
   const ref = useRef();
   const [record, setRecord] = useState("");
-  const [status, setStatus] = useState("");
   let stopRecorder = () => {
     return;
   };
@@ -45,8 +44,6 @@ export default function MobileTweet() {
           ref={ref}
           className="h-[12%] sm:h-1/4 w-1/4 rounded-full"
           onTouchStart={() => {
-            setStatus("recording");
-
             ref.current.classList.add("animate-pulse");
             ref.current.classList.add("!bg-green-500");
             recorder();

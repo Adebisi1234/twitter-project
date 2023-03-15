@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Bottom from "../../components/Bottom";
 import Header from "./Header";
@@ -12,9 +12,44 @@ export default function Notifications() {
   const [loading, setLoading] = useState(true);
   const [mentions, setMentions] = useState(false);
   const [isFetching, setIsFetching] = useState(false);
-  const [page, setPage] = useState(0);
+  const [page, setPage] = useState(1);
+  const [hasMore, setHasMore] = useState(true);
   const user = useSelector((state) => state.user.user);
   const dispatch = useDispatch();
+
+  const observer = useRef();
+  const ref = useCallback(
+    (node) => {
+      if (loading) return;
+      if (observer.current) observer.current.disconnect();
+      observer.current = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting && hasMore) {
+          console.log("visible");
+          getNewNotifications(page);
+        }
+      });
+      if (node) observer.current.observe(node);
+      console.log(node);
+    },
+    [loading, hasMore]
+  );
+
+  // Getting new Notifications after pargination
+  const getNewNotifications = async (page) => {
+    setIsFetching(true);
+    const { data } = await axios.get(
+      `https://my-twitter-backend.onrender.com/notifications/all/${user.handle}/${page}`
+    );
+    if (data.length) {
+      setNotifications((prev) => {
+        return [...new Set([...prev, ...data])];
+      });
+    } else {
+      setHasMore(false);
+    }
+    setIsFetching(false);
+    setPage((page) => page + 1);
+  };
   useEffect(() => {
     axios
       .get(
@@ -30,34 +65,7 @@ export default function Notifications() {
         dispatch(login(data.data));
       });
   }, []);
-
-  const observer = new IntersectionObserver(
-    (entries) => {
-      const lastCard = entries[0];
-      console.log(lastCard);
-      if (!lastCard.isIntersecting) return;
-      getNewNotifications(page);
-      observer.unobserve(last);
-      observer.observe(document.querySelector("#last"));
-    },
-    {
-      threshold: 1,
-    }
-  );
-
-  const getNewNotifications = async (page) => {
-    console.log("observing");
-    setIsFetching(true);
-    const { data } = await axios.get(
-      `https://my-twitter-backend.onrender.com/notifications/all/${user.handle}/${page}`
-    );
-    setNotifications((prev) => {
-      return [...prev, ...data];
-    });
-    console.log(data);
-    setIsFetching(false);
-    setPage(page + 1);
-  };
+  console.log(page);
 
   const mention = notifications.map((note) => {
     if (note.action.includes("mention")) {
@@ -77,7 +85,7 @@ export default function Notifications() {
   const notes = notifications.map((note, i) => {
     if (i === notifications.length - 1) {
       return (
-        <div className="last" id="last" key={note._id}>
+        <div className="last" ref={ref} key={note._id}>
           <Note
             text={note.text}
             action={note.action}
@@ -100,12 +108,6 @@ export default function Notifications() {
     );
   });
 
-  let last = document.querySelector("#last");
-  console.log(last);
-  if (last) {
-    observer.observe(last);
-  }
-
   return (
     <>
       {!loading ? (
@@ -114,6 +116,7 @@ export default function Notifications() {
           {notifications.length ? (
             <div className="pl-2">
               {!mentions ? notes : mention ? mention : <p>No mentions</p>}
+              {!hasMore && <p className="text-center font-bold">.</p>}
               {isFetching && <Skeleton />}
             </div>
           ) : (

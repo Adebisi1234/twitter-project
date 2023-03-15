@@ -11,7 +11,7 @@ import Notifications from "./pages/notifications/Notifications";
 import TweetPage from "./pages/Tweet/TweetPage";
 import { Route, Routes } from "react-router-dom";
 import ErrorPage from "./components/ErrorPage";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import MobileTweet from "./pages/home/MobileTweet";
 import Poster from "./pages/User/Poster";
@@ -22,6 +22,7 @@ import Theme from "./components/Theme";
 
 function App() {
   const socket = useRef();
+  const [newTheme, setNewTheme] = useState(false);
   const user = useSelector((state) => state.user.user);
   socket.current = io("https://my-twitter-backend.onrender.com", {
     autoConnect: false,
@@ -29,15 +30,24 @@ function App() {
   return (
     <div className=" flex min-h-screen flex-col lg:grid lg:grid-cols-[1fr,2fr,1fr] dark:bg-black dark:text-white bg-white text-black">
       <div className="hidden lg:block">
-        <Sidebar />
+        <Sidebar setNewTheme={setNewTheme} />
       </div>
       <div className="lg:border-x ">
         <Routes>
           <Route
             path="/"
-            element={Object.keys(user).length ? <HomePage /> : <Login />}
+            element={
+              Object.keys(user).length ? (
+                <HomePage setNewTheme={setNewTheme} newTheme={newTheme} />
+              ) : (
+                <Login />
+              )
+            }
           />
-          <Route path="/home" element={<HomePage />} />
+          <Route
+            path="/home"
+            element={<HomePage setNewTheme={setNewTheme} newTheme={newTheme} />}
+          />
           <Route path="profile">
             <Route index element={<User />} />
             <Route path="edit" element={<EditProfile />} />
@@ -64,6 +74,11 @@ function App() {
       <div className="hidden lg:block">
         <Search />
       </div>
+      {newTheme && (
+        <div className="fixed flex justify-center items-center inset-0 !bg-[var(--bg-lessDark)] z-50">
+          <Theme setNewTheme={setNewTheme} />
+        </div>
+      )}
     </div>
   );
 }

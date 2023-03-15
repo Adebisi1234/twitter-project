@@ -127,7 +127,7 @@ const MainTweet = ({ id }) => {
           </div>
           <div className="contain gap-2 flex justify-center items-center">
             <div
-              className="w-5 dark:bg-[url('/src/assets/retweetDark.png')] bg-[url('/src/assets/retweet.png')] bg-left bg-cover h-5"
+              className="w-5 h-5"
               onClick={(e) => {
                 if (recount === 0) {
                   e.target.classList.add("retweet");

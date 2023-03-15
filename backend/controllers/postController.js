@@ -55,7 +55,7 @@ const getAllPosts = async (req, res, next) => {
   try {
     const handle = req.query.handle;
     if (!handle) {
-      const posts = await Post.find();
+      const posts = await Post.find().sort({ createdAt: -1 });
       return res.status(200).json(posts);
     }
     const posts = await Post.find({
@@ -82,6 +82,15 @@ const like = async (req, res, next) => {
     await Post.findByIdAndUpdate(req.body.id, {
       $inc: { likes: 1 },
     });
+    const user = user.findOne({ handle: req.body.handle });
+    if (!user.likes.includes(req.body.id)) {
+      await User.findOneAndUpdate(
+        { handle: req.body.handle },
+        {
+          $push: { likes: req.body.id },
+        }
+      );
+    }
     res.sendStatus(200);
   } catch (err) {
     next(err);
@@ -102,6 +111,15 @@ const dislike = async (req, res, next) => {
     await Post.findByIdAndUpdate(req.body.id, {
       $inc: { likes: -1 },
     });
+    const user = user.findOne({ handle: req.body.handle });
+    if (!user.likes.includes(req.body.id)) {
+      await User.findOneAndUpdate(
+        { handle: req.body.handle },
+        {
+          $pull: { likes: req.body.id },
+        }
+      );
+    }
     res.sendStatus(200);
   } catch (err) {
     next(err);

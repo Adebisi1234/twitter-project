@@ -14,13 +14,12 @@ import { Link } from "react-router-dom";
 import Hr from "../../components/Hr";
 import Theme from "../../components/Theme";
 
-const HomePage = () => {
+const HomePage = ({ newTheme, setNewTheme }) => {
   const slide = useRef();
   const post = useSelector((state) => state.post);
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.user);
   const [loading, setLoading] = useState();
-  const [newTheme, setNewTheme] = useState();
   const [isFollowing, setIsFollowing] = useState(false);
 
   useEffect(() => {
@@ -86,17 +85,12 @@ const HomePage = () => {
         ref={slide}
         id="slide"
       >
-        <Sidebar />
+        <Sidebar setNewTheme={setNewTheme} />
       </div>
       <Link to="/newtweet" className="lg:hidden">
         <Post />
       </Link>
       <Bottom />
-      {newTheme && (
-        <div className="fixed flex justify-center items-center inset-0 !bg-[var(--bg-lessDark)] z-50">
-          <Theme setNewTheme={setNewTheme} />
-        </div>
-      )}
     </>
   );
 };

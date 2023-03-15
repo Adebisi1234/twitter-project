@@ -75,12 +75,19 @@ input, textarea {
     border-top-right-radius: 15%;
 }
 
+.logo {
+  background: url("/src/assets/logo.jpg");
+}
+.logoDark {
+  background: url("/src/assets/logoDark.jpg");
+}
+
 :root {
     --button-primary: rgb(0, 186, 124);
     --svg-light: rgb(15, 20, 25);
     --svg-dark: rgb(247, 249, 249);
     --bg-dark: rgb(24,34,45);
-    --bg-lessDark: rgb(247, 249, 249);
+    --bg-lessDark: #16181c67;
     --bg-light: white;
     --bg-lighter: rgb(247, 249, 249);
     --color-light: black;
@@ -104,12 +111,13 @@ svg {
   color: rgb(139, 152, 165);
 
 }
-.buttons {
-  color: rgb(139, 152, 165);
+.options .buttons * {
+  fill: var(--button-primary)
 }
+
 .trend * {
-    background-color: inherit !important;
-    color: inherit !important;
+  background-color: inherit !important;
+  color: inherit !important;
 }
 
 @keyframes rotate {
@@ -132,7 +140,7 @@ svg {
     width: 50px;
     height: 50px;
     margin: 110px auto 0;
-    border: solid 5px rgb(35, 123, 35) !important;
+    border: solid 5px var(--button-primary) !important;
     border-radius: 50%;
     border-right-color: transparent !important;
     border-bottom-color: transparent !important;
@@ -149,25 +157,26 @@ svg {
   }
 
 .tagging {
-  box-shadow: rgba(101, 119, 134, 0.8) 15px 15px 15px 15px;
+  box-shadow: rgba(101, 119, 134, 0.8) 2px 2px 2px 2px;
 }
 
 #primary {
   color: var(--button-primary);
+  fill: var(--button-primary);
 }
 #liked {
-  color: rgb(249, 24, 128) !important;
+  fill: rgb(249, 24, 128);
   
 }
 
 #retweet {
-  color: var(--button-primary) !important;
+  fill: var(--button-primary) !important;
 }
 .liked {
-  color: rgb(249, 24, 128) !important;
+  fill: rgb(249, 24, 128) !important;
   
 }
 
 .retweet {
-  color: var(--button-primary) !important;
+  fill: var(--button-primary) !important;
 }
