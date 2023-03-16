@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useRef, useState } from "react";
 import ProfilePix from "../../components/ProfilePix";
 import { useSelector, useDispatch } from "react-redux";
 import {
@@ -9,14 +9,20 @@ import {
 } from "../../features/post/postSlice";
 import Skeleton from "../../components/Skeleton";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 const MainTweet = ({ id }) => {
   const [count, setCount] = useState(0);
+  const [toRetweet, setToRetweet] = useState(false);
   const [recount, setRecount] = useState(0);
   const posts = useSelector((state) => state.post);
   const user = useSelector((state) => state.user.user);
   const post = posts[0].find((post) => post._id === id);
   const dispatch = useDispatch();
+  const ref = useRef();
+
+  const quote =
+    post.quoteId && posts[0].find((quote) => quote._id === post.quoteId);
   return Object.keys(post).length ? (
     <div className="border-b scroll-mb-20 m-auto max-w-2xl flex flex-col pt-2 dark:bg-black dark:text-white bg-white text-black py-2 ">
       <div className="details">
@@ -51,6 +57,11 @@ const MainTweet = ({ id }) => {
             <source src={post.audioUrl} type="video/webm"></source>
             Somethings going on
           </audio>
+        )}
+        {post.quoteId && (
+          <div className="w-full px-2 h-3/5 border-2 pointer-events-none">
+            <Tweet post={quote} />
+          </div>
         )}
         <div className="time my-3 flex gap-3 w-full">
           <p>{post.createdAt.slice(0, 10)}</p>
@@ -127,50 +138,85 @@ const MainTweet = ({ id }) => {
           </div>
           <div className="contain gap-2 flex justify-center items-center">
             <div
-              className="w-5 h-5"
-              onClick={(e) => {
-                if (recount === 0) {
-                  e.target.classList.add("retweet");
-                  dispatch(retweet({ id: post._id }));
-                  axios
-                    .post(
-                      "https://my-twitter-backend.onrender.com/posts/retweet",
-                      {
-                        id: post._id,
-                      }
-                    )
-                    .then(() => {
-                      axios.post(
-                        "https://my-twitter-backend.onrender.com/notifications/new",
-                        {
-                          actionHandle: user.handle,
-                          handle: post.handle,
-                          username: user.username,
-                          action: "retweet your post",
-                          PostId: post._id,
-                          pp: user.pp,
-                          text: post.content.slice(0, 100),
-                        }
-                      );
-                    })
-                    .catch((err) => {
-                      console.log(err);
-                    });
-                  setRecount((recount + 1) % 2);
-                } else {
-                  dispatch(undoRetweet({ id: post._id }));
-                  e.target.classList.remove("retweet");
-                  axios.post(
-                    "https://my-twitter-backend.onrender.com/posts/undoretweet",
-                    {
-                      id: post._id,
-                    }
-                  );
-                  setRecount((recount + 1) % 2);
-                }
+              className="w-5 h-5 relative"
+              onMouseEnter={() => {
+                setToRetweet(true);
+                console.log("over");
+              }}
+              onMouseLeave={() => {
+                setToRetweet(false);
+                console.log("over");
+              }}
+              onTouchStart={() => {
+                setToRetweet(true);
+                console.log("over");
               }}
             >
-              <svg viewBox="0 0 24 24" aria-hidden="true">
+              {toRetweet && (
+                <div className="absolute bottom-5 bg-[var(--bg-light)] p-2 w-fit">
+                  <Link to={`/newtweet/${post._id}`}>
+                    <p
+                      className="w-fit p-2"
+                      id="quote"
+                      onClick={() => {
+                        setToRetweet(false);
+                        console.log("Clicked");
+                      }}
+                    >
+                      Quote
+                    </p>
+                  </Link>
+                  <p
+                    className="w-fit p-2"
+                    id="quote"
+                    onClick={() => {
+                      if (recount === 0) {
+                        ref.current.classList.add("retweet");
+                        dispatch(retweet({ id: post._id }));
+                        axios
+                          .post(
+                            "https://my-twitter-backend.onrender.com/posts/retweet",
+                            {
+                              id: post._id,
+                            }
+                          )
+                          .then(() => {
+                            axios.post(
+                              "https://my-twitter-backend.onrender.com/notifications/new",
+                              {
+                                actionHandle: user.handle,
+                                handle: post.handle,
+                                username: user.username,
+                                action: "retweet your post",
+                                PostId: post._id,
+                                pp: user.pp,
+                                text: post.content.slice(0, 100),
+                              }
+                            );
+                          })
+                          .catch((err) => {
+                            console.log(err);
+                          });
+                        setRecount((recount + 1) % 2);
+                      } else {
+                        dispatch(undoRetweet({ id: post._id }));
+                        ref.current.classList.remove("retweet");
+                        axios.post(
+                          "https://my-twitter-backend.onrender.com/posts/undoretweet",
+                          {
+                            id: post._id,
+                          }
+                        );
+                        setRecount((recount + 1) % 2);
+                      }
+                      setToRetweet(false);
+                    }}
+                  >
+                    Retweet
+                  </p>
+                </div>
+              )}
+              <svg viewBox="0 0 24 24" aria-hidden="true" ref={ref}>
                 <g>
                   <path d="M4.5 3.88l4.432 4.14-1.364 1.46L5.5 7.55V16c0 1.1.896 2 2 2H13v2H7.5c-2.209 0-4-1.79-4-4V7.55L1.432 9.48.068 8.02 4.5 3.88zM16.5 6H11V4h5.5c2.209 0 4 1.79 4 4v8.45l2.068-1.93 1.364 1.46-4.432 4.14-4.432-4.14 1.364-1.46 2.068 1.93V8c0-1.1-.896-2-2-2z"></path>
                 </g>

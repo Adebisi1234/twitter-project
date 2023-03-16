@@ -10,10 +10,11 @@ import {
   getDownloadURL,
 } from "firebase/storage";
 import app from "../../firebase";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Tag from "../../components/Tag";
 
 const NewTweet = ({ status, record }) => {
+  const { quote } = useParams();
   const recorder = () => {
     const device = navigator.mediaDevices.getUserMedia({
       audio: true,
@@ -216,11 +217,12 @@ const NewTweet = ({ status, record }) => {
                       pp: user.pp,
                       img: imageUrl,
                       audioUrl: audioUrl,
+                      quoteId: quote,
                     }
                   )
                   .then((data) => {
                     dispatch(newPost(data.data));
-                    if (window.innerWidth < 1024) {
+                    if (window.innerWidth < 1024 || quote) {
                       navigate(-1);
                     }
                   })

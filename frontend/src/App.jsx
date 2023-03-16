@@ -57,7 +57,7 @@ function App() {
           <Route path="login" element={<Login />} />
           <Route path="notifications" element={<Notifications />} />
           <Route path="tweetPage/:id" element={<TweetPage />} />
-          <Route path="newtweet" element={<MobileTweet />} />
+          <Route path="newtweet/:quote?" element={<MobileTweet />} />
           <Route path="search" element={<Search />} />
           <Route path="searchPage/:id" element={<SearchPage />} />
           <Route

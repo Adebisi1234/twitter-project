@@ -17,12 +17,14 @@ input, textarea {
     border-color: rgba(95, 93, 93, 0.256);
 }
 
+
 @media (prefers-color-scheme: dark) {
     #root * {
         color: var(--color-dark);
         border-color: rgba(255, 255, 255, 0.256);
         background-color: var(--bg-dark);
     }
+    
     svg {
       color: rgb(83, 100, 113)
     }
@@ -99,7 +101,7 @@ input, textarea {
 }
 
 .trend:hover, li:hover {
-    background-color: rgb(0, 186, 124) !important;
+    background-color: var(--button-primary) !important;
     color: white !important;
 }
 svg {
@@ -179,4 +181,8 @@ svg {
 
 .retweet {
   fill: var(--button-primary) !important;
+}
+
+#quote:hover {
+  background-color: var(--button-primary);
 }

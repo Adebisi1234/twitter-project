@@ -11,25 +11,29 @@ export default function Theme({ setNewTheme }) {
         "--bg-lessDark",
         "rgba(171, 182, 182, 0.574)"
       );
-      document
-        .getElementById("logo")
-        .classList.remove("dark:bg-[url('/src/assets/logo.jpg')]");
-      document
-        .getElementById("logo")
-        .classList.remove("bg-[url('/src/assets/logo.jpg')]");
-      document
-        .getElementById("logo")
-        .classList.add("bg-[url('/src/assets/logoDark.jpg')]");
+      if (document.getElementById("logo")) {
+        document
+          .getElementById("logo")
+          .classList.remove("dark:bg-[url('/src/assets/logo.jpg')]");
+        document
+          .getElementById("logo")
+          .classList.remove("bg-[url('/src/assets/logo.jpg')]");
+        document
+          .getElementById("logo")
+          .classList.add("bg-[url('/src/assets/logoDark.jpg')]");
+      }
       document.documentElement.style.setProperty("--bg-dark", color);
       document.documentElement.style.setProperty("--color-light", "black");
       document.documentElement.style.setProperty("--color-dark", "black");
     } else {
-      document
-        .getElementById("logo")
-        .classList.add("bg-[url('/src/assets/logo.jpg')]");
-      document
-        .getElementById("logo")
-        .classList.remove("bg-[url('/src/assets/logoDark.jpg')]");
+      if (document.getElementById("logo")) {
+        document
+          .getElementById("logo")
+          .classList.add("bg-[url('/src/assets/logo.jpg')]");
+        document
+          .getElementById("logo")
+          .classList.remove("bg-[url('/src/assets/logoDark.jpg')]");
+      }
 
       document.documentElement.style.setProperty("--bg-light", color);
       document.documentElement.style.setProperty("--bg-dark", color);
@@ -56,7 +60,7 @@ export default function Theme({ setNewTheme }) {
           <div
             className="blue rounded-full w-9 h-9 !bg-[#1d9bf0]"
             onClick={() => {
-              setColor("1d9bf0");
+              setColor("#1d9bf0");
             }}
           ></div>
           <div
