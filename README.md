@@ -2,8 +2,8 @@
 A full stack twitter clone.
 
 **Built with:**
-- Frontend: React, Redux, Socket.io
-- Backend: Node, express, Socket.io and MongoDb
+- Frontend: React, Redux, Firebase(Auth), Tailwindcss
+- Backend: Node, express, MongoDb and Socket.io
 
 **Features:**
 - Making a post and commenting
@@ -14,6 +14,7 @@ A full stack twitter clone.
 
 **Features I plan on implementing:**
 - Ability to tag users ☑️
+- Ability to quote existing posts ☑️
 - Making audio posts ☑️
 - Adding indicator for new notifications☑️
 - Adding unit testing

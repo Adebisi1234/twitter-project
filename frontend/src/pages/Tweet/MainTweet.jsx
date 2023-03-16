@@ -10,6 +10,7 @@ import {
 import Skeleton from "../../components/Skeleton";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import Tweet from "../../components/Tweet";
 
 const MainTweet = ({ id }) => {
   const [count, setCount] = useState(0);
@@ -60,7 +61,7 @@ const MainTweet = ({ id }) => {
         )}
         {post.quoteId && (
           <div className="w-full px-2 h-3/5 border-2 pointer-events-none">
-            <Tweet post={quote} />
+            <Tweet post={quote} isQuote={true} />
           </div>
         )}
         <div className="time my-3 flex gap-3 w-full">
