@@ -16,7 +16,7 @@ const Tweet = ({ post, isQuote }) => {
   const [recount, setRecount] = useState(0);
   const user = useSelector((state) => state.user.user);
   const posts = useSelector((state) => state.post);
-  const isComment = posts[1].find((comment) => comment._id === post._id);
+  const isComment = posts[1].find((comment) => comment._id === post?._id);
   const dispatch = useDispatch();
   const [toRetweet, setToRetweet] = useState(false);
   const ref = useRef();
@@ -72,7 +72,7 @@ const Tweet = ({ post, isQuote }) => {
               <source src={post.audioUrl} type="video/webm"></source>
             </audio>
           )}
-          {post.quoteId && (
+          {post.quoteId && !isQuote && (
             <div className="w-full px-2 h-3/5 border-2 pointer-events-none">
               <Tweet post={quote} isQuote={true} />
             </div>
