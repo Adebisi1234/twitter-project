@@ -11,15 +11,17 @@ import Notifications from "./pages/notifications/Notifications";
 import TweetPage from "./pages/Tweet/TweetPage";
 import { Route, Routes } from "react-router-dom";
 import ErrorPage from "./components/ErrorPage";
-import { useRef, useState } from "react";
+import { useRef, useState, lazy, Suspense } from "react";
 import { useSelector } from "react-redux";
 import MobileTweet from "./pages/home/MobileTweet";
 import Poster from "./pages/User/Poster";
 import Messages from "./pages/messages/Messages";
 import { io } from "socket.io-client";
 import MessagePage from "./pages/messages/MessagePage";
-import Theme from "./components/Theme";
+import Skeleton from "./components/Skeleton";
+// import Theme from "./components/Theme";
 
+const Theme = lazy(() => import("./components/Theme"));
 function App() {
   const socket = useRef();
   const [newTheme, setNewTheme] = useState(false);
@@ -27,6 +29,7 @@ function App() {
   socket.current = io("https://my-twitter-backend.onrender.com", {
     autoConnect: false,
   });
+  const ref = useRef();
   return (
     <div className=" flex min-h-screen flex-col lg:grid lg:grid-cols-[1fr,2fr,1fr] dark:bg-black dark:text-white bg-white text-black">
       <div className="hidden lg:block">
@@ -75,8 +78,18 @@ function App() {
         <Search />
       </div>
       {newTheme && (
-        <div className="fixed flex justify-center items-center inset-0 !bg-[var(--bg-lessDark)] z-50">
-          <Theme setNewTheme={setNewTheme} />
+        <div
+          className="fixed flex justify-center items-center inset-0 !bg-[var(--bg-lessDark)] z-50"
+          ref={ref}
+          onClick={(e) => {
+            if (e.target === ref.current) {
+              setNewTheme(false);
+            }
+          }}
+        >
+          <Suspense fallback={<Skeleton />}>
+            <Theme setNewTheme={setNewTheme} />
+          </Suspense>
         </div>
       )}
     </div>

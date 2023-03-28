@@ -84,12 +84,8 @@ const like = async (req, res, next) => {
     });
     const user = user.findOne({ handle: req.body.handle });
     if (!user.likes.includes(req.body.id)) {
-      await User.findOneAndUpdate(
-        { handle: req.body.handle },
-        {
-          $push: { likes: req.body.id },
-        }
-      );
+      await user.likes.push(req.body.id);
+      await user.save();
     }
     res.sendStatus(200);
   } catch (err) {
@@ -112,13 +108,9 @@ const dislike = async (req, res, next) => {
       $inc: { likes: -1 },
     });
     const user = user.findOne({ handle: req.body.handle });
-    if (!user.likes.includes(req.body.id)) {
-      await User.findOneAndUpdate(
-        { handle: req.body.handle },
-        {
-          $pull: { likes: req.body.id },
-        }
-      );
+    if (user.likes.includes(req.body.id)) {
+      await user.likes.pull(req.body.id);
+      await user.save();
     }
     res.sendStatus(200);
   } catch (err) {
@@ -138,7 +130,6 @@ const undoRetweet = async (req, res, next) => {
 
 const search = async (req, res, next) => {
   const query = req.query.q;
-  console.log(query);
   try {
     const posts = await Post.find({
       content: { $regex: query, $options: "i" },

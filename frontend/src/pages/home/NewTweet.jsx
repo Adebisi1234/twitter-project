@@ -180,11 +180,11 @@ const NewTweet = ({ status, record }) => {
                 <div
                   ref={reference}
                   className=" w-7 h-7 relative cursor-pointer !bg-cover"
-                  onMouseUp={() => {
+                  onPointerUp={() => {
                     reference.current.classList.remove("animate-pulse");
                     stopRecorder();
                   }}
-                  onMouseDown={() => {
+                  onPointerDown={() => {
                     reference.current.classList.add("animate-pulse");
                     recorder();
                   }}

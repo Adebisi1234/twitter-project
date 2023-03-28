@@ -3,7 +3,7 @@ const Header = ({ imgs, slide, setIsFollowing, setNewTheme }) => {
   const you = useRef();
   const follow = useRef();
   return (
-    <header className="w-full dark:text-white border-b-2 bg-transparent backdrop-blur-lg lg:z-50 sticky top-0 text-black">
+    <header className="w-full dark:text-[var(--color-dark)] border-b-2 bg-transparent backdrop-blur-lg z-30 text-[var(--color-white)] sticky top-0">
       <div className="flex w-full justify-between p-2 border-b-2">
         {imgs && window.innerWidth < 756 ? (
           <img

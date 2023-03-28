@@ -5,13 +5,14 @@ import Hr from "../../components/Hr";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Skeleton from "../../components/Skeleton";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { login } from "../../features/auth/userSlice";
 
 export default function User() {
   const posts = useRef();
   const likes = useRef();
+  const [like, setLikes] = useState(false);
   const user = useSelector((state) => state.user.user);
   const dispatch = useDispatch();
   const post = useSelector((state) => state.post);
@@ -19,6 +20,17 @@ export default function User() {
   const tweets = userPost.map((post) => {
     return <Tweet key={post._id} post={post} />;
   });
+
+  const liked = post[0].filter((post) => {
+    if (user) {
+      user.likes?.includes(post._id);
+    }
+  });
+
+  const likedPost = liked.map((post) => {
+    return <Tweet key={post._id} post={post} />;
+  });
+
   useEffect(() => {
     axios
       .get(`https://my-twitter-backend.onrender.com/users/get/${user.handle}`)
@@ -72,7 +84,7 @@ export default function User() {
               ref={posts}
               onClick={() => {
                 posts.current.classList.add("border-b-4");
-
+                setLikes(false);
                 likes.current.classList.remove("border-b-4");
               }}
             >
@@ -84,14 +96,18 @@ export default function User() {
               ref={likes}
               onClick={() => {
                 posts.current.classList.remove("border-b-4");
-
+                setLikes(true);
                 likes.current.classList.add("border-b-4");
               }}
             >
               Likes
             </h1>
           </div>
-          {tweets}
+          {!like
+            ? tweets
+            : likedPost.length
+            ? likedPost
+            : "Please like more posts"}
         </div>
         <Hr />
       </div>
