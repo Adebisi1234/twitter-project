@@ -186,3 +186,7 @@ svg {
 #quote:hover {
   background-color: var(--button-primary);
 }
+
+.contain svg:hover {
+  transform: scale(1.25);
+}

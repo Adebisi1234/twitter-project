@@ -212,7 +212,7 @@ const Sidebar = ({ setNewTheme }) => {
           Theme
         </li>
       </ul>
-      <div className="absolute bottom-5 sm:bottom-0 w-[90%] ">
+      <div className="grow flex items-end">
         <button
           className=" w-full !text-white border-slate-300 border !bg-red-500 h-10 flex p-3 gap-1 mb-20 lg:mb-0 justify-center items-center rounded-3xl"
           onClick={() => {

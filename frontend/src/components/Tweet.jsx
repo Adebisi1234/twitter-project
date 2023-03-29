@@ -30,7 +30,7 @@ const Tweet = ({ post, isQuote }) => {
         <ProfilePix pp={post.pp} handle={post.handle} />
       ) : post.handle !== user.handle ? (
         <Link to={`/profile/poster/${post.handle}`}>
-          <div className="w-9 h-9">
+          <div className="w-14 h-14 mx-3">
             <svg viewBox="0 0 24 24" aria-hidden="true">
               <g>
                 <path d="M5.651 19h12.698c-.337-1.8-1.023-3.21-1.945-4.19C15.318 13.65 13.838 13 12 13s-3.317.65-4.404 1.81c-.922.98-1.608 2.39-1.945 4.19zm.486-5.56C7.627 11.85 9.648 11 12 11s4.373.85 5.863 2.44c1.477 1.58 2.366 3.8 2.632 6.46l.11 1.1H3.395l.11-1.1c.266-2.66 1.155-4.88 2.632-6.46zM12 4c-1.105 0-2 .9-2 2s.895 2 2 2 2-.9 2-2-.895-2-2-2zM8 6c0-2.21 1.791-4 4-4s4 1.79 4 4-1.791 4-4 4-4-1.79-4-4z"></path>
@@ -163,27 +163,42 @@ const Tweet = ({ post, isQuote }) => {
               </Link>
               {isComment ? isComment.commentCount : post.commentCount}
             </div>
-            <div className="contain gap-2 relative flex justify-center items-center">
+            <div
+              className="contain gap-2 relative flex justify-center items-center"
+              onClick={(e) => {
+                console.log("Haa");
+              }}
+            >
               <div
                 className="w-5 h-5 relative"
-                onPointerEnter={() => {
+                onMouseEnter={() => {
                   setToRetweet(true);
+                  console.log("over");
                 }}
-                onPointerLeave={() => {
+                onMouseLeave={() => {
                   setToRetweet(false);
+                  console.log("over");
+                }}
+                onTouchStart={() => {
+                  setToRetweet(true);
+                  console.log("over");
                 }}
               >
                 {toRetweet && (
-                  <div className="absolute -left-3 bottom-5 bg-[var(--bg-light)] p-2 w-fit">
-                    <Link to={`/newtweet/${post._id}`}>
-                      <p
-                        className="w-fit p-2"
-                        id="quote"
-                        onClick={() => {
-                          setToRetweet(false);
-                          console.log("Clicked");
-                        }}
-                      >
+                  <div
+                    className="absolute -left-3 bottom-5 bg-[var(--bg-light)] p-2 w-fit"
+                    onClick={(e) => {
+                      console.log(e.target);
+                    }}
+                  >
+                    <Link
+                      to={`/newtweet/${post._id}`}
+                      onClick={(e) => {
+                        console.log(e.target);
+                        setToRetweet(false);
+                      }}
+                    >
+                      <p className="w-fit p-2" id="quote">
                         Quote
                       </p>
                     </Link>
@@ -237,17 +252,7 @@ const Tweet = ({ post, isQuote }) => {
                     </p>
                   </div>
                 )}
-                <svg
-                  viewBox="0 0 24 24"
-                  aria-hidden="true"
-                  ref={ref}
-                  onPointerEnter={(e) => {
-                    e.target.classList.add("scale-125");
-                  }}
-                  onPointerLeave={(e) => {
-                    e.target.classList.remove("scale-125");
-                  }}
-                >
+                <svg viewBox="0 0 24 24" aria-hidden="true" ref={ref}>
                   <g>
                     <path d="M4.5 3.88l4.432 4.14-1.364 1.46L5.5 7.55V16c0 1.1.896 2 2 2H13v2H7.5c-2.209 0-4-1.79-4-4V7.55L1.432 9.48.068 8.02 4.5 3.88zM16.5 6H11V4h5.5c2.209 0 4 1.79 4 4v8.45l2.068-1.93 1.364 1.46-4.432 4.14-4.432-4.14 1.364-1.46 2.068 1.93V8c0-1.1-.896-2-2-2z"></path>
                   </g>

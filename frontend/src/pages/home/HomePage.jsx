@@ -81,7 +81,7 @@ const HomePage = ({ newTheme, setNewTheme }) => {
         <Hr />
       </div>
       <div
-        className=" fixed lg:hidden top-0 left-0 z-50 -translate-x-full w-full transition-all duration-300 !bg-transparent"
+        className=" fixed lg:hidden top-0 left-0 z-50 -translate-x-full w-full transition-all duration-300 !bg-[rgba(0,0,0,0.3)]"
         ref={slide}
         id="slide"
         onClick={(e) => {
@@ -90,7 +90,7 @@ const HomePage = ({ newTheme, setNewTheme }) => {
           }
         }}
       >
-        <div className="size max-w-[280px] dark:bg-[var(--bg-dark)] dark:text-[var(--color-dark)] bg-[var(--bg-light)] text-[var(--color-light)] h-screen">
+        <div className="size max-w-[320px] dark:bg-[var(--bg-dark)] dark:text-[var(--color-dark)] bg-[var(--bg-light)] text-[var(--color-light)] h-screen">
           <Sidebar setNewTheme={setNewTheme} />
         </div>
       </div>

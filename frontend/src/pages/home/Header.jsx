@@ -57,7 +57,7 @@ const Header = ({ imgs, slide, setIsFollowing, setNewTheme }) => {
       </div>
       <div className="flex items-center h-11 w-full">
         <button
-          className=" w-full h-full border-r-2"
+          className=" w-full h-full"
           onClick={() => {
             you.current.classList.add("border-b-4");
             follow.current.classList.remove("border-b-4");
