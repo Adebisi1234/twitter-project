@@ -128,8 +128,6 @@ const MainTweet = ({ id }) => {
                   setCount((count + 1) % 2);
                 }
               }}
-              onPointerEnter={(e) => {}}
-              onPointerLeave={(e) => {}}
             >
               <svg
                 viewBox="0 0 24 24"
