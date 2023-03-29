@@ -15,6 +15,7 @@ export default function Poster() {
   const { handle } = useParams();
   const users = useSelector((state) => state.user.user);
   const [user, setUser] = useState(undefined);
+  const [like, setLikes] = useState(false);
   useEffect(() => {
     const getUser = async (handle) => {
       const { data } = await axios.get(
@@ -26,7 +27,18 @@ export default function Poster() {
   }, []);
   const post = useSelector((state) => state.post);
   const userPost = post[0].filter((post) => post.handle === handle);
+
+  const liked = post[0].filter((post) => {
+    if (user) {
+      user.likes?.includes(post._id);
+    }
+  });
+  console.log(liked);
   const tweets = userPost.map((post) => {
+    return <Tweet key={post._id} post={post} />;
+  });
+
+  const likedPost = liked.map((post) => {
     return <Tweet key={post._id} post={post} />;
   });
 
@@ -93,7 +105,7 @@ export default function Poster() {
               ref={posts}
               onClick={() => {
                 posts.current.classList.add("border-b-4");
-
+                setLikes(false);
                 likes.current.classList.remove("border-b-4");
               }}
             >
@@ -105,14 +117,18 @@ export default function Poster() {
               ref={likes}
               onClick={() => {
                 posts.current.classList.remove("border-b-4");
-
+                setLikes(true);
                 likes.current.classList.add("border-b-4");
               }}
             >
               Likes
             </h1>
           </div>
-          {tweets}
+          {!like
+            ? tweets
+            : likedPost.length
+            ? likedPost
+            : "Please like more posts"}
         </div>
         <Hr />
       </div>

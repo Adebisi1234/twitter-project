@@ -1,5 +1,3 @@
-import React from "react";
-
 export default function Theme({ setNewTheme }) {
   function setColor(color) {
     document.documentElement.style.setProperty("--button-primary", color);

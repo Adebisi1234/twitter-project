@@ -81,11 +81,18 @@ const HomePage = ({ newTheme, setNewTheme }) => {
         <Hr />
       </div>
       <div
-        className=" fixed lg:hidden top-0 left-0 dark:bg-black dark:text-white bg-white text-black -translate-x-full max-w-full min-w-[280px] transition-all duration-300"
+        className=" fixed lg:hidden top-0 left-0 z-50 -translate-x-full w-full transition-all duration-300 !bg-transparent"
         ref={slide}
         id="slide"
+        onClick={(e) => {
+          if (e.target === slide.current) {
+            slide.current.classList.toggle("-translate-x-full");
+          }
+        }}
       >
-        <Sidebar setNewTheme={setNewTheme} />
+        <div className="size max-w-[280px] dark:bg-[var(--bg-dark)] dark:text-[var(--color-dark)] bg-[var(--bg-light)] text-[var(--color-light)] h-screen">
+          <Sidebar setNewTheme={setNewTheme} />
+        </div>
       </div>
       <Link to="/newtweet" className="lg:hidden">
         <Post />
