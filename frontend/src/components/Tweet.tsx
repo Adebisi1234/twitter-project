@@ -171,11 +171,14 @@ const Tweet = ({ post, isQuote }) => {
             >
               <div
                 className="w-5 h-5 relative"
-                onPointerEnter={() => {
+                onMouseEnter={() => {
                   setToRetweet(true);
                 }}
-                onPointerLeave={() => {
+                onMouseLeave={() => {
                   setToRetweet(false);
+                }}
+                onTouchStart={() => {
+                  setToRetweet(!toRetweet);
                 }}
               >
                 {toRetweet && (
