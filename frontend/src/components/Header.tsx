@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-const Header = ({ title, text }) => {
+const Header = ({ title, text }: { title?: string; text?: string }) => {
   return (
     <header className="w-full flex h-12 p-2 mt-2 dark:bg-black dark:text-white bg-white text-black items-center gap-3 justify-between">
       <div className="arrow h-full w-10">

@@ -12,15 +12,15 @@ import {
 import app from "../../firebase";
 import { useNavigate, useParams } from "react-router-dom";
 import Tag from "../../components/Tag";
+import { User } from "../../types/User";
 
-const NewTweet = ({ status, record }) => {
+const NewTweet = ({ status, record }: { status?: string; record?: Blob }) => {
   const { quote } = useParams();
   const recorder = () => {
     const device = navigator.mediaDevices.getUserMedia({
       audio: true,
     });
-    window.localStream = device;
-    let items = [];
+    let items: BlobEvent["data"][] = [];
     device.then((stream) => {
       let recorder = new MediaRecorder(stream);
       recorder.ondataavailable = (e) => {
@@ -28,7 +28,6 @@ const NewTweet = ({ status, record }) => {
         if (recorder.state == "inactive") {
           const blob = new Blob(items, { type: "audio/mp3" });
           blob.name = "new audio";
-          blob.webkitRelativePath = "";
           uploadFile(blob, setAudioUrl);
           stream.getAudioTracks().forEach((x) => x.stop());
         }
@@ -43,14 +42,16 @@ const NewTweet = ({ status, record }) => {
       };
     });
   };
-  const reference = useRef("");
-  const tags = useRef("");
-  const input = useRef("");
+  const reference = useRef<HTMLDivElement>(null);
+  const tags = useRef<HTMLDivElement>(null);
+  const input = useRef<HTMLTextAreaElement>(null);
 
   let stopRecorder = () => {
     return;
   };
-  const user = useSelector((state) => state.user.user);
+  const user = useSelector(
+    (state: { user: { user: User } }) => state.user.user
+  );
   const [match, setMatch] = useState("");
   const dispatch = useDispatch();
   const [imageUrl, setImageUrl] = useState("");
@@ -59,7 +60,10 @@ const NewTweet = ({ status, record }) => {
   const [uploadStatus, setUploadStatus] = useState(status ? status : "");
   const navigate = useNavigate();
 
-  const uploadFile = (file, setUrl) => {
+  const uploadFile = (
+    file: Blob,
+    setUrl: React.Dispatch<React.SetStateAction<string>>
+  ) => {
     console.log("uploading");
     const storage = getStorage(app);
     const fileName = new Date().getTime() + file.name;
@@ -103,7 +107,7 @@ const NewTweet = ({ status, record }) => {
   return (
     <div className="w-full m-auto max-w-2xl">
       <div className="gap-3 flex pl-2 w-full pt-2 dark:bg-slate-900 p-1 border-b-2 max-w-2xl">
-        <ProfilePix pp={Object.keys(user).length && user.pp} />
+        <ProfilePix pp={Object.keys(user).length ? user.pp : ""} />
         <div className="new-tweet w-full h-full flex flex-col ">
           <div className="input h-24 ">
             <textarea
@@ -121,15 +125,15 @@ const NewTweet = ({ status, record }) => {
                   setMatch(regex[0]);
                 }
               }}
-              onBeforeInput={(e) => {
+              onBeforeInput={(e: any) => {
                 if (e.data === "@") {
-                  tags.current.classList.remove("!hidden");
+                  tags.current?.classList.remove("!hidden");
                 } else if (
                   e.data === " " ||
                   (content === "" && e.data === "Backspace") ||
                   content === ""
                 ) {
-                  tags.current.classList.add("!hidden");
+                  tags.current?.classList.add("!hidden");
                   setMatch("");
                 }
               }}
@@ -139,8 +143,8 @@ const NewTweet = ({ status, record }) => {
                 className="absolute !hidden top-0 z-50 -left-7"
                 ref={tags}
                 onClick={() => {
-                  input.current.focus();
-                  tags.current.classList.add("!hidden");
+                  input.current?.focus();
+                  tags.current?.classList.add("!hidden");
                 }}
               >
                 <Tag query={match} content={content} setContent={setContent} />
@@ -170,9 +174,11 @@ const NewTweet = ({ status, record }) => {
                   id="file"
                   type="file"
                   accept="image/*"
-                  onChange={(e) => {
-                    const images = e.target.files[0];
-                    uploadFile(images, setImageUrl);
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    if (e.target.files) {
+                      const images = e.target.files[0];
+                      uploadFile(images, setImageUrl);
+                    }
                   }}
                 ></input>
               </label>
@@ -181,11 +187,11 @@ const NewTweet = ({ status, record }) => {
                   ref={reference}
                   className=" w-7 h-7 relative cursor-pointer !bg-cover"
                   onPointerUp={() => {
-                    reference.current.classList.remove("animate-pulse");
+                    reference.current?.classList.remove("animate-pulse");
                     stopRecorder();
                   }}
                   onPointerDown={() => {
-                    reference.current.classList.add("animate-pulse");
+                    reference.current?.classList.add("animate-pulse");
                     recorder();
                   }}
                 >

@@ -10,27 +10,32 @@ import {
 } from "../features/post/postSlice";
 import Skeleton from "./Skeleton";
 import axios from "axios";
+import { Post } from "../types/Post";
+import { User } from "../types/User";
 
-const Tweet = ({ post, isQuote }) => {
+const Tweet = (prop: { post: Post | undefined; isQuote?: boolean }) => {
   const [count, setCount] = useState(0);
   const [recount, setRecount] = useState(0);
-  const user = useSelector((state) => state.user.user);
-  const posts = useSelector((state) => state.post);
-  const isComment = posts[1].find((comment) => comment._id === post?._id);
+  const user = useSelector(
+    (state: { user: { user: User } }) => state.user.user
+  );
+  const posts = useSelector((state: { post: [Post[], Post[]] }) => state.post);
+  const isComment = posts[1].find((comment) => comment._id === prop.post?._id);
   const dispatch = useDispatch();
   const [toRetweet, setToRetweet] = useState(false);
-  const ref = useRef();
+  const ref: React.LegacyRef<SVGSVGElement> = useRef(null);
 
-  const quote =
-    post.quoteId && posts[0].find((quote) => quote._id === post.quoteId);
+  const quote = prop.post?.quoteId
+    ? posts[0].find((quote) => quote._id === prop.post?.quoteId)
+    : undefined;
 
   return Object.keys(user).length ? (
     <div className="border-b-[0.1px] pl-2 m-auto max-w-2xl flex pt-2 dark:bg-black dark:text-white bg-white text-black py-2 ">
-      {post.pp ? (
-        <ProfilePix pp={post.pp} handle={post.handle} />
-      ) : post.handle !== user.handle ? (
-        <Link to={`/profile/poster/${post.handle}`}>
-          <div className="w-9 h-9">
+      {prop.post?.pp ? (
+        <ProfilePix pp={prop.post?.pp} handle={prop.post?.handle} />
+      ) : prop.post?.handle !== user.handle ? (
+        <Link to={`/profile/poster/${prop.post?.handle}`}>
+          <div className="w-9 lg:w-14 lg:h-14 h-9">
             <svg viewBox="0 0 24 24" aria-hidden="true">
               <g>
                 <path d="M5.651 19h12.698c-.337-1.8-1.023-3.21-1.945-4.19C15.318 13.65 13.838 13 12 13s-3.317.65-4.404 1.81c-.922.98-1.608 2.39-1.945 4.19zm.486-5.56C7.627 11.85 9.648 11 12 11s4.373.85 5.863 2.44c1.477 1.58 2.366 3.8 2.632 6.46l.11 1.1H3.395l.11-1.1c.266-2.66 1.155-4.88 2.632-6.46zM12 4c-1.105 0-2 .9-2 2s.895 2 2 2 2-.9 2-2-.895-2-2-2zM8 6c0-2.21 1.791-4 4-4s4 1.79 4 4-1.791 4-4 4-4-1.79-4-4z"></path>
@@ -51,34 +56,36 @@ const Tweet = ({ post, isQuote }) => {
       )}
       <div className="flex flex-col w-full h-full">
         <Link
-          to={!isComment && `/tweetPage/${post._id}`}
+          to={!isComment ? `/tweetPage/${prop.post?._id}` : ""}
           className="tweet flex flex-col w-full p-2 pt-0"
         >
           <h3 className="font-bold">
-            {post.username}{" "}
-            <span className="text-sm block font-thin ">{post.handle}</span>
+            {prop.post?.username}{" "}
+            <span className="text-sm block font-thin ">
+              {prop.post?.handle}
+            </span>
           </h3>
-          <p className="max-w-full whitespace-pre-wrap">{post.content}</p>
-          {post.img && (
+          <p className="max-w-full whitespace-pre-wrap">{prop.post?.content}</p>
+          {prop.post?.img && (
             <img
               className=" max-w-full max-h-96 object-contain rounded-3xl my-2 "
-              src={post.img}
+              src={prop.post?.img}
               decoding="async"
               loading="lazy"
             />
           )}
-          {post.audioUrl && (
+          {prop.post?.audioUrl && (
             <audio controls>
-              <source src={post.audioUrl} type="video/webm"></source>
+              <source src={prop.post?.audioUrl} type="video/webm"></source>
             </audio>
           )}
-          {post.quoteId && !isQuote && (
+          {prop.post?.quoteId && !prop.isQuote && (
             <div className="w-full px-2 h-3/5 border-2 pointer-events-none">
               <Tweet post={quote} isQuote={true} />
             </div>
           )}
         </Link>
-        {!isQuote && (
+        {!prop.isQuote && (
           <div className="buttons w-full flex justify-around items-center mr-1">
             <div
               className="contain gap-2 flex justify-center items-center"
@@ -86,15 +93,16 @@ const Tweet = ({ post, isQuote }) => {
             >
               <div
                 className="w-5 h-5"
-                onClick={(e) => {
+                onClick={(e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+                  const target = e.target as HTMLDivElement;
                   if (count === 0) {
-                    e.target.classList.add("liked");
-                    dispatch(like({ id: post._id }));
+                    target.classList.add("liked");
+                    dispatch(like({ id: prop.post?._id }));
                     axios
                       .post(
                         "https://my-twitter-backend.onrender.com/posts/like",
                         {
-                          id: post._id,
+                          id: prop.post?._id,
                         }
                       )
                       .then(() => {
@@ -102,12 +110,12 @@ const Tweet = ({ post, isQuote }) => {
                           "https://my-twitter-backend.onrender.com/notifications/new",
                           {
                             actionHandle: user.handle,
-                            handle: post.handle,
+                            handle: prop.post?.handle,
                             username: user.username,
                             action: "liked your post",
-                            PostId: post._id,
+                            PostId: prop.post?._id,
                             pp: user.pp,
-                            text: post.content.slice(0, 100),
+                            text: prop.post?.content.slice(0, 100),
                           }
                         );
                       })
@@ -116,12 +124,12 @@ const Tweet = ({ post, isQuote }) => {
                       });
                     setCount((count + 1) % 2);
                   } else {
-                    dispatch(dislike({ id: post._id }));
-                    e.target.classList.remove("liked");
+                    dispatch(dislike({ id: prop.post?._id }));
+                    target.classList.remove("liked");
                     axios.post(
                       "https://my-twitter-backend.onrender.com/posts/dislike",
                       {
-                        id: post._id,
+                        id: prop.post?._id,
                       }
                     );
                     setCount((count + 1) % 2);
@@ -132,10 +140,12 @@ const Tweet = ({ post, isQuote }) => {
                   viewBox="0 0 24 24"
                   aria-hidden="true"
                   onPointerEnter={(e) => {
-                    e.target.classList.add("scale-125");
+                    const target = e.target as HTMLDivElement;
+                    target.classList.add("scale-125");
                   }}
                   onPointerLeave={(e) => {
-                    e.target.classList.remove("scale-125");
+                    const target = e.target as HTMLDivElement;
+                    target.classList.remove("scale-125");
                   }}
                 >
                   <g>
@@ -143,14 +153,14 @@ const Tweet = ({ post, isQuote }) => {
                   </g>
                 </svg>
               </div>
-              {isComment ? isComment.likes : post.likes}
+              {isComment ? isComment.likes : prop.post?.likes}
             </div>
             <div
               className="contain gap-2 flex justify-center items-center"
               id="comment"
             >
               <Link
-                to={!isComment && `/tweetPage/${post._id}`}
+                to={!isComment ? `/tweetPage/${prop.post?._id}` : ""}
                 className="tweet flex w-full"
               >
                 <div className="w-5 h-5">
@@ -161,7 +171,7 @@ const Tweet = ({ post, isQuote }) => {
                   </svg>
                 </div>
               </Link>
-              {isComment ? isComment.commentCount : post.commentCount}
+              {isComment ? isComment.commentCount : prop.post?.commentCount}
             </div>
             <div
               className="contain gap-2 relative flex justify-center items-center"
@@ -189,7 +199,7 @@ const Tweet = ({ post, isQuote }) => {
                     }}
                   >
                     <Link
-                      to={`/newtweet/${post._id}`}
+                      to={`/newtweet/${prop.post?._id}`}
                       onClick={(e) => {
                         console.log(e.target);
                         setToRetweet(false);
@@ -204,13 +214,13 @@ const Tweet = ({ post, isQuote }) => {
                       id="quote"
                       onClick={() => {
                         if (recount === 0) {
-                          ref.current.classList.add("retweet");
-                          dispatch(retweet({ id: post._id }));
+                          ref.current?.classList.add("retweet");
+                          dispatch(retweet({ id: prop.post?._id }));
                           axios
                             .post(
                               "https://my-twitter-backend.onrender.com/posts/retweet",
                               {
-                                id: post._id,
+                                id: prop.post?._id,
                               }
                             )
                             .then(() => {
@@ -218,12 +228,12 @@ const Tweet = ({ post, isQuote }) => {
                                 "https://my-twitter-backend.onrender.com/notifications/new",
                                 {
                                   actionHandle: user.handle,
-                                  handle: post.handle,
+                                  handle: prop.post?.handle,
                                   username: user.username,
                                   action: "retweet your post",
-                                  PostId: post._id,
+                                  PostId: prop.post?._id,
                                   pp: user.pp,
-                                  text: post.content.slice(0, 100),
+                                  text: prop.post?.content.slice(0, 100),
                                 }
                               );
                             })
@@ -232,12 +242,12 @@ const Tweet = ({ post, isQuote }) => {
                             });
                           setRecount((recount + 1) % 2);
                         } else {
-                          dispatch(undoRetweet({ id: post._id }));
-                          ref.current.classList.remove("retweet");
+                          dispatch(undoRetweet({ id: prop.post?._id }));
+                          ref.current?.classList.remove("retweet");
                           axios.post(
                             "https://my-twitter-backend.onrender.com/posts/undoretweet",
                             {
-                              id: post._id,
+                              id: prop.post?._id,
                             }
                           );
                           setRecount((recount + 1) % 2);
@@ -254,10 +264,12 @@ const Tweet = ({ post, isQuote }) => {
                   aria-hidden="true"
                   ref={ref}
                   onPointerEnter={(e) => {
-                    e.target.classList.add("scale-125");
+                    const target = e.target as HTMLDivElement;
+                    target.classList.add("scale-125");
                   }}
                   onPointerLeave={(e) => {
-                    e.target.classList.remove("scale-125");
+                    const target = e.target as HTMLDivElement;
+                    target.classList.remove("scale-125");
                   }}
                 >
                   <g>
@@ -265,7 +277,7 @@ const Tweet = ({ post, isQuote }) => {
                   </g>
                 </svg>
               </div>
-              {isComment ? isComment.retweet : post.retweet}
+              {isComment ? isComment.retweet : prop.post?.retweet}
             </div>
           </div>
         )}

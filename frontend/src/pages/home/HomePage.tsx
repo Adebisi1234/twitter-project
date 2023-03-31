@@ -9,17 +9,24 @@ import { login } from "../../features/auth/userSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { update } from "../../features/post/postSlice";
 import axios from "axios";
-import Post from "../../components/Post";
+import NewPost from "../../components/Newpost";
 import { Link } from "react-router-dom";
 import Hr from "../../components/Hr";
 import Theme from "../../components/Theme";
+import { Post } from "../../types/Post";
 
-const HomePage = ({ newTheme, setNewTheme }) => {
-  const slide = useRef();
-  const post = useSelector((state) => state.post);
+const HomePage = ({
+  newTheme,
+  setNewTheme,
+}: {
+  newTheme?: boolean;
+  setNewTheme?: React.Dispatch<React.SetStateAction<boolean>>;
+}) => {
+  const slide = useRef<HTMLDivElement>(null);
+  const post = useSelector((state: any) => state.post);
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.user.user);
-  const [loading, setLoading] = useState();
+  const user = useSelector((state: any) => state.user.user);
+  const [loading, setLoading] = useState(false);
   const [isFollowing, setIsFollowing] = useState(false);
 
   useEffect(() => {
@@ -45,12 +52,12 @@ const HomePage = ({ newTheme, setNewTheme }) => {
       });
   }, []);
 
-  const forYou = post[0].map((post) => {
+  const forYou = post[0].map((post: Post) => {
     return <Tweet post={post} key={post._id} />;
   });
-  const following = post[0].map((post) => {
+  const following = post[0].map((post: Post) => {
     const followed = user.following.find(
-      (follower) => follower === post.handle
+      (follower: string) => follower === post.handle
     );
     if (followed) {
       return <Tweet post={post} key={post._id} />;
@@ -64,7 +71,7 @@ const HomePage = ({ newTheme, setNewTheme }) => {
           imgs={Object.keys(user).length && user.pp}
           slide={slide}
           setIsFollowing={setIsFollowing}
-          setNewTheme={setNewTheme}
+          setNewTheme={setNewTheme!}
         />
         <div className="hidden md:block">
           <NewTweet />
@@ -91,11 +98,11 @@ const HomePage = ({ newTheme, setNewTheme }) => {
         }}
       >
         <div className="size max-w-[320px] dark:bg-[var(--bg-dark)] dark:text-[var(--color-dark)] bg-[var(--bg-light)] text-[var(--color-light)] h-screen">
-          <Sidebar setNewTheme={setNewTheme} />
+          <Sidebar setNewTheme={setNewTheme!} />
         </div>
       </div>
       <Link to="/newtweet" className="lg:hidden">
-        <Post />
+        <NewPost />
       </Link>
       <Bottom />
     </>

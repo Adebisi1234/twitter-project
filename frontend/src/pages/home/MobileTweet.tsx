@@ -1,13 +1,17 @@
 import { useRef, useState } from "react";
 import Header from "../../components/Header";
 import NewTweet from "./NewTweet";
+declare global {
+  interface Blob {
+    name: string;
+  }
+}
 export default function MobileTweet() {
   const recorder = () => {
     const device = navigator.mediaDevices.getUserMedia({
       audio: true,
     });
-    window.localStream = device;
-    let items = [];
+    let items: BlobEvent["data"][] = [];
     device.then((stream) => {
       let recorder = new MediaRecorder(stream);
       recorder.ondataavailable = (e) => {
@@ -15,7 +19,6 @@ export default function MobileTweet() {
         if (recorder.state == "inactive") {
           const blob = new Blob(items, { type: "audio/mp3" });
           blob.name = "new audio";
-          blob.webkitRelativePath = "";
           setRecord(blob);
           stream.getAudioTracks().forEach((x) => x.stop());
         }
@@ -30,8 +33,8 @@ export default function MobileTweet() {
       };
     });
   };
-  const ref = useRef();
-  const [record, setRecord] = useState("");
+  const ref = useRef<HTMLDivElement>(null);
+  const [record, setRecord] = useState<Blob>();
   let stopRecorder = () => {
     return;
   };
@@ -44,23 +47,23 @@ export default function MobileTweet() {
           ref={ref}
           className="h-[12%] sm:h-1/4 w-1/4 rounded-full"
           onTouchStart={() => {
-            ref.current.classList.add("animate-pulse");
-            ref.current.classList.add("!bg-green-500");
+            ref.current?.classList.add("animate-pulse");
+            ref.current?.classList.add("!bg-green-500");
             recorder();
           }}
           onTouchEnd={() => {
-            ref.current.classList.remove("animate-pulse");
-            ref.current.classList.remove("!bg-green-500");
+            ref.current?.classList.remove("animate-pulse");
+            ref.current?.classList.remove("!bg-green-500");
             stopRecorder();
           }}
           onTouchCancel={() => {
-            ref.current.classList.remove("animate-pulse");
-            ref.current.classList.remove("!bg-green-500");
+            ref.current?.classList.remove("animate-pulse");
+            ref.current?.classList.remove("!bg-green-500");
             stopRecorder();
           }}
           onTouchMove={() => {
-            ref.current.classList.remove("animate-pulse");
-            ref.current.classList.remove("!bg-green-500");
+            ref.current?.classList.remove("animate-pulse");
+            ref.current?.classList.remove("!bg-green-500");
             stopRecorder();
           }}
         >

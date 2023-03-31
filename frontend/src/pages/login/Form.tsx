@@ -11,12 +11,12 @@ import { signInWithPopup } from "firebase/auth";
 import google from "../../assets/google.svg";
 
 const Form = () => {
-  const img = useRef();
-  const errs = useRef();
-  const pass = useRef();
-  const userInput = useRef();
+  const img = useRef<HTMLInputElement>(null);
+  const errs = useRef<HTMLInputElement>(null!);
+  const pass = useRef<HTMLInputElement>(null);
+  const userInput = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
-  const user = useSelector((state) => state.user.user);
+  const user = useSelector((state: any) => state.user.user);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
@@ -24,12 +24,12 @@ const Form = () => {
   const signInWithGoogle = () => {
     signInWithPopup(auth, provider)
       .then((result) => {
-        pass.current.classList.add("!hidden");
-        userInput.current.classList.add("!hidden");
-        let email = result.user.email.includes("@")
+        pass.current?.classList.add("!hidden");
+        userInput.current?.classList.add("!hidden");
+        let email = result.user.email?.includes("@")
           ? result.user.email
           : `@${result.user.email}`;
-        img.current.classList.replace("hidden", "flex");
+        img.current?.classList.replace("hidden", "flex");
         console.log(result);
         axios
           .post("https://my-twitter-backend.onrender.com/auth/google", {
@@ -52,7 +52,7 @@ const Form = () => {
       .catch((err) => console.log(err));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     axios
@@ -120,8 +120,8 @@ const Form = () => {
 
           <button
             onClick={() => {
-              if (userInput.current.value && pass.current.value) {
-                img.current.classList.replace("hidden", "flex");
+              if (userInput.current?.value && pass.current?.value) {
+                img.current?.classList.replace("hidden", "flex");
               }
             }}
             type="submit"

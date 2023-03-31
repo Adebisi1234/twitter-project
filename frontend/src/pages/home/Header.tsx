@@ -1,7 +1,17 @@
 import { useRef } from "react";
-const Header = ({ imgs, slide, setIsFollowing, setNewTheme }) => {
-  const you = useRef();
-  const follow = useRef();
+const Header = ({
+  imgs,
+  slide,
+  setIsFollowing,
+  setNewTheme,
+}: {
+  imgs: string;
+  slide: React.RefObject<HTMLDivElement>;
+  setIsFollowing: React.Dispatch<React.SetStateAction<boolean>>;
+  setNewTheme: React.Dispatch<React.SetStateAction<boolean>>;
+}) => {
+  const you = useRef<HTMLSpanElement>(null);
+  const follow = useRef<HTMLSpanElement>(null);
   return (
     <header className="w-full dark:text-[var(--color-dark)] border-b-2 bg-transparent backdrop-blur-lg z-30 text-[var(--color-white)] sticky top-0">
       <div className="flex w-full justify-between p-2 border-b-2">
@@ -10,7 +20,7 @@ const Header = ({ imgs, slide, setIsFollowing, setNewTheme }) => {
             src={imgs}
             className="h-7 rounded-full"
             onClick={() => {
-              slide.current.classList.toggle("-translate-x-full");
+              slide.current?.classList.toggle("-translate-x-full");
             }}
           />
         ) : (
@@ -18,7 +28,7 @@ const Header = ({ imgs, slide, setIsFollowing, setNewTheme }) => {
             <div
               className="w-7 lg:hidden h-7"
               onClick={() => {
-                slide.current.classList.toggle("-translate-x-full");
+                slide.current?.classList.toggle("-translate-x-full");
               }}
             >
               <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -59,8 +69,8 @@ const Header = ({ imgs, slide, setIsFollowing, setNewTheme }) => {
         <button
           className=" w-full h-full"
           onClick={() => {
-            you.current.classList.add("border-b-4");
-            follow.current.classList.remove("border-b-4");
+            you.current?.classList.add("border-b-4");
+            follow.current?.classList.remove("border-b-4");
             setIsFollowing(false);
           }}
         >
@@ -74,8 +84,8 @@ const Header = ({ imgs, slide, setIsFollowing, setNewTheme }) => {
         <button
           className="w-full h-full"
           onClick={() => {
-            you.current.classList.remove("border-b-4");
-            follow.current.classList.add("border-b-4");
+            you.current?.classList.remove("border-b-4");
+            follow.current?.classList.add("border-b-4");
             setIsFollowing(true);
           }}
         >

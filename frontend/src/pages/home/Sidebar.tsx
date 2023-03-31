@@ -1,10 +1,17 @@
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../../features/auth/userSlice";
-const Sidebar = ({ setNewTheme }) => {
+import { User } from "../../types/User";
+const Sidebar = ({
+  setNewTheme,
+}: {
+  setNewTheme: React.Dispatch<React.SetStateAction<boolean>>;
+}) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.user.user);
+  const user = useSelector(
+    (state: { user: { user: User } }) => state.user.user
+  );
   let location = useLocation();
   return Object.keys(user).length ? (
     <div
@@ -18,7 +25,7 @@ const Sidebar = ({ setNewTheme }) => {
             className="lg:hidden"
             onClick={() => {
               const slide = document.getElementById("slide");
-              slide.classList.toggle("-translate-x-full");
+              slide?.classList.toggle("-translate-x-full");
             }}
           >
             X
@@ -226,7 +233,7 @@ const Sidebar = ({ setNewTheme }) => {
       </div>
     </div>
   ) : (
-    ""
+    <div></div>
   );
 };
 

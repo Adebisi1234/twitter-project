@@ -1,4 +1,4 @@
-export default function Post() {
+export default function NewPost() {
   return (
     <div className="w-12 h-12 flex justify-center items-center fixed bottom-20 lg:absolute right-5 rounded-full !bg-[var(--button-primary)]">
       <svg viewBox="0 0 24 24" aria-hidden="true" id="svg" width="70%">

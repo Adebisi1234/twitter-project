@@ -1,9 +1,12 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { User } from "../types/User";
 
-const ProfilePix = ({ pp, handle }) => {
-  const user = useSelector((state) => state.user.user);
+const ProfilePix = ({ pp, handle }: { pp?: string; handle?: string }) => {
+  const user = useSelector(
+    (state: { user: { user: User } }) => state.user.user
+  );
   return (
     <Link
       to={
