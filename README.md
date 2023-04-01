@@ -2,7 +2,7 @@
 A full stack twitter clone.
 
 **Built with:**
-- Frontend: React, Redux, Firebase(Auth and storage), Tailwindcss
+- Frontend: React, Redux, typescript, Firebase(Auth and storage), Tailwindcss
 - Backend: Node, express, MongoDb and Socket.io
 
 **Features:**
