@@ -2,7 +2,7 @@
 A full stack twitter clone.
 
 **Built with:**
-- Frontend: React, Redux, Firebase(Auth), Tailwindcss
+- Frontend: React, Redux, Firebase(Auth and storage), Tailwindcss
 - Backend: Node, express, MongoDb and Socket.io
 
 **Features:**
@@ -18,6 +18,6 @@ A full stack twitter clone.
 - Making audio posts ☑️
 - Adding indicator for new notifications☑️
 - Adding unit testing
-- Replacing all javascript with typescript
+- Replacing all javascript with typescript ☑️
 - Adding more functionality ☑️
 - Improving the ui/ux ☑️
