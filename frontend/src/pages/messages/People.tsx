@@ -1,7 +1,17 @@
 import React from "react";
 import ProfilePix from "../../components/ProfilePix";
 
-export default function People({ online, username, img, handle }) {
+export default function People({
+  online,
+  username,
+  img,
+  handle,
+}: {
+  online: boolean;
+  username: string;
+  img: string;
+  handle: string;
+}) {
   return (
     <div className="flex space space-x-2 items-center">
       <div className="relative img">

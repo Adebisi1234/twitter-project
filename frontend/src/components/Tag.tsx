@@ -2,10 +2,19 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Skeleton from "./Skeleton";
+import { User } from "../types/User";
 
-export default function Tag({ query, setContent, content }) {
+export default function Tag({
+  query,
+  setContent,
+  content,
+}: {
+  query?: string;
+  setContent?: React.Dispatch<React.SetStateAction<string>>;
+  content?: string;
+}) {
   const [loading, setLoading] = useState(true);
-  const [users, setUsers] = useState([]);
+  const [users, setUsers] = useState<User[]>();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -23,14 +32,14 @@ export default function Tag({ query, setContent, content }) {
     }
   }, [query]);
 
-  const result = users.map((user) => {
-    if (content) {
+  const result = users?.map((user) => {
+    if (content && setContent) {
       return (
         <div
           className="user flex py-1 border-b-2 cursor-pointer"
           key={user._id}
           onClick={() => {
-            const newContent = content.replace(query, user.handle);
+            const newContent = content.replace(query!, user.handle);
             setContent(newContent);
             setUsers([]);
           }}
@@ -86,7 +95,7 @@ export default function Tag({ query, setContent, content }) {
       );
     }
   });
-  return loading || !users.length ? (
+  return loading || !users?.length ? (
     <div
       className="min-h-[100px] max-h-[331.5px] gap-y-1 tagging justify-center items-center overflow-x-hidden min-w-[380px] absolute bg-[rgba(255,255,255,1.00)] border-black flex flex-col rounded-[4px]"
       onClick={() => {

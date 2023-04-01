@@ -1,8 +1,12 @@
-export default function Theme({ setNewTheme }) {
-  function setColor(color) {
+export default function Theme({
+  setNewTheme,
+}: {
+  setNewTheme: React.Dispatch<React.SetStateAction<boolean>>;
+}) {
+  function setColor(color: string) {
     document.documentElement.style.setProperty("--button-primary", color);
   }
-  function setBg(color) {
+  function setBg(color: string) {
     if (color === "white") {
       document.documentElement.style.setProperty("--bg-light", color);
       document.documentElement.style.setProperty(
@@ -12,13 +16,13 @@ export default function Theme({ setNewTheme }) {
       if (document.getElementById("logo")) {
         document
           .getElementById("logo")
-          .classList.remove("dark:bg-[url('/src/assets/logo.jpg')]");
+          ?.classList.remove("dark:bg-[url('/src/assets/logo.jpg')]");
         document
           .getElementById("logo")
-          .classList.remove("bg-[url('/src/assets/logo.jpg')]");
+          ?.classList.remove("bg-[url('/src/assets/logo.jpg')]");
         document
           .getElementById("logo")
-          .classList.add("bg-[url('/src/assets/logoDark.jpg')]");
+          ?.classList.add("bg-[url('/src/assets/logoDark.jpg')]");
       }
       document.documentElement.style.setProperty("--bg-dark", color);
       document.documentElement.style.setProperty("--color-light", "black");
@@ -27,10 +31,10 @@ export default function Theme({ setNewTheme }) {
       if (document.getElementById("logo")) {
         document
           .getElementById("logo")
-          .classList.add("bg-[url('/src/assets/logo.jpg')]");
+          ?.classList.add("bg-[url('/src/assets/logo.jpg')]");
         document
           .getElementById("logo")
-          .classList.remove("bg-[url('/src/assets/logoDark.jpg')]");
+          ?.classList.remove("bg-[url('/src/assets/logoDark.jpg')]");
       }
 
       document.documentElement.style.setProperty("--bg-light", color);
@@ -104,10 +108,11 @@ export default function Theme({ setNewTheme }) {
                 className="h-[101%] w-[101%] themes"
                 onClick={(e) => {
                   let themes = document.getElementsByClassName("themes");
-                  themes = [...themes];
-                  themes.forEach((element) => {
+                  const themesArr = [...themes] as HTMLInputElement[];
+                  themesArr.forEach((element) => {
                     if (element === e.target) {
-                      e.target.checked = true;
+                      const target = e.target as HTMLInputElement;
+                      target.checked = true;
                       setBg("white");
                     } else {
                       element.checked = false;
@@ -128,10 +133,11 @@ export default function Theme({ setNewTheme }) {
                 className="h-[101%] w-[101%] themes"
                 onClick={(e) => {
                   let themes = document.getElementsByClassName("themes");
-                  themes = [...themes];
-                  themes.forEach((element) => {
+                  const themesArr = [...themes] as HTMLInputElement[];
+                  themesArr.forEach((element) => {
                     if (element === e.target) {
-                      e.target.checked = true;
+                      const target = e.target as HTMLInputElement;
+                      target.checked = true;
                       setBg("rgb(24,34,45)");
                     } else {
                       element.checked = false;
@@ -150,10 +156,11 @@ export default function Theme({ setNewTheme }) {
                 className="h-[101%] w-[101%] themes"
                 onClick={(e) => {
                   let themes = document.getElementsByClassName("themes");
-                  themes = [...themes];
-                  themes.forEach((element) => {
+                  const themesArr = [...themes] as HTMLInputElement[];
+                  themesArr.forEach((element) => {
                     if (element === e.target) {
-                      e.target.checked = true;
+                      const target = e.target as HTMLInputElement;
+                      target.checked = true;
                       setBg("black");
                     } else {
                       element.checked = false;

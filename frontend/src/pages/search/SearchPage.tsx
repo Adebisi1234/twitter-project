@@ -14,7 +14,7 @@ export default function SearchPage() {
     return <Tweet post={post} />;
   });
   useEffect(() => {
-    const searchFunc = async (query) => {
+    const searchFunc = async (query: string) => {
       const data = await axios.get(
         "https://my-twitter-backend.onrender.com/posts/search",
         {
@@ -25,7 +25,7 @@ export default function SearchPage() {
       );
       setResult(data.data);
     };
-    searchFunc(query);
+    searchFunc(query!);
   }, [query]);
   return (
     <>

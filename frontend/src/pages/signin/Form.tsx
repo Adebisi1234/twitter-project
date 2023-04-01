@@ -16,6 +16,7 @@ import {
 } from "firebase/storage";
 import app from "../../firebase";
 import Skeleton from "../../components/Skeleton";
+import { User } from "../../types/User";
 
 const Form = () => {
   const [username, setUsername] = useState("");
@@ -32,28 +33,30 @@ const Form = () => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const pass = useRef();
-  const ppLabel = useRef();
-  const coverLabel = useRef();
-  const img = useRef();
-  const errs = useRef();
-  const user = useSelector((state) => state.user.user);
+  const pass = useRef<HTMLInputElement>(null);
+  const ppLabel = useRef<HTMLInputElement>(null);
+  const coverLabel = useRef<HTMLInputElement>(null);
+  const img = useRef<HTMLDivElement>(null);
+  const errs = useRef<HTMLDivElement>(null);
+  const user = useSelector(
+    (state: { user: { user: User } }) => state.user.user
+  );
 
   const signInWithGoogle = () => {
     signInWithPopup(auth, provider)
       .then((result) => {
-        setUsername(result.user.displayName);
+        setUsername(result.user.displayName!);
         setHandle(`@${result.user.email}`);
         setBio("This profile is from google");
         setFromGoogle(true);
 
-        pass.current.classList.add("!hidden");
-        ppLabel.current.classList.add("!hidden");
+        pass.current?.classList.add("!hidden");
+        ppLabel.current?.classList.add("!hidden");
       })
       .catch((err) => console.log(err));
   };
 
-  const uploadPP = (file) => {
+  const uploadPP = (file: Blob) => {
     const storage = getStorage(app);
     const fileName = new Date().getTime() + file.name;
     const storageRef = ref(storage, fileName);
@@ -83,12 +86,12 @@ const Form = () => {
           console.log("File available at", downloadURL);
           setPp(downloadURL);
           setUploadPPStatus("Uploaded");
-          ppLabel.current.setAttribute("readOnly", true);
+          ppLabel.current?.setAttribute("readOnly", "true");
         });
       }
     );
   };
-  const uploadCover = (file) => {
+  const uploadCover = (file: Blob) => {
     const storage = getStorage(app);
     const fileName = new Date().getTime() + file.name;
     const storageRef = ref(storage, fileName);
@@ -119,7 +122,7 @@ const Form = () => {
           setCoverImg(downloadURL);
           setUploadCoverStatus("Uploaded");
 
-          coverLabel.current.setAttribute("readOnly", true);
+          coverLabel.current?.setAttribute("readOnly", "true");
         });
       }
     );
@@ -232,9 +235,10 @@ const Form = () => {
                 type="file"
                 accept="image/*"
                 onChange={(e) => {
-                  const images = e.target.files[0];
-
-                  uploadPP(images);
+                  if (e.target.files) {
+                    const images = e.target.files[0];
+                    uploadPP(images);
+                  }
                 }}
               ></input>
             </label>
@@ -266,9 +270,10 @@ const Form = () => {
                   type="file"
                   accept="image/*"
                   onChange={(e) => {
-                    const images = e.target.files[0];
-
-                    uploadCover(images);
+                    if (e.target.files) {
+                      const images = e.target.files[0];
+                      uploadCover(images);
+                    }
                   }}
                 ></input>
               </label>
@@ -279,7 +284,7 @@ const Form = () => {
         <button
           className=" bg-black hover:!bg-[var(--button-primary)] hover:dark:!bg-[var(--button-primary)] p-3 my-3 dark:bg-white dark:text-black text-white w-full font-bold rounded-3xl"
           onClick={() => {
-            img.current.classList.replace("hidden", "flex");
+            img.current?.classList.replace("hidden", "flex");
             if (!fromGoogle) {
               axios
                 .post("https://my-twitter-backend.onrender.com/auth/signup", {
@@ -322,7 +327,7 @@ const Form = () => {
                   navigate("/home");
                 })
                 .catch((err) => {
-                  errs.current.textContent = err.response.data.message;
+                  errs.current!.textContent = err.response.data.message;
                 });
             }
           }}

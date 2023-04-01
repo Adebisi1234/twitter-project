@@ -23,13 +23,13 @@ import Skeleton from "./components/Skeleton";
 
 const Theme = lazy(() => import("./components/Theme"));
 function App() {
-  const socket = useRef();
+  const socket = useRef<any>(null);
   const [newTheme, setNewTheme] = useState(false);
-  const user = useSelector((state) => state.user.user);
+  const user = useSelector((state: { user: { user: any } }) => state.user.user);
   socket.current = io("https://my-twitter-backend.onrender.com", {
     autoConnect: false,
   });
-  const ref = useRef();
+  const ref = useRef<HTMLDivElement>(null);
   return (
     <div className=" flex min-h-screen flex-col lg:grid lg:grid-cols-[1fr,2fr,1fr] dark:bg-black dark:text-white bg-white text-black">
       <div className="hidden lg:block">

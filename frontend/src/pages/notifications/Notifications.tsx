@@ -6,20 +6,32 @@ import axios from "axios";
 import Note from "./Note";
 import Skeleton from "../../components/Skeleton";
 import { login } from "../../features/auth/userSlice";
+import { User } from "../../types/User";
+
+interface Notes {
+  _id: string;
+  text: string;
+  action: string;
+  actionHandle: string;
+  pp: string;
+  PostId: string;
+}
 
 export default function Notifications() {
-  const [notifications, setNotifications] = useState([]);
+  const [notifications, setNotifications] = useState<Notes[]>([]);
   const [loading, setLoading] = useState(true);
   const [mentions, setMentions] = useState(false);
   const [isFetching, setIsFetching] = useState(false);
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
-  const user = useSelector((state) => state.user.user);
+  const user = useSelector(
+    (state: { user: { user: User } }) => state.user.user
+  );
   const dispatch = useDispatch();
 
-  const observer = useRef();
+  const observer = useRef<any>();
   const ref = useCallback(
-    (node) => {
+    (node: any) => {
       if (loading) return;
       if (observer.current) observer.current.disconnect();
       observer.current = new IntersectionObserver((entries) => {
@@ -35,14 +47,14 @@ export default function Notifications() {
   );
 
   // Getting new Notifications after pargination
-  const getNewNotifications = async (page) => {
+  const getNewNotifications = async (page: number) => {
     setIsFetching(true);
     const { data } = await axios.get(
       `https://my-twitter-backend.onrender.com/notifications/all/${user.handle}/${page}`
     );
     if (data.length) {
-      setNotifications((prev) => {
-        return [...new Set([...prev, ...data])];
+      setNotifications((prev: Notes[]) => {
+        return [...new Set([...notifications, ...data])];
       });
     } else {
       setHasMore(false);

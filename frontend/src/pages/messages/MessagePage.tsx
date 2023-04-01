@@ -5,23 +5,30 @@ import { useParams, Link } from "react-router-dom";
 import Message from "./Message";
 import Header from "../../components/Header";
 import ProfilePix from "../../components/ProfilePix";
+import { User } from "../../types/User";
 
-export default function MessagePage({ socket }) {
-  const user = useSelector((state) => state.user.user);
-  const content = useRef();
+export default function MessagePage({ socket }: { socket: any }) {
+  const user = useSelector((state: { user: { user: any } }) => state.user.user);
+  const content = useRef<HTMLInputElement>(null);
   const { currentChat } = useParams();
-  const [newMessage, setNewMessage] = useState(null);
-  const scrollRef = useRef();
-  const [messages, setMessages] = useState([]);
-  const [other, setOther] = useState({});
-  const [chat, setChat] = useState(JSON.parse(currentChat));
+  const [newMessage, setNewMessage] = useState<any>(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const [messages, setMessages] = useState<
+    {
+      sender: string;
+      text: string;
+      createdAt: string;
+    }[]
+  >([]);
+  const [other, setOther] = useState<User>();
+  const [chat, setChat] = useState(JSON.parse(currentChat!));
 
   if (!socket.active) {
     socket.connect();
   }
 
   const receiver = useRef(
-    chat.members.find((member) => member !== user.handle)
+    chat.members.find((member: string) => member !== user.handle)
   );
 
   useEffect(() => {
@@ -60,7 +67,7 @@ export default function MessagePage({ socket }) {
     scrollRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
   useEffect(() => {
-    socket.on("getMessage", (data) => {
+    socket.on("getMessage", (data: { sender: string; text: string }) => {
       setNewMessage({
         sender: data.sender,
         text: data.text,
@@ -90,10 +97,10 @@ export default function MessagePage({ socket }) {
     <div className="h-screen flex flex-col">
       <Header />
       <div className=" px-10 flex w-full justify-center items-center flex-col gap-1">
-        {other.pp ? (
-          <ProfilePix pp={other.pp} handle={other.handle} />
+        {other?.pp ? (
+          <ProfilePix pp={other?.pp} handle={other?.handle} />
         ) : (
-          <Link to={`/profile/poster/${other.handle}`}>
+          <Link to={`/profile/poster/${other?.handle}`}>
             <div className="w-9 h-9">
               <svg viewBox="0 0 24 24" aria-hidden="true">
                 <g>
@@ -103,10 +110,10 @@ export default function MessagePage({ socket }) {
             </div>
           </Link>
         )}
-        <h1>{other.username}</h1>
-        <p>{other.handle}</p>
-        <p className="whitespace-pre-wrap ">{other.bio}</p>
-        <p>{other.followingCount} followers</p>
+        <h1>{other?.username}</h1>
+        <p>{other?.handle}</p>
+        <p className="whitespace-pre-wrap ">{other?.bio}</p>
+        <p>{other?.followingCount} followers</p>
       </div>
 
       <div className="message flex-col h-full overflow-y-scroll flex gap-y-10 p-2 ">
@@ -123,8 +130,8 @@ export default function MessagePage({ socket }) {
               if (e.key === "Enter") {
                 socket.emit("sendMessage", {
                   sender: user.handle,
-                  receiver: other.handle,
-                  text: content.current.value,
+                  receiver: other?.handle,
+                  text: content.current?.value,
                 });
                 if (!chat._id) {
                   axios
@@ -132,7 +139,7 @@ export default function MessagePage({ socket }) {
                       `https://my-twitter-backend.onrender.com/conversations/`,
                       {
                         sender: user.handle,
-                        receiver: other.handle,
+                        receiver: other?.handle,
                       }
                     )
                     .then((data) => {
@@ -142,7 +149,7 @@ export default function MessagePage({ socket }) {
                         {
                           sender: user.handle,
                           conversationId: data.data._id,
-                          text: content.current.value,
+                          text: content.current?.value,
                         }
                       );
                     });
@@ -152,11 +159,11 @@ export default function MessagePage({ socket }) {
                     {
                       sender: user.handle,
                       conversationId: chat._id,
-                      text: content.current.value,
+                      text: content.current?.value,
                     }
                   );
                 }
-                content.current.value = "";
+                content.current!.value = "";
               }
             }}
           />
@@ -165,8 +172,8 @@ export default function MessagePage({ socket }) {
             onClick={(e) => {
               socket.emit("sendMessage", {
                 sender: user.handle,
-                receiver: other.handle,
-                text: content.current.value,
+                receiver: other?.handle,
+                text: content.current?.value,
               });
               if (!chat._id) {
                 axios
@@ -174,7 +181,7 @@ export default function MessagePage({ socket }) {
                     `https://my-twitter-backend.onrender.com/conversations/`,
                     {
                       sender: user.handle,
-                      receiver: other.handle,
+                      receiver: other?.handle,
                     }
                   )
                   .then((data) => {
@@ -184,7 +191,7 @@ export default function MessagePage({ socket }) {
                       {
                         sender: user.handle,
                         conversationId: data.data._id,
-                        text: content.current.value,
+                        text: content.current?.value,
                       }
                     );
                   });
@@ -194,11 +201,11 @@ export default function MessagePage({ socket }) {
                   {
                     sender: user.handle,
                     conversationId: chat._id,
-                    text: content.current.value,
+                    text: content.current?.value,
                   }
                 );
               }
-              content.current.value = "";
+              content.current!.value = "";
             }}
           >
             <svg id="svg" viewBox="0 0 24 24" aria-hidden="true">

@@ -2,12 +2,14 @@ import { useState, useRef } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import Bottom from "../../components/Bottom";
-import Skeleton from "../../components/Skeleton";
 import Tag from "../../components/Tag";
+import { User } from "../../types/User";
 const Search = () => {
-  const user = useSelector((state) => state.user.user);
-  const tags = useRef();
-  const input = useRef();
+  const user = useSelector(
+    (state: { user: { user: User } }) => state.user.user
+  );
+  const tags = useRef<HTMLDivElement>(null);
+  const input = useRef<HTMLInputElement>(null);
   const [match, setMatch] = useState("");
   const [query, setQuery] = useState("");
   return Object.keys(user).length ? (
@@ -40,15 +42,15 @@ const Search = () => {
                 setMatch(regex[0]);
               }
             }}
-            onKeyDown={(e) => {
-              if (e.key === "@") {
-                tags.current.classList.remove("!hidden");
+            onBeforeInput={(e: any) => {
+              if (e.data === "@") {
+                tags.current?.classList.remove("!hidden");
               } else if (
-                e.key === " " ||
-                (query === "" && e.key === "Backspace") ||
+                e.data === " " ||
+                (query === "" && e.data === "Backspace") ||
                 query === ""
               ) {
-                tags.current.classList.add("!hidden");
+                tags.current?.classList.add("!hidden");
                 setMatch("");
               }
             }}
@@ -59,8 +61,8 @@ const Search = () => {
               id="searchTags"
               ref={tags}
               onClick={() => {
-                input.current.focus();
-                tags.current.classList.add("!hidden");
+                input.current?.focus();
+                tags.current?.classList.add("!hidden");
               }}
             >
               <Tag query={match} />
@@ -145,7 +147,7 @@ const Search = () => {
       <Bottom />
     </div>
   ) : (
-    ""
+    <div></div>
   );
 };
 

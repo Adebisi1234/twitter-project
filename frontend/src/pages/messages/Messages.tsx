@@ -4,10 +4,13 @@ import { useSelector } from "react-redux";
 import Header from "../../components/Header";
 import Bottom from "../../components/Bottom";
 import { Link } from "react-router-dom";
+import { User } from "../../types/User";
 
-export default function Messages({ socket }) {
-  const user = useSelector((state) => state.user.user);
-  const [conversations, setConversations] = useState([]);
+export default function Messages({ socket }: { socket: any }) {
+  const user = useSelector(
+    (state: { user: { user: User } }) => state.user.user
+  );
+  const [conversations, setConversations] = useState<{ members: [] }[]>([]);
 
   useEffect(() => {
     socket.connect();
@@ -30,9 +33,11 @@ export default function Messages({ socket }) {
     // });
   }, [user]);
 
-  const users = user.following.map((handle, i) => {
-    const conversation = !!conversations.find((x) => x.members.includes(user))
-      ? conversations.find((x) => x.members.includes(user))
+  const users = user.following.map((handle: string, i: number) => {
+    const conversation = !!conversations.find((x) =>
+      x.members.includes(user as never)
+    )
+      ? conversations.find((x) => x.members.includes(user as never))
       : {
           members: [user.handle, handle],
         };
