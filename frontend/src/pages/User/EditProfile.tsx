@@ -10,8 +10,10 @@ import {
 import app from "../../firebase";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../../features/auth/userSlice";
+import { useNavigate } from "react-router-dom";
 
 export default function User() {
+  const navigate = useNavigate();
   const user = useSelector((state) => state.user.user);
   const [uploadPPStatus, setUploadPPStatus] = useState("");
   const [uploadCoverStatus, setUploadCoverStatus] = useState("");
@@ -203,6 +205,7 @@ export default function User() {
             })
             .then((res) => {
               dispatch(login(res.data));
+              navigate("/profile");
             })
             .catch((err) => console.log(err));
         }}
