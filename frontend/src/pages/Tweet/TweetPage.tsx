@@ -11,16 +11,17 @@ import { useSelector, useDispatch } from "react-redux";
 import { addComment } from "../../features/post/postSlice";
 import axios from "axios";
 import Tag from "../../components/Tag";
+import { AppDispatch, RootState } from "../../app/store";
 
 export default function TweetPage() {
-  const user = useSelector((state) => state.user.user);
+  const user = useSelector((state: RootState) => state.user.user);
   const [match, setMatch] = useState("");
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const [content, setContent] = useState("");
   const { id } = useParams();
-  const tags = useRef("");
-  const input = useRef("");
-  const posts = useSelector((state) => state.post);
+  const tags = useRef<HTMLDivElement>(null!);
+  const input = useRef<HTMLTextAreaElement>(null!);
+  const posts = useSelector((state: RootState) => state.post);
   const [comments, setComments] = useState(
     posts[1].filter((post) => post.PostId === id)
   );
@@ -29,11 +30,11 @@ export default function TweetPage() {
   const comment = comments.map((comment) => {
     return <Tweet key={comment._id} post={comment} />;
   });
-  return Object.keys(post).length ? (
+  return Object.keys(post!).length ? (
     <div className="h-full w-full">
       <Header text="Post" />
       <div className="p-3">
-        <MainTweet id={post._id} />
+        <MainTweet id={post!._id} />
       </div>
       <div className="flex mt-2 mx-auto mb-3 p-2 max-w-2xl h-10 items-center gap-2">
         <ProfilePix pp={user.pp} />
@@ -50,12 +51,13 @@ export default function TweetPage() {
               setMatch(regex[0]);
             }
           }}
-          onBeforeInput={(e) => {
-            if (e.data === "@") {
+          onBeforeInput={(e: React.FormEvent<HTMLTextAreaElement>) => {
+            const { data }: { data: string } = e as any;
+            if (data === "@") {
               tags.current.classList.remove("!hidden");
             } else if (
-              e.data === " " ||
-              (content === "" && e.data === "Backspace") ||
+              data === " " ||
+              (content === "" && data === "Backspace") ||
               content === ""
             ) {
               tags.current.classList.add("!hidden");
@@ -73,7 +75,7 @@ export default function TweetPage() {
                 content: content,
                 handle: user.handle,
                 username: user.username,
-                PostId: post._id,
+                PostId: post?._id,
                 likes: 0,
                 commentCount: 0,
                 pp: user.pp,

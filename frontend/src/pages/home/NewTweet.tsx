@@ -13,6 +13,7 @@ import app from "../../firebase";
 import { useNavigate, useParams } from "react-router-dom";
 import Tag from "../../components/Tag";
 import { User } from "../../types/User";
+import { RootState } from "../../app/store";
 
 const NewTweet = ({ status, record }: { status?: string; record?: Blob }) => {
   const { quote } = useParams();
@@ -49,9 +50,7 @@ const NewTweet = ({ status, record }: { status?: string; record?: Blob }) => {
   let stopRecorder = () => {
     return;
   };
-  const user = useSelector(
-    (state: { user: { user: User } }) => state.user.user
-  );
+  const user = useSelector((state: RootState) => state.user.user);
   const [match, setMatch] = useState("");
   const dispatch = useDispatch();
   const [imageUrl, setImageUrl] = useState("");

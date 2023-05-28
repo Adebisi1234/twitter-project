@@ -9,6 +9,7 @@ import Button from "../../components/Button";
 import { auth, provider } from "../../firebase";
 import { signInWithPopup } from "firebase/auth";
 import google from "../../assets/google.svg";
+import { RootState } from "../../app/store";
 
 const Form = () => {
   const img = useRef<HTMLInputElement>(null);
@@ -16,7 +17,7 @@ const Form = () => {
   const pass = useRef<HTMLInputElement>(null);
   const userInput = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
-  const user = useSelector((state: any) => state.user.user);
+  const user = useSelector((state: RootState) => state.user.user);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
@@ -125,12 +126,25 @@ const Form = () => {
               }
             }}
             type="submit"
-            className=" bg-black hover:!bg-green-600 dark:bg-white dark:text-black text-white w-full p-3 mt-2 font-bold rounded-3xl"
+            className="!text-white !bg-black hover:!bg-green-600 dark:bg-white dark:text-black w-full p-3 mt-2 font-bold rounded-3xl"
           >
             Next
           </button>
+          <button
+            onClick={(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+              setUsername("check");
+              setPassword("testing");
+              const { target }: any = e;
+              target.classList.add("hidden");
+              img.current?.classList.replace("hidden", "flex");
+            }}
+            type="submit"
+            className="!text-white !bg-black hover:!bg-green-600 dark:bg-white dark:text-black w-full p-3 mt-2 font-bold rounded-3xl"
+          >
+            Test Clone out without an account
+          </button>
           <div
-            className="h-7 w-full hidden justify-center items-center"
+            className="h-12 w-fit mx-auto hidden justify-center items-center"
             id="img"
             ref={img}
           >

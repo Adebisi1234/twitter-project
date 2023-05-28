@@ -11,16 +11,19 @@ import Skeleton from "../../components/Skeleton";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import Tweet from "../../components/Tweet";
+import { Post } from "../../types/Post";
+import { RootState } from "../../app/store";
 
-const MainTweet = ({ id }) => {
+const MainTweet = ({ id }: { id: string }) => {
+  const likeIcon = useRef<HTMLDivElement>(null);
   const [count, setCount] = useState(0);
   const [toRetweet, setToRetweet] = useState(false);
   const [recount, setRecount] = useState(0);
-  const posts = useSelector((state) => state.post);
-  const user = useSelector((state) => state.user.user);
-  const post = posts[0].find((post) => post._id === id);
+  const posts = useSelector((state: RootState) => state.post);
+  const user = useSelector((state: RootState) => state.user.user);
+  const post = posts[0].find((post) => post._id === id)!;
   const dispatch = useDispatch();
-  const ref = useRef();
+  const retweetIcon = useRef<HTMLDivElement>(null);
 
   const quote =
     post.quoteId && posts[0].find((quote) => quote._id === post.quoteId);
@@ -61,7 +64,7 @@ const MainTweet = ({ id }) => {
         )}
         {post.quoteId && (
           <div className="w-full px-2 h-3/5 border-2 pointer-events-none">
-            <Tweet post={quote} isQuote={true} />
+            <Tweet post={quote as Post} isQuote={true} />
           </div>
         )}
         <div className="time my-3 flex gap-3 w-full">
@@ -83,12 +86,15 @@ const MainTweet = ({ id }) => {
             </div>
             {post.commentCount}
           </div>
-          <div className="contain gap-2 flex justify-center items-center">
+          <div
+            className="contain gap-2 flex justify-center items-center"
+            ref={likeIcon}
+          >
             <div
               className="w-5 h-5"
               onClick={(e) => {
                 if (count === 0) {
-                  e.target.classList.add("liked");
+                  likeIcon.current?.classList.add("liked");
                   dispatch(like({ id: post._id }));
                   axios
                     .post(
@@ -117,7 +123,7 @@ const MainTweet = ({ id }) => {
                   setCount((count + 1) % 2);
                 } else {
                   dispatch(dislike({ id: post._id }));
-                  e.target.classList.remove("liked");
+                  likeIcon.current?.classList.remove("liked");
 
                   axios.post(
                     "https://my-twitter-backend.onrender.com/posts/dislike",
@@ -132,11 +138,11 @@ const MainTweet = ({ id }) => {
               <svg
                 viewBox="0 0 24 24"
                 aria-hidden="true"
-                onPointerEnter={(e) => {
-                  e.target.classList.add("scale-125");
+                onPointerEnter={() => {
+                  likeIcon.current?.classList.add("scale-125");
                 }}
-                onPointerLeave={(e) => {
-                  e.target.classList.remove("scale-125");
+                onPointerLeave={() => {
+                  likeIcon.current?.classList.remove("scale-125");
                 }}
               >
                 <g>
@@ -175,7 +181,7 @@ const MainTweet = ({ id }) => {
                     id="quote"
                     onClick={() => {
                       if (recount === 0) {
-                        ref.current.classList.add("retweet");
+                        retweetIcon.current?.classList.add("retweet");
                         dispatch(retweet({ id: post._id }));
                         axios
                           .post(
@@ -204,7 +210,7 @@ const MainTweet = ({ id }) => {
                         setRecount((recount + 1) % 2);
                       } else {
                         dispatch(undoRetweet({ id: post._id }));
-                        ref.current.classList.remove("retweet");
+                        retweetIcon.current?.classList.remove("retweet");
                         axios.post(
                           "https://my-twitter-backend.onrender.com/posts/undoretweet",
                           {
@@ -223,12 +229,11 @@ const MainTweet = ({ id }) => {
               <svg
                 viewBox="0 0 24 24"
                 aria-hidden="true"
-                ref={ref}
                 onPointerEnter={(e) => {
-                  e.target.classList.add("scale-125");
+                  retweetIcon.current?.classList.add("scale-125");
                 }}
                 onPointerLeave={(e) => {
-                  e.target.classList.remove("scale-125");
+                  retweetIcon.current?.classList.remove("scale-125");
                 }}
               >
                 <g>

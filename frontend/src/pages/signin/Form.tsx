@@ -17,6 +17,7 @@ import {
 import app from "../../firebase";
 import Skeleton from "../../components/Skeleton";
 import { User } from "../../types/User";
+import { RootState } from "../../app/store";
 
 const Form = () => {
   const [username, setUsername] = useState("");
@@ -38,9 +39,7 @@ const Form = () => {
   const coverLabel = useRef<HTMLInputElement>(null);
   const img = useRef<HTMLDivElement>(null);
   const errs = useRef<HTMLDivElement>(null);
-  const user = useSelector(
-    (state: { user: { user: User } }) => state.user.user
-  );
+  const user = useSelector((state: RootState) => state.user.user);
 
   const signInWithGoogle = () => {
     signInWithPopup(auth, provider)

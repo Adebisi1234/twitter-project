@@ -1,6 +1,12 @@
 import { Link } from "react-router-dom";
 
-export default function Header({ user, tweets }) {
+export default function Header({
+  user,
+  tweets,
+}: {
+  user: string;
+  tweets: number;
+}) {
   return (
     <header className="w-full flex h-12 p-2 dark:bg-black dark:text-white dark:border-b items-center gap-3">
       <div className="arrow h-full w-10">

@@ -1,6 +1,8 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { Post } from "./../../types/Post";
+import { ActionCreatorWithPayload, createSlice } from "@reduxjs/toolkit";
+export type RootState = [Post[], Post[]];
 
-const initialState = [[], []];
+const initialState: RootState = [[], []];
 
 export const postSlice = createSlice({
   name: "post",
@@ -15,8 +17,12 @@ export const postSlice = createSlice({
     update: (state, action) => {
       state[0] = [];
       state[1] = [];
-      const comments = action.payload.filter((post) => post.comment === true);
-      const posts = action.payload.filter((post) => post.comment === false);
+      const comments = action.payload.filter(
+        (post: Post) => post.comment === true
+      );
+      const posts = action.payload.filter(
+        (post: Post) => post.comment === false
+      );
       state[0].push(posts[posts.length - 1]);
       state[0].push(...posts);
       state[0].pop();
@@ -33,7 +39,7 @@ export const postSlice = createSlice({
       } else {
         const commentExisting = state[1].find(
           (comments) => comments._id === id
-        );
+        )!;
         commentExisting.likes++;
       }
     },
@@ -48,7 +54,7 @@ export const postSlice = createSlice({
       } else {
         const commentExisting = state[1].find(
           (comments) => comments._id === id
-        );
+        )!;
         commentExisting.retweet++;
       }
     },
@@ -63,7 +69,7 @@ export const postSlice = createSlice({
       } else {
         const commentExisting = state[1].find(
           (comments) => comments._id === id
-        );
+        )!;
         commentExisting.likes--;
       }
     },
@@ -78,7 +84,7 @@ export const postSlice = createSlice({
       } else {
         const commentExisting = state[1].find(
           (comments) => comments._id === id
-        );
+        )!;
         commentExisting.retweet--;
       }
     },
@@ -93,6 +99,14 @@ export const {
   retweet,
   newPost,
   addComment,
+}: {
+  update: ActionCreatorWithPayload<any, "post/update">;
+  like: ActionCreatorWithPayload<any, "post/like">;
+  undoRetweet: ActionCreatorWithPayload<any, "post/undoRetweet">;
+  dislike: ActionCreatorWithPayload<any, "post/dislike">;
+  retweet: ActionCreatorWithPayload<any, "post/retweet">;
+  newPost: ActionCreatorWithPayload<any, "post/newPost">;
+  addComment: ActionCreatorWithPayload<any, "post/addComment">;
 } = postSlice.actions;
 
 export default postSlice.reducer;

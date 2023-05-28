@@ -8,14 +8,15 @@ import Skeleton from "../../components/Skeleton";
 import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { login } from "../../features/auth/userSlice";
+import { RootState } from "../../app/store";
 
 export default function User() {
-  const posts = useRef();
-  const likes = useRef();
+  const posts = useRef<HTMLHeadingElement>(null!);
+  const likes = useRef<HTMLHeadingElement>(null!);
   const [like, setLikes] = useState(false);
-  const user = useSelector((state) => state.user.user);
+  const user = useSelector((state: RootState) => state.user.user);
   const dispatch = useDispatch();
-  const post = useSelector((state) => state.post);
+  const post = useSelector((state: RootState) => state.post);
   const userPost = post[0].filter((post) => post.username === user.username);
   const tweets = userPost.map((post) => {
     return <Tweet key={post._id} post={post} />;
@@ -83,9 +84,9 @@ export default function User() {
               id="posts"
               ref={posts}
               onClick={() => {
-                posts.current.classList.add("border-b-4");
+                posts.current?.classList.add("border-b-4");
                 setLikes(false);
-                likes.current.classList.remove("border-b-4");
+                likes.current?.classList.remove("border-b-4");
               }}
             >
               Posts
@@ -95,9 +96,9 @@ export default function User() {
               id="likes"
               ref={likes}
               onClick={() => {
-                posts.current.classList.remove("border-b-4");
+                posts.current?.classList.remove("border-b-4");
                 setLikes(true);
-                likes.current.classList.add("border-b-4");
+                likes.current?.classList.add("border-b-4");
               }}
             >
               Likes

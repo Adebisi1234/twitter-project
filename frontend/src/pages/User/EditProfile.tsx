@@ -11,19 +11,20 @@ import app from "../../firebase";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../../features/auth/userSlice";
 import { useNavigate } from "react-router-dom";
+import { RootState } from "../../app/store";
 
 export default function User() {
   const navigate = useNavigate();
-  const user = useSelector((state) => state.user.user);
+  const user = useSelector((state: RootState) => state.user.user);
   const [uploadPPStatus, setUploadPPStatus] = useState("");
   const [uploadCoverStatus, setUploadCoverStatus] = useState("");
-  const [pp, setPp] = useState("");
-  const [CoverImg, setCoverImg] = useState("");
-  const [username, setUsername] = useState("");
-  const [bio, setBio] = useState("");
-  const [location, setLocation] = useState("");
+  const [pp, setPp] = useState(user.pp);
+  const [CoverImg, setCoverImg] = useState(user.coverImg);
+  const [username, setUsername] = useState(user.username);
+  const [bio, setBio] = useState(user.bio);
+  const [location, setLocation] = useState(user.location);
   const dispatch = useDispatch();
-  const uploadPP = (file) => {
+  const uploadPP = (file: File) => {
     const storage = getStorage(app);
     const fileName = new Date().getTime() + file.name;
     const storageRef = ref(storage, fileName);
@@ -57,7 +58,7 @@ export default function User() {
       }
     );
   };
-  const uploadCover = (file) => {
+  const uploadCover = (file: File) => {
     const storage = getStorage(app);
     const fileName = new Date().getTime() + file.name;
     const storageRef = ref(storage, fileName);
@@ -94,10 +95,13 @@ export default function User() {
 
   return (
     <div className="h-full w-full dark:bg-black dark:text-white bg-white text-black">
-      <Header title="Save" text="Edit Profile" />
+      <Header text="Edit Profile" />
       <div className="big flex flex-col dark:!bg-black dark:!text-white !bg-white !text-black">
         <div className="cover-img relative h-36 w-full !bg-black dark:!bg-teal-700 ">
-          <div className="h-full !bg-red-500 w-full flex justify-center items-center text-3xl">
+          <div
+            className="h-full !bg-green-700 bg-cover bg-no-repeat w-full flex justify-center items-center text-3xl"
+            style={{ backgroundImage: `url(${user.coverImg})` }}
+          >
             <div className="buttons w-7 h-9 flex gap-2 justify-between">
               <label
                 htmlFor="coverImgReal"
@@ -110,16 +114,21 @@ export default function User() {
                   type="file"
                   accept="image/*"
                   onChange={(e) => {
-                    const images = e.target.files[0];
-
-                    uploadCover(images);
+                    const { target } = e;
+                    if (target.files != null) {
+                      const images = target.files[0];
+                      uploadCover(images);
+                    }
                   }}
                 ></input>
               </label>
             </div>
             <span>{uploadCoverStatus}</span>
           </div>
-          <div className="pp h-28 absolute w-28 rounded-full ml-4 border -bottom-1/4 border-white !bg-black">
+          <div
+            className="pp h-28 absolute w-28 bg-cover bg-no-repeat  rounded-full ml-4 border -bottom-1/4 border-white !bg-black/90"
+            style={{ backgroundImage: `url(${user.pp})` }}
+          >
             <div className=" h-full w-full flex !bg-transparent justify-center items-center">
               <div className="buttons w-7 h-9 flex gap-2 justify-between">
                 <label
@@ -133,10 +142,12 @@ export default function User() {
                     id="ppReal"
                     type="file"
                     accept="image/*"
-                    onChange={(e) => {
-                      const images = e.target.files[0];
-
-                      uploadPP(images);
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                      const { target } = e;
+                      if (target.files != null) {
+                        const images = target.files[0];
+                        uploadPP(images);
+                      }
                     }}
                   ></input>
                 </label>
@@ -170,7 +181,7 @@ export default function User() {
               Bio
             </label>
             <textarea
-              className="bg-transparent w-full"
+              className="bg-transparent w-full no-scrollbar"
               value={bio}
               onChange={(e) => setBio(e.target.value)}
             ></textarea>

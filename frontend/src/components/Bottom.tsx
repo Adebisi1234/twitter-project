@@ -1,8 +1,10 @@
 import { useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
+import { User } from "../types/User";
+import { RootState } from "../app/store";
 
 const Bottom = () => {
-  const user = useSelector((state) => state.user.user);
+  const user = useSelector((state: RootState) => state.user.user);
   let location = useLocation();
 
   return (

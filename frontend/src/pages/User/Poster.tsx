@@ -7,25 +7,30 @@ import Hr from "../../components/Hr";
 import Skeleton from "../../components/Skeleton";
 import Tweet from "../../components/Tweet";
 import Header from "./Header";
+import { RootState } from "../../app/store";
+import { User } from "../../types/User";
 
 export default function Poster() {
-  const posts = useRef();
-  const likes = useRef();
-  const follow = useRef();
+  const posts = useRef<HTMLDivElement>(null!);
+  const likes = useRef<HTMLDivElement>(null!);
+  const follow = useRef<HTMLButtonElement>(null!);
   const { handle } = useParams();
-  const users = useSelector((state) => state.user.user);
-  const [user, setUser] = useState(undefined);
+  const users = useSelector((state: RootState) => state.user.user);
+  const [user, setUser]: [
+    user: User,
+    setUser: React.Dispatch<React.SetStateAction<User>>
+  ] = useState<User>(undefined!);
   const [like, setLikes] = useState(false);
   useEffect(() => {
-    const getUser = async (handle) => {
+    const getUser = async (handle: string) => {
       const { data } = await axios.get(
         `https://my-twitter-backend.onrender.com/users/get/${handle}`
       );
       setUser(data);
     };
-    getUser(handle);
+    getUser(handle!);
   }, []);
-  const post = useSelector((state) => state.post);
+  const post = useSelector((state: RootState) => state.post);
   const userPost = post[0].filter((post) => post.handle === handle);
 
   const liked = post[0].filter((post) => {

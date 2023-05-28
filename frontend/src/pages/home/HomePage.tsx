@@ -14,6 +14,7 @@ import { Link } from "react-router-dom";
 import Hr from "../../components/Hr";
 import Theme from "../../components/Theme";
 import { Post } from "../../types/Post";
+import { RootState } from "../../app/store";
 
 const HomePage = ({
   newTheme,
@@ -23,9 +24,9 @@ const HomePage = ({
   setNewTheme?: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
   const slide = useRef<HTMLDivElement>(null);
-  const post = useSelector((state: any) => state.post);
+  const post = useSelector((state: RootState) => state.post);
   const dispatch = useDispatch();
-  const user = useSelector((state: any) => state.user.user);
+  const user = useSelector((state: RootState) => state.user.user);
   const [loading, setLoading] = useState(false);
   const [isFollowing, setIsFollowing] = useState(false);
 
@@ -68,7 +69,7 @@ const HomePage = ({
     <>
       <div className="w-full h-full relative">
         <Header
-          imgs={Object.keys(user).length && user.pp}
+          imgs={Object.keys(user).length ? user.pp : ""}
           slide={slide}
           setIsFollowing={setIsFollowing}
           setNewTheme={setNewTheme!}

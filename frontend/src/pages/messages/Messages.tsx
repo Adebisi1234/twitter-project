@@ -5,11 +5,10 @@ import Header from "../../components/Header";
 import Bottom from "../../components/Bottom";
 import { Link } from "react-router-dom";
 import { User } from "../../types/User";
+import { RootState } from "../../app/store";
 
 export default function Messages({ socket }: { socket: any }) {
-  const user = useSelector(
-    (state: { user: { user: User } }) => state.user.user
-  );
+  const user = useSelector((state: RootState) => state.user.user);
   const [conversations, setConversations] = useState<{ members: [] }[]>([]);
 
   useEffect(() => {

@@ -4,10 +4,9 @@ import { Link } from "react-router-dom";
 import Bottom from "../../components/Bottom";
 import Tag from "../../components/Tag";
 import { User } from "../../types/User";
+import { RootState } from "../../app/store";
 const Search = () => {
-  const user = useSelector(
-    (state: { user: { user: User } }) => state.user.user
-  );
+  const user = useSelector((state: RootState) => state.user.user);
   const tags = useRef<HTMLDivElement>(null);
   const input = useRef<HTMLInputElement>(null);
   const [match, setMatch] = useState("");

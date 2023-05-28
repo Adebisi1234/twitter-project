@@ -7,6 +7,7 @@ import Note from "./Note";
 import Skeleton from "../../components/Skeleton";
 import { login } from "../../features/auth/userSlice";
 import { User } from "../../types/User";
+import { RootState } from "../../app/store";
 
 interface Notes {
   _id: string;
@@ -24,9 +25,7 @@ export default function Notifications() {
   const [isFetching, setIsFetching] = useState(false);
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
-  const user = useSelector(
-    (state: { user: { user: User } }) => state.user.user
-  );
+  const user = useSelector((state: RootState) => state.user.user);
   const dispatch = useDispatch();
 
   const observer = useRef<any>();

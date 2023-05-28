@@ -19,13 +19,14 @@ import Messages from "./pages/messages/Messages";
 import { io } from "socket.io-client";
 import MessagePage from "./pages/messages/MessagePage";
 import Skeleton from "./components/Skeleton";
+import { RootState } from "./app/store";
 // import Theme from "./components/Theme";
 
 const Theme = lazy(() => import("./components/Theme"));
 function App() {
   const socket = useRef<any>(null);
   const [newTheme, setNewTheme] = useState(false);
-  const user = useSelector((state: { user: { user: any } }) => state.user.user);
+  const user = useSelector((state: RootState) => state.user.user);
   socket.current = io("https://my-twitter-backend.onrender.com", {
     autoConnect: false,
   });

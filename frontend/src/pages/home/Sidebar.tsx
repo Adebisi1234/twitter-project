@@ -2,6 +2,7 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../../features/auth/userSlice";
 import { User } from "../../types/User";
+import { RootState } from "../../app/store";
 const Sidebar = ({
   setNewTheme,
 }: {
@@ -9,9 +10,7 @@ const Sidebar = ({
 }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const user = useSelector(
-    (state: { user: { user: User } }) => state.user.user
-  );
+  const user = useSelector((state: RootState) => state.user.user);
   let location = useLocation();
   return Object.keys(user).length ? (
     <div
@@ -223,8 +222,8 @@ const Sidebar = ({
         <button
           className=" w-full !text-white border-slate-300 border !bg-red-500 h-10 flex p-3 gap-1 mb-20 lg:mb-0 justify-center items-center rounded-3xl"
           onClick={() => {
-            localStorage.clear();
             dispatch(logout());
+            localStorage.clear();
             navigate("/login");
           }}
         >

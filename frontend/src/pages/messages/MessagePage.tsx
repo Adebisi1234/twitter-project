@@ -6,9 +6,10 @@ import Message from "./Message";
 import Header from "../../components/Header";
 import ProfilePix from "../../components/ProfilePix";
 import { User } from "../../types/User";
+import { RootState } from "../../app/store";
 
 export default function MessagePage({ socket }: { socket: any }) {
-  const user = useSelector((state: { user: { user: any } }) => state.user.user);
+  const user = useSelector((state: RootState) => state.user.user);
   const content = useRef<HTMLInputElement>(null);
   const { currentChat } = useParams();
   const [newMessage, setNewMessage] = useState<any>(null);

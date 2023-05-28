@@ -12,14 +12,13 @@ import Skeleton from "./Skeleton";
 import axios from "axios";
 import { Post } from "../types/Post";
 import { User } from "../types/User";
+import { RootState } from "../app/store";
 
 const Tweet = (prop: { post: Post | undefined; isQuote?: boolean }) => {
   const [count, setCount] = useState(0);
   const [recount, setRecount] = useState(0);
-  const user = useSelector(
-    (state: { user: { user: User } }) => state.user.user
-  );
-  const posts = useSelector((state: { post: [Post[], Post[]] }) => state.post);
+  const user = useSelector((state: RootState) => state.user.user);
+  const posts = useSelector((state: RootState) => state.post);
   const isComment = posts[1].find((comment) => comment._id === prop.post?._id);
   const dispatch = useDispatch();
   const [toRetweet, setToRetweet] = useState(false);
@@ -68,9 +67,12 @@ const Tweet = (prop: { post: Post | undefined; isQuote?: boolean }) => {
           <p className="max-w-full whitespace-pre-wrap">{prop.post?.content}</p>
           {prop.post?.img && (
             <img
-              className=" max-w-full max-h-96 object-contain rounded-3xl my-2 "
+              className=" max-w-full h-auto max-h-96 object-contain rounded-3xl my-2 "
               src={prop.post?.img}
               decoding="async"
+              height={384}
+              width={360}
+              alt="loading"
               loading="lazy"
             />
           )}

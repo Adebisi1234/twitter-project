@@ -13,4 +13,5 @@ export interface Post {
   quoteId: string;
   audioUrl: string;
   title: string;
+  createdAt: string;
 }

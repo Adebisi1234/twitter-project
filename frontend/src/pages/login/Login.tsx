@@ -2,12 +2,10 @@ import Form from "./Form";
 import Header from "../../components/Header";
 import { useSelector } from "react-redux";
 import HomePage from "../home/HomePage";
-import { User } from "../../types/User";
+import { RootState } from "../../app/store";
 
 const login = () => {
-  const user = useSelector(
-    (state: { user: { user: User } }) => state.user.user
-  );
+  const user = useSelector((state: RootState) => state.user.user);
   return Object.keys(user).length ? (
     <HomePage />
   ) : (
