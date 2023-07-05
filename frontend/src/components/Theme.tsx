@@ -1,12 +1,16 @@
+import React from "react";
 export default function Theme({
   setNewTheme,
 }: {
   setNewTheme: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
   function setColor(color: string) {
+    localStorage.setItem("text", color);
     document.documentElement.style.setProperty("--button-primary", color);
   }
   function setBg(color: string) {
+    localStorage.setItem("THEME", color);
+
     if (color === "white") {
       document.documentElement.style.setProperty("--bg-light", color);
       document.documentElement.style.setProperty(

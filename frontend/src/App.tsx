@@ -11,7 +11,7 @@ import Notifications from "./pages/notifications/Notifications";
 import TweetPage from "./pages/Tweet/TweetPage";
 import { Route, Routes } from "react-router-dom";
 import ErrorPage from "./components/ErrorPage";
-import { useRef, useState, lazy, Suspense } from "react";
+import { useRef, useState, lazy, Suspense, useEffect } from "react";
 import { useSelector } from "react-redux";
 import MobileTweet from "./pages/home/MobileTweet";
 import Poster from "./pages/User/Poster";
@@ -31,6 +31,63 @@ function App() {
     autoConnect: false,
   });
   const ref = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (!localStorage.getItem("THEME")) {
+      window.matchMedia("(prefers-color-scheme: dark)").matches
+        ? localStorage.setItem("THEME", "black")
+        : localStorage.setItem("THEME", "white");
+    }
+
+    if (localStorage.getItem("THEME") === "white") {
+      document.documentElement.style.setProperty("--bg-light", "white");
+      document.documentElement.style.setProperty(
+        "--bg-lessDark",
+        "rgba(171, 182, 182, 0.574)"
+      );
+      if (document.getElementById("logo")) {
+        document
+          .getElementById("logo")
+          ?.classList.remove("dark:bg-[url('/src/assets/logo.jpg')]");
+        document
+          .getElementById("logo")
+          ?.classList.remove("bg-[url('/src/assets/logo.jpg')]");
+        document
+          .getElementById("logo")
+          ?.classList.add("bg-[url('/src/assets/logoDark.jpg')]");
+      }
+      document.documentElement.style.setProperty("--bg-dark", "white");
+      document.documentElement.style.setProperty("--color-light", "black");
+      document.documentElement.style.setProperty("--color-dark", "black");
+    } else if (localStorage.getItem("THEME") === "black") {
+      if (document.getElementById("logo")) {
+        document
+          .getElementById("logo")
+          ?.classList.add("bg-[url('/src/assets/logo.jpg')]");
+        document
+          .getElementById("logo")
+          ?.classList.remove("bg-[url('/src/assets/logoDark.jpg')]");
+      }
+
+      document.documentElement.style.setProperty("--bg-light", "black");
+      document.documentElement.style.setProperty("--bg-dark", "black");
+      document.documentElement.style.setProperty("--color-light", "white");
+      document.documentElement.style.setProperty("--color-dark", "white");
+    } else {
+      if (document.getElementById("logo")) {
+        document
+          .getElementById("logo")
+          ?.classList.add("bg-[url('/src/assets/logo.jpg')]");
+        document
+          .getElementById("logo")
+          ?.classList.remove("bg-[url('/src/assets/logoDark.jpg')]");
+      }
+
+      document.documentElement.style.setProperty("--bg-light", "rgb(24,34,45)");
+      document.documentElement.style.setProperty("--bg-dark", "rgb(24,34,45)");
+      document.documentElement.style.setProperty("--color-light", "white");
+      document.documentElement.style.setProperty("--color-dark", "white");
+    }
+  }, []);
   return (
     <div className=" flex min-h-screen flex-col lg:grid lg:grid-cols-[1fr,2fr,1fr] dark:bg-black dark:text-white bg-white text-black">
       <div className="hidden lg:block">

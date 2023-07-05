@@ -128,7 +128,7 @@ const Form = () => {
             type="submit"
             className="!text-white !bg-black hover:!bg-green-600 dark:bg-white dark:text-black w-full p-3 mt-2 font-bold rounded-3xl"
           >
-            Next
+            Log in
           </button>
           <button
             onClick={(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
