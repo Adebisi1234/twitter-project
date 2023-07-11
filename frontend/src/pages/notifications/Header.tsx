@@ -9,7 +9,7 @@ export default function Header({
   const all = useRef<HTMLDivElement>(null);
   const mentions = useRef<HTMLDivElement>(null);
   return (
-    <header className="w-full flex flex-col p-2 dark:bg-black dark:text-white dark:border-b items-center gap-3">
+    <header className="w-full flex flex-col p-2 bg-[var(--bg-primary)]  dark:border-b items-center gap-3">
       <div className="flex w-full h-12 gap-3">
         <div className="arrow h-full w-10">
           <Link to="/">

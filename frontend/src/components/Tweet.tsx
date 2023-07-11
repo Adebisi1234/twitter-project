@@ -28,8 +28,8 @@ const Tweet = (prop: { post: Post | undefined; isQuote?: boolean }) => {
     ? posts[0].find((quote) => quote._id === prop.post?.quoteId)
     : undefined;
 
-  return Object.keys(user).length ? (
-    <div className="border-b-[0.1px] pl-2 m-auto max-w-2xl flex pt-2 dark:bg-black dark:text-white bg-white text-black py-2 ">
+  return (
+    <div className="border-[0.1px] w-full flex bg-[var(--bg-primary)] py-2 ">
       {prop.post?.pp ? (
         <ProfilePix pp={prop.post?.pp} handle={prop.post?.handle} />
       ) : prop.post?.handle !== user.handle ? (
@@ -53,10 +53,10 @@ const Tweet = (prop: { post: Post | undefined; isQuote?: boolean }) => {
           </div>
         </Link>
       )}
-      <div className="flex flex-col w-full h-full">
+      <div className="flex flex-col w-[calc(100%_-_36px)] lg:w-[calc(100%_-_56px)]">
         <Link
           to={!isComment ? `/tweetPage/${prop.post?._id}` : ""}
-          className="tweet flex flex-col w-full p-2 pt-0"
+          className="tweet flex flex-col p-2 pt-0"
         >
           <h3 className="font-bold">
             {prop.post?.username}{" "}
@@ -183,19 +183,13 @@ const Tweet = (prop: { post: Post | undefined; isQuote?: boolean }) => {
             >
               <div
                 className="w-5 h-5 relative"
-                onMouseEnter={() => {
-                  setToRetweet(true);
-                }}
-                onMouseLeave={() => {
-                  setToRetweet(false);
-                }}
-                onTouchStart={() => {
+                onClick={() => {
                   setToRetweet(!toRetweet);
                 }}
               >
                 {toRetweet && (
                   <div
-                    className="absolute -left-3 bottom-5 bg-[var(--bg-light)] p-2 w-fit"
+                    className="absolute -left-9 bottom-5 bg-[var(--bg-secondary)] p-2 w-fit"
                     onClick={(e) => {
                       console.log(e.target);
                     }}
@@ -285,8 +279,6 @@ const Tweet = (prop: { post: Post | undefined; isQuote?: boolean }) => {
         )}
       </div>
     </div>
-  ) : (
-    <Skeleton />
   );
 };
 

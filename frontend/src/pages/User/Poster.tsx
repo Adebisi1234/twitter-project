@@ -46,21 +46,48 @@ export default function Poster() {
   const likedPost = liked.map((post) => {
     return <Tweet key={post._id} post={post} />;
   });
+  const showDialog = useRef<HTMLDialogElement>(null);
+  const dialogImgSrc = useRef<string>("");
 
   return user ? (
-    <div className="w-full">
+    <div>
+      <dialog className="w-full h-full" ref={showDialog}>
+        <div
+          className="x"
+          onClick={() => {
+            showDialog.current?.close();
+          }}
+        >
+          X
+        </div>
+        <img
+          src={dialogImgSrc.current}
+          alt="image"
+          className="max-h-screen max-w-full object-cover aspect-auto"
+        />
+      </dialog>
       <Header user={user.username} tweets={user.posts} />
-      <div className="big flex flex-col dark:bg-black dark:text-black bg-white text-black">
+      <div className="big flex flex-col bg-[var(--bg-primary)] text-[var(--color)]">
         <div
           className="cover-img relative h-48 lg:h-52 w-full !bg-green-500 !dark:bg-red-500 !bg-cover "
           style={{ background: `url("${user.coverImg}")` }}
+          onClick={() => {
+            dialogImgSrc.current = user.coverImg;
+            console.log(dialogImgSrc.current);
+            showDialog.current?.showModal();
+          }}
         >
           <div
             className="pp h-24 absolute w-24 rounded-full translate-y-36 ml-4 border border-white !bg-cover bg-black"
             style={{ background: `url("${user.pp}")` }}
+            onClick={() => {
+              dialogImgSrc.current = user.pp;
+              console.log(dialogImgSrc.current);
+              showDialog.current?.showModal();
+            }}
           ></div>
         </div>
-        <div className=" dark:bg-black dark:text-white  options">
+        <div className=" bg-[var(--bg-primary)]   options">
           <div className="edit-profile flex items-end justify-end pr-3">
             <button
               className="border dark:border-white border-black py-3 px-4 rounded-3xl mt-1"
@@ -87,23 +114,23 @@ export default function Poster() {
           </div>
         </div>
         <div className="ml-5">
-          <div className="name dark:bg-black dark:text-white mb-6">
+          <div className="name bg-[var(--bg-primary)]  mb-6">
             <h1 className="text-xl font-bold">{user.username}</h1>
             <small className="font-thin opacity-80">{user.handle}</small>
           </div>
-          <div className="bio dark:bg-black dark:text-white mb-4 whitespace-pre">
+          <div className="bio bg-[var(--bg-primary)]  mb-4 whitespace-pre">
             {user.bio}
           </div>
-          <div className="info dark:bg-black dark:text-white mb-4 flex flex-wrap opacity-80 gap-x-8">
+          <div className="info bg-[var(--bg-primary)]  mb-4 flex flex-wrap opacity-80 gap-x-8">
             <div>{user.location} </div>
           </div>
 
-          <div className="follow-count dark:bg-black dark:text-white mb-4 flex gap-4">
+          <div className="follow-count bg-[var(--bg-primary)]  mb-4 flex gap-4">
             <div className="following">{user.followersCount} Following</div>
             <div className="following">{user.followingCount} Followers</div>
           </div>
 
-          <div className="tweets dark:bg-black dark:text-white flex items-center justify-evenly w-full gap-11">
+          <div className="tweets bg-[var(--bg-primary)]  flex items-center justify-evenly w-full gap-11">
             <h1
               className="post font-extrabold border-b-4 !border-b-[var(--button-primary)]"
               id="posts"

@@ -14,7 +14,7 @@ const Sidebar = ({
   let location = useLocation();
   return Object.keys(user).length ? (
     <div
-      className="flex lg:w-[90%] pl-2 z-50 !sticky top-0 flex-col h-screen w-full sidebar"
+      className="flex pl-2 z-50 !sticky top-0 flex-col h-screen w-full sidebar"
       id="sidebar"
     >
       <div>
@@ -30,32 +30,49 @@ const Sidebar = ({
             X
           </span>
         </div>
-        <div className="account flex justify-between p-3">
-          <div className="user">
-            <div className="details mb-3">
-              {user.pp ? (
-                <img src={user.pp} className="h-7 w-7 !bg-cover rounded-full" />
-              ) : (
-                <div className="w-9 h-9">
-                  <svg
-                    viewBox="0 0 24 24"
-                    aria-hidden="true"
-                    className="w-7 h-7 !bg-transparent"
-                  >
-                    <g>
-                      <path d="M5.651 19h12.698c-.337-1.8-1.023-3.21-1.945-4.19C15.318 13.65 13.838 13 12 13s-3.317.65-4.404 1.81c-.922.98-1.608 2.39-1.945 4.19zm.486-5.56C7.627 11.85 9.648 11 12 11s4.373.85 5.863 2.44c1.477 1.58 2.366 3.8 2.632 6.46l.11 1.1H3.395l.11-1.1c.266-2.66 1.155-4.88 2.632-6.46zM12 4c-1.105 0-2 .9-2 2s.895 2 2 2 2-.9 2-2-.895-2-2-2zM8 6c0-2.21 1.791-4 4-4s4 1.79 4 4-1.791 4-4 4-4-1.79-4-4z"></path>
-                    </g>
-                  </svg>
-                </div>
-              )}
-              <h1>{user.username ? user.username : "owner"}</h1>
-              <small>{user.handle ? user.handle : "owner"}</small>
+        <div className="account p-3">
+          <div
+            className="user cursor-pointer"
+            onClick={() => {
+              navigate("/profile");
+            }}
+          >
+            <div className="details mb-3 flex justify-between">
+              <div>
+                <h1 className="font-bold text-lg">
+                  {user.username ? user.username : "owner"}
+                </h1>
+                <p className="font-extralight italic">
+                  {user.handle ? user.handle : "owner"}
+                </p>
+              </div>
+              <div className="img w-14 h-14 mr-2">
+                {user.pp ? (
+                  <img
+                    src={user.pp}
+                    className="h-full w-full !bg-cover rounded-full"
+                  />
+                ) : (
+                  <div className="w-full h-full">
+                    <svg
+                      viewBox="0 0 24 24"
+                      aria-hidden="true"
+                      className="w-full h-full !bg-transparent"
+                    >
+                      <g>
+                        <path d="M5.651 19h12.698c-.337-1.8-1.023-3.21-1.945-4.19C15.318 13.65 13.838 13 12 13s-3.317.65-4.404 1.81c-.922.98-1.608 2.39-1.945 4.19zm.486-5.56C7.627 11.85 9.648 11 12 11s4.373.85 5.863 2.44c1.477 1.58 2.366 3.8 2.632 6.46l.11 1.1H3.395l.11-1.1c.266-2.66 1.155-4.88 2.632-6.46zM12 4c-1.105 0-2 .9-2 2s.895 2 2 2 2-.9 2-2-.895-2-2-2zM8 6c0-2.21 1.791-4 4-4s4 1.79 4 4-1.791 4-4 4-4-1.79-4-4z"></path>
+                      </g>
+                    </svg>
+                  </div>
+                )}
+              </div>
             </div>
             <div className="follow-count mb-4 flex gap-4">
               <div className="following">{user.followingCount} followers</div>
               <div className="followers">{user.followersCount} following</div>
             </div>
           </div>
+          <hr />
         </div>
       </div>
       <ul className="p-3 flex flex-col gap-2">
@@ -162,7 +179,7 @@ const Sidebar = ({
                 </svg>
               )}
               {user.notification !== 0 && (
-                <div className="absolute -top-1 -right-1 rounded-full w-4 h-4 !bg-green-500 text-xs !text-white flex justify-center items-center">
+                <div className="absolute -top-1 -right-1 rounded-full w-4 h-4 !bg-green-500 text-xs !text-[var(--color)] flex justify-center items-center">
                   {user.notification ? user.notification : 0}
                 </div>
               )}
@@ -220,7 +237,7 @@ const Sidebar = ({
       </ul>
       <div className="grow flex items-end">
         <button
-          className=" w-full !text-white border-slate-300 border !bg-red-500 h-10 flex p-3 gap-1 mb-20 lg:mb-0 justify-center items-center rounded-3xl"
+          className=" w-full !text-[var(--color)] border-slate-300 border !bg-red-500 h-10 flex p-3 gap-1 mb-20 lg:mb-0 justify-center items-center rounded-3xl"
           onClick={() => {
             dispatch(logout());
             localStorage.clear();

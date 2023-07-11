@@ -2,28 +2,18 @@
     height: 100vh;
 }
 
-* {
-    box-sizing: border-box;
-}
-
 input, textarea {
     outline: 0px !important;
     background: transparent;
 }
 
-#root * {
-    color: var(--color-light);
-    background-color: var(--bg-light);
-    border-color: rgba(95, 93, 93, 0.256);
-}
-
-
 @media (prefers-color-scheme: dark) {
-    #root * {
-        color: var(--color-dark);
-        border-color: rgba(255, 255, 255, 0.256);
-        background-color: var(--bg-dark);
-    }
+  :root {
+    --bg-primary: black;
+    --bg-secondary: #16181c67;
+    --color: white;
+    --svg: rgb(15, 20, 25);
+  }
     
     svg {
       color: rgb(83, 100, 113)
@@ -85,19 +75,15 @@ input, textarea {
 }
 
 :root {
+    --bg-primary: white;
+    --bg-secondary: rgba(171, 182, 182, 0.574);
     --button-primary: rgb(0, 186, 124);
-    --svg-light: rgb(15, 20, 25);
-    --svg-dark: rgb(247, 249, 249);
-    --bg-dark: rgb(24,34,45);
-    --bg-lessDark: #16181c67;
-    --bg-light: white;
-    --bg-lighter: rgb(247, 249, 249);
-    --color-light: black;
-    --color-dark: white;
+    --svg: rgb(247, 249, 249);
+    --color: black;
 }
 
 #sidebar svg {
-  color: var(--svg-light);
+  color: var(--svg);
 }
 
 .trend:hover, li:hover {

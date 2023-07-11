@@ -18,7 +18,9 @@ const signup = async (req, res, next) => {
         .status(400)
         .json({ message: "Username and password are required." });
     // Find duplicate
-    const user = await User.findOne({ username: username });
+    const user = await User.findOne({
+      handle: username.includes("@") ? username : `@${username}`,
+    });
     if (user) return res.status(409).json({ message: "User exists" });
     // encrypt password
     const hashedPwd = await bcrypt.hash(password, 10);

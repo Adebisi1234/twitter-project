@@ -75,9 +75,9 @@ const Form = () => {
   };
 
   return !Object.keys(user).length ? (
-    <div className="w-full dark:bg-black overflow-hidden dark:text-white bg-white text-black">
+    <div className="w-full overflow-hidden  bg-[var(--bg-primary)] text-black">
       <div className=" mx-4 h-screen flex flex-col gap-4 my-36 ">
-        <h1 className=" text-3xl text-black dark:text-white font-bold mb-2">
+        <h1 className=" text-3xl text-black  font-bold mb-2">
           Sign in to Clone
         </h1>
         <Button
@@ -98,7 +98,7 @@ const Form = () => {
           <input
             required
             type="text"
-            placeholder="username"
+            placeholder="handle"
             ref={userInput}
             className="w-full pl-2 h-14 border border-1 border-slate-300 "
             onChange={(e) => {
@@ -126,7 +126,7 @@ const Form = () => {
               }
             }}
             type="submit"
-            className="!text-white !bg-black hover:!bg-green-600 dark:bg-white dark:text-black w-full p-3 mt-2 font-bold rounded-3xl"
+            className="!text-black !bg-[var(--bg-primary)] hover:!bg-green-600 dark:bg-[var(--bg-lighter)]  w-full p-3 mt-2 font-bold rounded-3xl"
           >
             Log in
           </button>
@@ -139,7 +139,7 @@ const Form = () => {
               img.current?.classList.replace("hidden", "flex");
             }}
             type="submit"
-            className="!text-white !bg-black hover:!bg-green-600 dark:bg-white dark:text-black w-full p-3 mt-2 font-bold rounded-3xl"
+            className="!text-black !bg-[var(--bg-primary)] hover:!bg-green-600 dark:bg-[var(--bg-lighter)]  w-full p-3 mt-2 font-bold rounded-3xl"
           >
             Test Clone out without an account
           </button>
@@ -153,7 +153,7 @@ const Form = () => {
           <span id="err" ref={errs}></span>
         </form>
 
-        <p className="dark:text-white text-black">
+        <p className=" text-black">
           Don't have an account?{" "}
           <Link to="/signin" className=" !text-green-600 ">
             Sign up

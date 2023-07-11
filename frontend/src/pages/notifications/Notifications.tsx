@@ -122,7 +122,7 @@ export default function Notifications() {
   return (
     <>
       {!loading ? (
-        <div className="dark:bg-black dark:text-white">
+        <div className="bg-[var(--bg-primary)] ">
           <Header setMentions={setMentions} />
           {notifications.length ? (
             <div className="pl-2">

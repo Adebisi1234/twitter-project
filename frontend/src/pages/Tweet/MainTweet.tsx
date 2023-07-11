@@ -28,7 +28,7 @@ const MainTweet = ({ id }: { id: string }) => {
   const quote =
     post.quoteId && posts[0].find((quote) => quote._id === post.quoteId);
   return Object.keys(post).length ? (
-    <div className="border-b scroll-mb-20 m-auto max-w-2xl flex flex-col pt-2 dark:bg-black dark:text-white bg-white text-black py-2 ">
+    <div className="border-b scroll-mb-20 m-auto max-w-2xl flex flex-col pt-2  bg-[var(--bg-primary)] text-[var(--color)] py-2 ">
       <div className="details">
         {post.pp ? (
           <ProfilePix pp={post.pp} handle={post.handle} />
@@ -155,15 +155,12 @@ const MainTweet = ({ id }: { id: string }) => {
           <div className="contain gap-2 flex justify-center items-center">
             <div
               className="w-5 h-5 z-0 relative"
-              onPointerEnter={() => {
-                setToRetweet(true);
-              }}
-              onPointerLeave={() => {
-                setToRetweet(false);
+              onClick={() => {
+                setToRetweet(!toRetweet);
               }}
             >
               {toRetweet && (
-                <div className="absolute bottom-5 bg-[var(--bg-light)] p-2 w-fit">
+                <div className="absolute bottom-5 bg-[var(--bg-primary)] p-2 w-fit">
                   <Link to={`/newtweet/${post._id}`}>
                     <p
                       className="w-fit p-2"

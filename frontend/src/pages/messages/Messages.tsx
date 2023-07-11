@@ -49,9 +49,9 @@ export default function Messages({ socket }: { socket: any }) {
   });
 
   return (
-    <div className="dark:bg-black lg:relative dark:text-white bg-white h-full text-black">
+    <div className=" lg:relative  bg-[var(--bg-primary)] h-full text-[var(--color)]">
       <Header text="Messages" />
-      <div className="input dark:bg-black bg-white px-20 flex gap-3 rounded-3xl w-full p-2 mb-3 mt-3">
+      <div className="input bg-[var(--bg-primary)] px-20 flex gap-3 rounded-3xl w-full p-2 mb-3 mt-3">
         <div className="w-7 h-7">
           <svg viewBox="0 0 24 24" aria-hidden="true">
             <g>

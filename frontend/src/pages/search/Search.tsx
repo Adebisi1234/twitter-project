@@ -12,7 +12,7 @@ const Search = () => {
   const [match, setMatch] = useState("");
   const [query, setQuery] = useState("");
   return Object.keys(user).length ? (
-    <div className="flex flex-col ml-auto lg:w-[90%] !sticky top-0 gap-4 dark:bg-black dark:text-white h-screen w-full bg-white text-black">
+    <div className="flex flex-col ml-auto lg:w-[90%] !sticky top-0 gap-4 h-screen w-full bg-[var(--bg-primary)] text-[var(--color)]">
       <div className="input flex gap-3 rounded-3xl p-2 mt-1">
         <Link to={`/searchPage/${query}`}>
           <div className="w-7 h-7">

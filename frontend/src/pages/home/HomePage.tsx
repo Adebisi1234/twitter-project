@@ -98,7 +98,7 @@ const HomePage = ({
           }
         }}
       >
-        <div className="size max-w-[320px] dark:bg-[var(--bg-dark)] dark:text-[var(--color-dark)] bg-[var(--bg-light)] text-[var(--color-light)] h-screen">
+        <div className="size max-w-[320px] bg-[var(--bg-primary)] text-[var(--color)] h-screen">
           <Sidebar setNewTheme={setNewTheme!} />
         </div>
       </div>

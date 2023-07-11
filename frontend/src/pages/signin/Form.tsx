@@ -128,11 +128,9 @@ const Form = () => {
   };
 
   return !Object.keys(user).length ? (
-    <div className="h-full dark:bg-black dark:text-black bg-white text-white">
+    <div className="h-full dark:text-black bg-[var(--bg-primary)] text-white">
       <div className=" mx-4 h-2/3 flex flex-col gap-4 my-14 ">
-        <h1 className=" text-3xl dark:text-white font-bold mb-2">
-          Join Clone today
-        </h1>
+        <h1 className=" text-3xl  font-bold mb-2">Join Clone today</h1>
         <Button
           onClick={() => signInWithGoogle}
           word="Sign in with google"
@@ -281,7 +279,7 @@ const Form = () => {
           </label>
         </div>
         <button
-          className=" bg-black hover:!bg-[var(--button-primary)] hover:dark:!bg-[var(--button-primary)] p-3 my-3 dark:bg-white dark:text-black text-white w-full font-bold rounded-3xl"
+          className=" bg-black hover:!bg-[var(--button-primary)] hover:dark:!bg-[var(--button-primary)] p-3 my-3 dark:bg-[var(--bg-primary)] dark:text-black text-white w-full font-bold rounded-3xl"
           onClick={() => {
             img.current?.classList.replace("hidden", "flex");
             if (!fromGoogle) {

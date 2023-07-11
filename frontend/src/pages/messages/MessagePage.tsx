@@ -120,7 +120,7 @@ export default function MessagePage({ socket }: { socket: any }) {
       <div className="message flex-col h-full overflow-y-scroll flex gap-y-10 p-2 ">
         {result}
       </div>
-      <div className="max-h-[60px] h-[60px] mt-2 dark:bg-black dark:text-white bg-slate-200 w-full p-2">
+      <div className="max-h-[60px] h-[60px] mt-2 bg-[var(--bg-primary)]  bg-slate-200 w-full p-2">
         <div className="flex h-9 w-full bottom-0 gap-2 items-center">
           <input
             ref={content}
