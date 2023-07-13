@@ -1,5 +1,7 @@
 import { useRef } from "react";
 import { Link } from "react-router-dom";
+import React from "react";
+import Logo from "../../components/Logo";
 
 export default function Header({
   setMentions,
@@ -13,7 +15,7 @@ export default function Header({
       <div className="flex w-full h-12 gap-3">
         <div className="arrow h-full w-10">
           <Link to="/">
-            <div className="w-8 bg-[url('/src/assets/logoDark.jpg')] dark:bg-[url('/src/assets/logo.jpg')] bg-cover h-8"></div>
+            <Logo />
           </Link>
         </div>
         <div className="user w-full">

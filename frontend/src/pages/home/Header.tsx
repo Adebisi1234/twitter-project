@@ -1,4 +1,6 @@
+import React from "react";
 import { useRef } from "react";
+import Logo from "../../components/Logo";
 const Header = ({
   imgs,
   slide,
@@ -41,10 +43,7 @@ const Header = ({
         )}
 
         <div className="h-full header w-fit ml-auto flex justify-center items-center font-extrabold">
-          <div
-            className="w-8 bg-[url('/src/assets/logoDark.jpg')] dark:bg-[url('/src/assets/logo.jpg')] bg-cover h-8"
-            id="logo"
-          ></div>
+          <Logo />
         </div>
         <div className="h-full w-fit flex justify-end items-end ml-auto">
           <svg
