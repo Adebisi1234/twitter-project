@@ -42,23 +42,27 @@ function App() {
         "--bg-secondary",
         "rgba(171, 182, 182, 0.574)"
       );
+      document.documentElement.style.setProperty("--svg", "rgb(15, 20, 25)");
+
       document.documentElement.style.setProperty("--bg-primary", "white");
       document.documentElement.style.setProperty("--color", "black");
     } else if (localStorage.getItem("THEME") === "black") {
       document.documentElement.style.setProperty("--bg-primary", "black");
       document.documentElement.style.setProperty("--bg-secondary", "#16181c67");
       document.documentElement.style.setProperty("--color", "white");
+      document.documentElement.style.setProperty("--svg", "rgb(247, 249, 249)");
     } else {
       document.documentElement.style.setProperty(
         "--bg-primary",
         "rgb(24,34,45)"
       );
+      document.documentElement.style.setProperty("--svg", "rgb(247, 249, 249)");
       document.documentElement.style.setProperty("--bg-secondary", "#16181c67");
       document.documentElement.style.setProperty("--color", "white");
     }
   }, []);
   return (
-    <div className="min-h-screen overflow-hidden lg:grid lg:grid-cols-[280px,1fr,280px] bg-[var(--bg-primary)] text-[var(--color)]">
+    <div className="min-h-screen lg:grid lg:grid-cols-[280px,1fr,280px] bg-[var(--bg-primary)] text-[var(--color)]">
       <div className="hidden lg:block">
         <Sidebar setNewTheme={setNewTheme} />
       </div>

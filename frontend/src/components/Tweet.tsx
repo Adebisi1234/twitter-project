@@ -28,8 +28,11 @@ const Tweet = (prop: { post: Post | undefined; isQuote?: boolean }) => {
     ? posts[0].find((quote) => quote._id === prop.post?.quoteId)
     : undefined;
 
+  const showDialog = useRef<HTMLDialogElement>(null);
+  const [dialogImgSrc, setDialogImgSrc] = useState<string>("");
+
   return (
-    <div className="border-[0.1px] w-full flex bg-[var(--bg-primary)] py-2 ">
+    <div className="border-[0.1px] w-full flex bg-[var(--bg-primary)] py-2 pl-2">
       {prop.post?.pp ? (
         <ProfilePix pp={prop.post?.pp} handle={prop.post?.handle} />
       ) : prop.post?.handle !== user.handle ? (
@@ -54,6 +57,23 @@ const Tweet = (prop: { post: Post | undefined; isQuote?: boolean }) => {
         </Link>
       )}
       <div className="flex flex-col w-[calc(100%_-_36px)] lg:w-[calc(100%_-_56px)]">
+        <dialog className="w-full h-full " ref={showDialog}>
+          <div
+            className="x"
+            onClick={() => {
+              showDialog.current?.close();
+            }}
+          >
+            X
+          </div>
+          <div className="img h-[calc(100%_-_24px)] flex items-center">
+            <img
+              src={dialogImgSrc}
+              alt="image"
+              className="max-h-full mx-auto max-w-full object-cover aspect-auto"
+            />
+          </div>
+        </dialog>
         <Link
           to={!isComment ? `/tweetPage/${prop.post?._id}` : ""}
           className="tweet flex flex-col p-2 pt-0"
@@ -64,29 +84,34 @@ const Tweet = (prop: { post: Post | undefined; isQuote?: boolean }) => {
               {prop.post?.handle}
             </span>
           </h3>
-          <p className="max-w-full whitespace-pre-wrap">{prop.post?.content}</p>
-          {prop.post?.img && (
-            <img
-              className=" max-w-full h-auto max-h-96 object-contain rounded-3xl my-2 "
-              src={prop.post?.img}
-              decoding="async"
-              height={384}
-              width={360}
-              alt="loading"
-              loading="lazy"
-            />
-          )}
-          {prop.post?.audioUrl && (
-            <audio controls>
-              <source src={prop.post?.audioUrl} type="video/webm"></source>
-            </audio>
-          )}
-          {prop.post?.quoteId && !prop.isQuote && (
-            <div className="w-full px-2 h-3/5 border-2 pointer-events-none">
-              <Tweet post={quote} isQuote={true} />
-            </div>
-          )}
+          <p className="whitespace-pre-wrap">{prop.post?.content}</p>
         </Link>
+        {prop.post?.img && (
+          <img
+            className=" max-w-full h-auto max-h-96 object-contain rounded-3xl my-2 "
+            src={prop.post?.img}
+            decoding="async"
+            height={384}
+            width={360}
+            alt="loading"
+            loading="lazy"
+            onClick={() => {
+              setDialogImgSrc(prop.post!.img);
+              showDialog.current?.showModal();
+            }}
+          />
+        )}
+        {prop.post?.audioUrl && (
+          <audio controls className="w-full z-0">
+            <source src={prop.post?.audioUrl} type="video/webm"></source>
+          </audio>
+        )}
+
+        {prop.post?.quoteId && !prop.isQuote && (
+          <div className="w-full px-2 h-fit pointer-events-none">
+            <Tweet post={quote} isQuote={true} />
+          </div>
+        )}
         {!prop.isQuote && (
           <div className="buttons w-full flex justify-around items-center mr-1">
             <div
@@ -182,7 +207,7 @@ const Tweet = (prop: { post: Post | undefined; isQuote?: boolean }) => {
               }}
             >
               <div
-                className="w-5 h-5 relative"
+                className="w-5 h-5 relative z-0"
                 onClick={() => {
                   setToRetweet(!toRetweet);
                 }}
@@ -207,7 +232,7 @@ const Tweet = (prop: { post: Post | undefined; isQuote?: boolean }) => {
                     </Link>
                     <p
                       className="w-fit p-2"
-                      id="quote"
+                      id="retweet"
                       onClick={() => {
                         if (recount === 0) {
                           ref.current?.classList.add("retweet");
@@ -258,6 +283,7 @@ const Tweet = (prop: { post: Post | undefined; isQuote?: boolean }) => {
                 <svg
                   viewBox="0 0 24 24"
                   aria-hidden="true"
+                  className="z-0"
                   ref={ref}
                   onPointerEnter={(e) => {
                     const target = e.target as HTMLDivElement;

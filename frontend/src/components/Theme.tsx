@@ -13,6 +13,7 @@ export default function Theme({
 
     if (color === "white") {
       document.documentElement.style.setProperty("--bg-primary", "white");
+      document.documentElement.style.setProperty("--svg", "rgb(15, 20, 25)");
       document.documentElement.style.setProperty(
         "--bg-secondary",
         "rgba(171, 182, 182, 0.574)"
@@ -21,12 +22,13 @@ export default function Theme({
       document.documentElement.style.setProperty("--color", "black");
     } else {
       document.documentElement.style.setProperty("--bg-primary", color);
-      document.documentElement.style.setProperty("--bg-secondary", "#16181c67");
+      document.documentElement.style.setProperty("--bg-secondary", "#16181c94");
       document.documentElement.style.setProperty("--color", "white");
+      document.documentElement.style.setProperty("--svg", "rgb(247, 249, 249)");
     }
   }
   return (
-    <div className="w-fit h-fit max-w-xl tagging flex flex-col items-center justify-center gap-2 px-2 pb-1">
+    <div className="w-fit h-fit bg-[var(--bg-primary)] max-w-xl tagging flex flex-col items-center justify-center gap-2 px-2 pb-1">
       <header className="w-full flex gap-5 p-3 items-center">
         <p
           onClick={() => {
@@ -82,7 +84,7 @@ export default function Theme({
       <div className="background p-2 w-full">
         <h3 className="mb-2">Background</h3>
         <div className="flex flex-col gap-y-3 py-3 rounded-md px-4 justify-between w-full">
-          <div className="!bg-[var(--bg-primary)] w-full h-12 flex items-center gap-2 border-4">
+          <div className="!bg-white w-full h-12 flex items-center gap-2 border-4 border-black/50">
             <div className="w-8 h-8 rounded-full overflow-hidden mx-[20%]">
               <input
                 type="checkbox"

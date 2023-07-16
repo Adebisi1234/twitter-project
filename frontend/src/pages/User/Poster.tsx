@@ -47,7 +47,7 @@ export default function Poster() {
     return <Tweet key={post._id} post={post} />;
   });
   const showDialog = useRef<HTMLDialogElement>(null);
-  const dialogImgSrc = useRef<string>("");
+  const [dialogImgSrc, setDialogImgSrc] = useState<string>("");
 
   return user ? (
     <div>
@@ -60,30 +60,36 @@ export default function Poster() {
         >
           X
         </div>
-        <img
-          src={dialogImgSrc.current}
-          alt="image"
-          className="max-h-screen max-w-full object-cover aspect-auto"
-        />
+        <div className="img h-[calc(100%_-_24px)] flex items-center">
+          <img
+            src={dialogImgSrc}
+            alt="image"
+            className="max-h-full mx-auto max-w-full object-cover aspect-auto"
+          />
+        </div>
       </dialog>
       <Header user={user.username} tweets={user.posts} />
       <div className="big flex flex-col bg-[var(--bg-primary)] text-[var(--color)]">
         <div
           className="cover-img relative h-48 lg:h-52 w-full !bg-green-500 !dark:bg-red-500 !bg-cover "
           style={{ background: `url("${user.coverImg}")` }}
-          onClick={() => {
-            dialogImgSrc.current = user.coverImg;
-            console.log(dialogImgSrc.current);
-            showDialog.current?.showModal();
+          onClick={(e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+            if ((e.target as HTMLDivElement).classList.contains("cover-img")) {
+              setDialogImgSrc(user.coverImg);
+              console.log(dialogImgSrc);
+              showDialog.current?.showModal();
+            }
           }}
         >
           <div
             className="pp h-24 absolute w-24 rounded-full translate-y-36 ml-4 border border-white !bg-cover bg-black"
             style={{ background: `url("${user.pp}")` }}
-            onClick={() => {
-              dialogImgSrc.current = user.pp;
-              console.log(dialogImgSrc.current);
-              showDialog.current?.showModal();
+            onClick={(e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+              if ((e.target as HTMLDivElement).classList.contains("pp")) {
+                setDialogImgSrc(user.pp);
+                console.log(dialogImgSrc);
+                showDialog.current?.showModal();
+              }
             }}
           ></div>
         </div>

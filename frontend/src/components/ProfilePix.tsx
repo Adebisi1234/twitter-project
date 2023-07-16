@@ -1,7 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { User } from "../types/User";
 import { RootState } from "../app/store";
 
 const ProfilePix = ({ pp, handle }: { pp?: string; handle?: string }) => {

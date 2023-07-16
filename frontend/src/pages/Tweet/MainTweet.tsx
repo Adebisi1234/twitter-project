@@ -28,8 +28,8 @@ const MainTweet = ({ id }: { id: string }) => {
   const quote =
     post.quoteId && posts[0].find((quote) => quote._id === post.quoteId);
   return Object.keys(post).length ? (
-    <div className="border-b scroll-mb-20 m-auto max-w-2xl flex flex-col pt-2  bg-[var(--bg-primary)] text-[var(--color)] py-2 ">
-      <div className="details">
+    <div className="border-b flex flex-col bg-[var(--bg-primary)] text-[var(--color)] py-2 ">
+      <div className="details mb-2 border-b flex gap-3">
         {post.pp ? (
           <ProfilePix pp={post.pp} handle={post.handle} />
         ) : (
@@ -57,7 +57,7 @@ const MainTweet = ({ id }: { id: string }) => {
           />
         )}
         {post.audioUrl && (
-          <audio controls>
+          <audio className="w-full z-0" controls>
             <source src={post.audioUrl} type="video/webm"></source>
             Somethings going on
           </audio>
@@ -175,7 +175,7 @@ const MainTweet = ({ id }: { id: string }) => {
                   </Link>
                   <p
                     className="w-fit p-2"
-                    id="quote"
+                    id="retweet"
                     onClick={() => {
                       if (recount === 0) {
                         retweetIcon.current?.classList.add("retweet");
@@ -225,6 +225,7 @@ const MainTweet = ({ id }: { id: string }) => {
               )}
               <svg
                 viewBox="0 0 24 24"
+                className="z-0"
                 aria-hidden="true"
                 onPointerEnter={(e) => {
                   retweetIcon.current?.classList.add("scale-125");

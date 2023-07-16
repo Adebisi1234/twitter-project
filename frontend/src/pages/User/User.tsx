@@ -40,8 +40,8 @@ export default function User() {
       });
   }, []);
 
+  const [dialogImgSrc, setDialogImgSrc] = useState<string>("");
   const showDialog = useRef<HTMLDialogElement>(null);
-  const dialogImgSrc = useRef<string>("");
   return Object.keys(user).length ? (
     <div>
       <dialog className="w-full h-full" ref={showDialog}>
@@ -55,9 +55,9 @@ export default function User() {
         </div>
         <div className="img h-[calc(100%_-_24px)] flex items-center">
           <img
-            src={dialogImgSrc.current}
+            src={dialogImgSrc}
             alt="image"
-            className="object-cover aspect-auto"
+            className="max-h-full mx-auto max-w-full object-cover aspect-auto"
           />
         </div>
       </dialog>
@@ -66,19 +66,23 @@ export default function User() {
         <div
           className="cover-img relative h-48 lg:h-52 w-full !bg-green-500 !dark:bg-red-500 !bg-cover "
           style={{ background: `url("${user.coverImg}")` }}
-          onClick={() => {
-            dialogImgSrc.current = user.coverImg;
-            console.log(dialogImgSrc.current);
-            showDialog.current?.showModal();
+          onClick={(e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+            if ((e.target as HTMLDivElement).classList.contains("cover-img")) {
+              setDialogImgSrc(user.coverImg);
+              console.log(dialogImgSrc);
+              showDialog.current?.showModal();
+            }
           }}
         >
           <div
             className="pp h-24 absolute w-24 rounded-full translate-y-36 ml-4 border border-white !bg-cover bg-black"
             style={{ background: `url("${user.pp}")` }}
-            onClick={() => {
-              dialogImgSrc.current = user.pp;
-              console.log(dialogImgSrc.current);
-              showDialog.current?.showModal();
+            onClick={(e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+              if ((e.target as HTMLDivElement).classList.contains("pp")) {
+                setDialogImgSrc(user.pp);
+                console.log(dialogImgSrc);
+                showDialog.current?.showModal();
+              }
             }}
           ></div>
         </div>
