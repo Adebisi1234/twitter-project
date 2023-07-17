@@ -89,7 +89,7 @@ const HomePage = ({
         <Hr />
       </div>
       <div
-        className=" fixed lg:hidden top-0 left-0 z-50 -translate-x-full w-full transition-all duration-300 !bg-[rgba(0,0,0,0.3)]"
+        className=" fixed lg:hidden top-0 left-0 z-50 -translate-x-full w-full transition-all duration-300"
         ref={slide}
         id="slide"
         onClick={(e) => {
