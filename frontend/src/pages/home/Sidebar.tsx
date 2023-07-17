@@ -14,7 +14,7 @@ const Sidebar = ({
   let location = useLocation();
   return Object.keys(user).length ? (
     <div
-      className="flex pl-2 z-50 !sticky top-0 flex-col h-screen w-full sidebar"
+      className="flex pl-2 z-50 !sticky top-0 flex-col h-screen w-full sidebar bg-[var(--bg-primary)] text-[var(--color)]"
       id="sidebar"
     >
       <div>
