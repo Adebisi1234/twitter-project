@@ -51,7 +51,10 @@ export default function Poster() {
 
   return user ? (
     <div>
-      <dialog className="w-full h-full" ref={showDialog}>
+      <dialog
+        className="w-full bg-[var(--bg-secondary)] h-full"
+        ref={showDialog}
+      >
         <div
           className="x"
           onClick={() => {

@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 import ProfilePix from "../components/ProfilePix";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import {
   like,
@@ -8,13 +8,14 @@ import {
   dislike,
   undoRetweet,
 } from "../features/post/postSlice";
-import Skeleton from "./Skeleton";
+
 import axios from "axios";
 import { Post } from "../types/Post";
-import { User } from "../types/User";
+
 import { RootState } from "../app/store";
 
 const Tweet = (prop: { post: Post | undefined; isQuote?: boolean }) => {
+  const navigate = useNavigate();
   const [count, setCount] = useState(0);
   const [recount, setRecount] = useState(0);
   const user = useSelector((state: RootState) => state.user.user);
@@ -57,7 +58,10 @@ const Tweet = (prop: { post: Post | undefined; isQuote?: boolean }) => {
         </Link>
       )}
       <div className="flex flex-col w-[calc(100%_-_36px)] lg:w-[calc(100%_-_56px)]">
-        <dialog className="w-full h-full " ref={showDialog}>
+        <dialog
+          className="w-full bg-[var(--bg-secondary)] h-full "
+          ref={showDialog}
+        >
           <div
             className="x"
             onClick={() => {
@@ -74,9 +78,13 @@ const Tweet = (prop: { post: Post | undefined; isQuote?: boolean }) => {
             />
           </div>
         </dialog>
-        <Link
-          to={!isComment ? `/tweetPage/${prop.post?._id}` : ""}
+        <div
           className="tweet flex flex-col p-2 pt-0"
+          onClick={(e) => {
+            if ((e.target as HTMLDivElement).tagName !== "IMG") {
+              navigate(!isComment ? `/tweetPage/${prop.post?._id}` : "");
+            }
+          }}
         >
           <h3 className="font-bold">
             {prop.post?.username}{" "}
@@ -85,22 +93,22 @@ const Tweet = (prop: { post: Post | undefined; isQuote?: boolean }) => {
             </span>
           </h3>
           <p className="whitespace-pre-wrap">{prop.post?.content}</p>
-        </Link>
-        {prop.post?.img && (
-          <img
-            className=" max-w-full h-auto max-h-96 object-contain rounded-3xl my-2 "
-            src={prop.post?.img}
-            decoding="async"
-            height={384}
-            width={360}
-            alt="loading"
-            loading="lazy"
-            onClick={() => {
-              setDialogImgSrc(prop.post!.img);
-              showDialog.current?.showModal();
-            }}
-          />
-        )}
+          {prop.post?.img && (
+            <img
+              className=" max-w-full h-auto max-h-96 object-contain rounded-3xl my-2 "
+              src={prop.post?.img}
+              decoding="async"
+              height={384}
+              width={360}
+              alt="loading"
+              loading="lazy"
+              onClick={() => {
+                setDialogImgSrc(prop.post!.img);
+                showDialog.current?.showModal();
+              }}
+            />
+          )}
+        </div>
         {prop.post?.audioUrl && (
           <audio controls className="w-full z-0">
             <source src={prop.post?.audioUrl} type="video/webm"></source>
