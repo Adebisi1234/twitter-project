@@ -1,5 +1,8 @@
 #root {
     height: 100vh;
+    background-color: var(--bg-primary);
+    color: var(--color);
+    
 }
 
 input, textarea {
