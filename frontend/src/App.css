@@ -1,4 +1,4 @@
-#root {
+html {
     height: 100vh;
     background-color: var(--bg-primary);
     color: var(--color);
@@ -70,12 +70,6 @@ input, textarea {
     border-top-right-radius: 15%;
 }
 
-.logo {
-  background: url("/src/assets/logo.jpg");
-}
-.logoDark {
-  background: url("/src/assets/logoDark.jpg");
-}
 .svg-icon {
   width: 1em;
    height: 1em;
