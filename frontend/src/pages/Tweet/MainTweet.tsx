@@ -28,7 +28,7 @@ const MainTweet = ({ id }: { id: string }) => {
   const quote =
     post.quoteId && posts[0].find((quote) => quote._id === post.quoteId);
   return Object.keys(post).length ? (
-    <div className="border-b flex flex-col bg-[var(--bg-primary)] text-[var(--color)] my-2 ">
+    <div className="border-b flex flex-col   my-2 ">
       <div className="details mb-2 shadow-md shadow-[var(--bg-secondary)]  flex gap-3">
         {post.pp ? (
           <ProfilePix pp={post.pp} handle={post.handle} />
@@ -160,7 +160,7 @@ const MainTweet = ({ id }: { id: string }) => {
               }}
             >
               {toRetweet && (
-                <div className="absolute bottom-5 bg-[var(--bg-primary)] p-2 w-fit">
+                <div className="absolute bottom-5  p-2 w-fit">
                   <Link to={`/newtweet/${post._id}`}>
                     <p
                       className="w-fit p-2"

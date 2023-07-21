@@ -13,7 +13,7 @@ const Search = () => {
   const [query, setQuery] = useState("");
   const navigate = useNavigate();
   return Object.keys(user).length ? (
-    <div className="flex flex-col ml-auto lg:w-[90%] !sticky top-0 gap-4 h-screen w-full bg-[var(--bg-primary)] text-[var(--color)]">
+    <div className="flex flex-col ml-auto lg:w-[90%] !sticky top-0 gap-4 h-screen w-full  ">
       <div className="input flex gap-3 rounded-3xl p-2 mt-1">
         <div
           className="w-7 h-7"

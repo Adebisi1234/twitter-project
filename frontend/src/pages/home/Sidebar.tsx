@@ -14,7 +14,7 @@ const Sidebar = ({
   let location = useLocation();
   return Object.keys(user).length ? (
     <div
-      className="flex pl-2 z-50 !sticky top-0 flex-col h-screen w-full sidebar bg-[var(--bg-primary)] text-[var(--color)]"
+      className="flex pl-2 z-50 !sticky top-0 flex-col h-screen w-full sidebar  "
       id="sidebar"
     >
       <div>
@@ -179,7 +179,7 @@ const Sidebar = ({
                 </svg>
               )}
               {user.notification !== 0 && (
-                <div className="absolute -top-1 -right-1 rounded-full w-4 h-4 !bg-green-500 text-xs !text-[var(--color)] flex justify-center items-center">
+                <div className="absolute -top-1 -right-1 rounded-full w-4 h-4 !bg-green-500 text-xs ! flex justify-center items-center">
                   {user.notification ? user.notification : 0}
                 </div>
               )}
@@ -237,7 +237,7 @@ const Sidebar = ({
       </ul>
       <div className="grow flex items-end">
         <button
-          className=" w-full !text-[var(--color)] border-slate-300 border !bg-red-500 h-10 flex p-3 gap-1 mb-20 lg:mb-0 justify-center items-center rounded-3xl"
+          className=" w-full ! border-slate-300 border !bg-red-500 h-10 flex p-3 gap-1 mb-20 lg:mb-0 justify-center items-center rounded-3xl"
           onClick={() => {
             dispatch(logout());
             localStorage.clear();

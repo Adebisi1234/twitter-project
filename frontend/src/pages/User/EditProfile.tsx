@@ -96,9 +96,9 @@ export default function User() {
   return (
     <>
       {user.handle !== "@check" ? (
-        <div className="h-full w-full bg-[var(--bg-primary)] text-[var(--color)]">
+        <div className="h-full w-full  ">
           <Header text="Edit Profile" />
-          <div className="big flex flex-col !bg-[var(--bg-primary)] !text-[var(--color)]">
+          <div className="big flex flex-col ! !">
             <div className="cover-img relative h-36 w-full !bg-black dark:!bg-teal-700 ">
               <div
                 className="h-full !bg-green-700 bg-cover bg-no-repeat w-full flex justify-center items-center text-3xl"
@@ -158,7 +158,7 @@ export default function User() {
                 </div>
               </div>
             </div>
-            <div className=" bg-[var(--bg-primary)]   options">
+            <div className="    options">
               <div className="edit-profile opacity-0 flex items-end justify-end pr-3">
                 <button className="border dark:border-white border-black py-3 px-4 rounded-3xl mt-1">
                   Edit Profile
@@ -166,7 +166,7 @@ export default function User() {
               </div>
             </div>
             <div className="ml-5">
-              <div className="name border-2 my-6 bg-[var(--bg-primary)]  p-2">
+              <div className="name border-2 my-6   p-2">
                 <label htmlFor="name" className="block opacity-90">
                   Name
                 </label>
@@ -178,7 +178,7 @@ export default function User() {
                   onChange={(e) => setUsername(e.target.value)}
                 />
               </div>
-              <div className="bio border p-2 bg-[var(--bg-primary)]  mb-4">
+              <div className="bio border p-2   mb-4">
                 <label htmlFor="bio" className="block">
                   Bio
                 </label>
@@ -188,7 +188,7 @@ export default function User() {
                   onChange={(e) => setBio(e.target.value)}
                 ></textarea>
               </div>
-              <div className="info bg-[var(--bg-primary)]  mb-4 border p-3">
+              <div className="info   mb-4 border p-3">
                 <label htmlFor="location" className="block">
                   Location
                 </label>

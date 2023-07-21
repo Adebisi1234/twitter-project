@@ -207,7 +207,7 @@ const NewTweet = ({ status, record }: { status?: string; record?: Blob }) => {
             </div>
             <span>{uploadStatus !== "" ? uploadStatus : status}</span>
             <button
-              className=" !bg-[var(--button-primary)] px-5 !text-[var(--color)] py-1 rounded-3xl"
+              className=" !bg-[var(--button-primary)] px-5 ! py-1 rounded-3xl"
               onClick={() => {
                 axios
                   .post(

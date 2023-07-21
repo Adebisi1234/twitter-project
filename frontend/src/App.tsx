@@ -1,3 +1,4 @@
+import React from "react";
 import "./App.css";
 import Login from "./pages/login/Login";
 import Signin from "./pages/signin/Signin";
@@ -5,7 +6,6 @@ import HomePage from "./pages/home/HomePage";
 import Sidebar from "./pages/home/Sidebar";
 import Search from "./pages/search/Search";
 import SearchPage from "./pages/search/SearchPage";
-// import EditProfile from "./pages/User/EditProfile";
 import User from "./pages/User/User";
 import Notifications from "./pages/notifications/Notifications";
 import TweetPage from "./pages/Tweet/TweetPage";
@@ -15,9 +15,7 @@ import { useRef, useState, Suspense, lazy, useEffect } from "react";
 import { useSelector } from "react-redux";
 import MobileTweet from "./pages/home/MobileTweet";
 import Poster from "./pages/User/Poster";
-// import Messages from "./pages/messages/Messages";
 import { io } from "socket.io-client";
-// import MessagePage from "./pages/messages/MessagePage";
 import Skeleton from "./components/Skeleton";
 import { RootState } from "./app/store";
 import Theme from "./components/Theme";
@@ -65,7 +63,7 @@ function App() {
     }
   }, []);
   return (
-    <div className="min-h-screen lg:grid lg:grid-cols-[280px,1fr,280px] bg-[var(--bg-primary)] text-[var(--color)]">
+    <div className="min-h-screen lg:grid lg:grid-cols-[280px,1fr,280px]  ">
       <div className="hidden lg:block">
         <Sidebar setNewTheme={setNewTheme} />
       </div>

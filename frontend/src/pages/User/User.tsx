@@ -45,7 +45,7 @@ export default function User() {
   return Object.keys(user).length ? (
     <div>
       <dialog
-        className="w-full bg-[var(--bg-secondary)] h-full text-[var(--color)]"
+        className="w-full bg-[var(--bg-secondary)] h-full "
         ref={showDialog}
       >
         <div
@@ -65,7 +65,7 @@ export default function User() {
         </div>
       </dialog>
       <Header user={user.username} tweets={user.posts} />
-      <div className="big flex flex-col bg-[var(--bg-primary)] ">
+      <div className="big flex flex-col  ">
         <div
           className="cover-img relative h-48 lg:h-52 w-full !bg-green-500 !dark:bg-red-500 !bg-cover "
           style={{ background: `url("${user.coverImg}")` }}
@@ -89,7 +89,7 @@ export default function User() {
             }}
           ></div>
         </div>
-        <div className=" bg-[var(--bg-primary)]   options">
+        <div className="    options">
           <div className="edit-profile flex items-end justify-end pr-3">
             <Link to="/profile/edit">
               <button className="border dark:border-white border-black py-3 px-4 rounded-3xl mt-1">
@@ -99,23 +99,21 @@ export default function User() {
           </div>
         </div>
         <div className="ml-5">
-          <div className="name bg-[var(--bg-primary)]  mb-6">
+          <div className="name   mb-6">
             <h1 className="text-xl font-bold">{user.username}</h1>
             <small className="font-thin opacity-80">{user.handle}</small>
           </div>
-          <div className="bio bg-[var(--bg-primary)]  mb-4 whitespace-pre">
-            {user.bio}
-          </div>
-          <div className="info bg-[var(--bg-primary)]  mb-4 flex flex-wrap opacity-80 gap-x-8">
+          <div className="bio   mb-4 whitespace-pre">{user.bio}</div>
+          <div className="info   mb-4 flex flex-wrap opacity-80 gap-x-8">
             <div>{user.location} </div>
           </div>
 
-          <div className="follow-count bg-[var(--bg-primary)]  mb-4 flex gap-4">
+          <div className="follow-count   mb-4 flex gap-4">
             <div className="following">{user.followersCount} following</div>
             <div className="following">{user.followingCount} followers</div>
           </div>
 
-          <div className="tweets bg-[var(--bg-primary)]  flex items-center justify-evenly w-full gap-11">
+          <div className="tweets   flex items-center justify-evenly w-full gap-11">
             <h1
               className="post font-extrabold border-b-4 !border-b-[var(--button-primary)]"
               id="posts"

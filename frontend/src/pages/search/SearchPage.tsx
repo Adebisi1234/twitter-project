@@ -34,7 +34,7 @@ export default function SearchPage() {
   }, [query]);
   return (
     <>
-      <div className="input bg-[var(--bg-primary)] text-[var(--color)] flex gap-3 rounded-3xl p-2 mt-1">
+      <div className="input   flex gap-3 rounded-3xl p-2 mt-1">
         <div className="w-7 h-7">
           <svg viewBox="0 0 24 24" aria-hidden="true">
             <g>

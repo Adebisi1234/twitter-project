@@ -33,7 +33,7 @@ const Tweet = (prop: { post: Post | undefined; isQuote?: boolean }) => {
   const [dialogImgSrc, setDialogImgSrc] = useState<string>("");
 
   return (
-    <div className="border-b-[0.1px] w-full flex bg-[var(--bg-primary)] py-2 pl-2">
+    <div className="border-b-[0.1px] w-full flex  py-2 pl-2">
       {prop.post?.pp ? (
         <ProfilePix pp={prop.post?.pp} handle={prop.post?.handle} />
       ) : prop.post?.handle !== user.handle ? (
@@ -59,7 +59,7 @@ const Tweet = (prop: { post: Post | undefined; isQuote?: boolean }) => {
       )}
       <div className="flex flex-col w-[calc(100%_-_36px)] lg:w-[calc(100%_-_56px)]">
         <dialog
-          className="w-full bg-[var(--bg-secondary)] h-full text-[var(--color)] "
+          className="w-full bg-[var(--bg-secondary)] h-full  "
           ref={showDialog}
         >
           <div

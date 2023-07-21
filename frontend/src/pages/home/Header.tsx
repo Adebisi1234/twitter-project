@@ -15,7 +15,7 @@ const Header = ({
   const you = useRef<HTMLSpanElement>(null);
   const follow = useRef<HTMLSpanElement>(null);
   return (
-    <header className="w-full shadow-md shadow-[var(--bg-secondary)] bg-transparent backdrop-blur-lg text-[var(--color)] sticky top-0">
+    <header className="w-full shadow-md shadow-[var(--bg-secondary)] bg-transparent backdrop-blur-lg  sticky top-0">
       <div className="flex w-full justify-between p-2 ">
         {imgs && window.innerWidth < 756 ? (
           <img
