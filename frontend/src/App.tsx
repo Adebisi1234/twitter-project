@@ -5,19 +5,19 @@ import HomePage from "./pages/home/HomePage";
 import Sidebar from "./pages/home/Sidebar";
 import Search from "./pages/search/Search";
 import SearchPage from "./pages/search/SearchPage";
-import EditProfile from "./pages/User/EditProfile";
+// import EditProfile from "./pages/User/EditProfile";
 import User from "./pages/User/User";
 import Notifications from "./pages/notifications/Notifications";
 import TweetPage from "./pages/Tweet/TweetPage";
 import { Route, Routes } from "react-router-dom";
 import ErrorPage from "./components/ErrorPage";
-import { useRef, useState, Suspense, useEffect } from "react";
+import { useRef, useState, Suspense, lazy, useEffect } from "react";
 import { useSelector } from "react-redux";
 import MobileTweet from "./pages/home/MobileTweet";
 import Poster from "./pages/User/Poster";
-import Messages from "./pages/messages/Messages";
+// import Messages from "./pages/messages/Messages";
 import { io } from "socket.io-client";
-import MessagePage from "./pages/messages/MessagePage";
+// import MessagePage from "./pages/messages/MessagePage";
 import Skeleton from "./components/Skeleton";
 import { RootState } from "./app/store";
 import Theme from "./components/Theme";
@@ -30,6 +30,9 @@ function App() {
     autoConnect: false,
   });
   const ref = useRef<HTMLDivElement>(null);
+  const Messages = lazy(() => import("./pages/messages/Messages"));
+  const MessagePage = lazy(() => import("./pages/messages/MessagePage"));
+  const EditProfile = lazy(() => import("./pages/User/EditProfile"));
   useEffect(() => {
     if (!localStorage.getItem("THEME")) {
       window.matchMedia("(prefers-color-scheme: dark)").matches
@@ -84,7 +87,14 @@ function App() {
           />
           <Route path="profile">
             <Route index element={<User />} />
-            <Route path="edit" element={<EditProfile />} />
+            <Route
+              path="edit"
+              element={
+                <Suspense fallback={<Skeleton />}>
+                  <EditProfile />
+                </Suspense>
+              }
+            />
             <Route path="poster/:handle" element={<Poster />} />
           </Route>
           <Route path="signin" element={<Signin />} />
@@ -96,11 +106,19 @@ function App() {
           <Route path="searchPage/:id" element={<SearchPage />} />
           <Route
             path="messages"
-            element={<Messages socket={socket.current} />}
+            element={
+              <Suspense fallback={<Skeleton />}>
+                <Messages socket={socket.current} />
+              </Suspense>
+            }
           />
           <Route
             path="messages/message/:currentChat"
-            element={<MessagePage socket={socket.current} />}
+            element={
+              <Suspense fallback={<Skeleton />}>
+                <MessagePage socket={socket.current} />
+              </Suspense>
+            }
           />
           <Route path="*" element={<ErrorPage />} />
         </Routes>
