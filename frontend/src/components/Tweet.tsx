@@ -33,7 +33,7 @@ const Tweet = (prop: { post: Post | undefined; isQuote?: boolean }) => {
   const [dialogImgSrc, setDialogImgSrc] = useState<string>("");
 
   return (
-    <div className="border-[0.1px] w-full flex bg-[var(--bg-primary)] py-2 pl-2">
+    <div className="border-b-[0.1px] w-full flex bg-[var(--bg-primary)] py-2 pl-2">
       {prop.post?.pp ? (
         <ProfilePix pp={prop.post?.pp} handle={prop.post?.handle} />
       ) : prop.post?.handle !== user.handle ? (
@@ -59,7 +59,7 @@ const Tweet = (prop: { post: Post | undefined; isQuote?: boolean }) => {
       )}
       <div className="flex flex-col w-[calc(100%_-_36px)] lg:w-[calc(100%_-_56px)]">
         <dialog
-          className="w-full bg-[var(--bg-secondary)] h-full "
+          className="w-full bg-[var(--bg-secondary)] h-full text-[var(--color)] "
           ref={showDialog}
         >
           <div
@@ -110,13 +110,13 @@ const Tweet = (prop: { post: Post | undefined; isQuote?: boolean }) => {
           )}
         </div>
         {prop.post?.audioUrl && (
-          <audio controls className="w-full z-0">
+          <audio controls className="max-w-full z-0">
             <source src={prop.post?.audioUrl} type="video/webm"></source>
           </audio>
         )}
 
         {prop.post?.quoteId && !prop.isQuote && (
-          <div className="w-full px-2 h-fit pointer-events-none">
+          <div className="w-full border-[0.1px] border-b-0 h-fit pointer-events-none">
             <Tweet post={quote} isQuote={true} />
           </div>
         )}

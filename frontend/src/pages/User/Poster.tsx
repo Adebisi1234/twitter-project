@@ -52,7 +52,7 @@ export default function Poster() {
   return user ? (
     <div>
       <dialog
-        className="w-full bg-[var(--bg-secondary)] h-full"
+        className="w-full bg-[var(--bg-secondary)] h-full text-[var(--color)]"
         ref={showDialog}
       >
         <div

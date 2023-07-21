@@ -4,16 +4,21 @@ import { useParams } from "react-router-dom";
 import Bottom from "../../components/Bottom";
 import Skeleton from "../../components/Skeleton";
 import Tweet from "../../components/Tweet";
+import { Post } from "../../types/Post";
 
 export default function SearchPage() {
   const { id } = useParams();
   const [result, setResult] = useState([]);
   const [query, setQuery] = useState(id);
 
-  const res = result.map((post) => {
-    return <Tweet post={post} />;
+  const res = result.map((post: Post) => {
+    return <Tweet post={post} key={post._id} />;
   });
   useEffect(() => {
+    setQuery(id);
+  }, [id]);
+  useEffect(() => {
+    setResult([]);
     const searchFunc = async (query: string) => {
       const data = await axios.get(
         "https://my-twitter-backend.onrender.com/posts/search",

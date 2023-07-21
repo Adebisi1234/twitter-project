@@ -45,7 +45,7 @@ export default function User() {
   return Object.keys(user).length ? (
     <div>
       <dialog
-        className="w-full bg-[var(--bg-secondary)] h-full"
+        className="w-full bg-[var(--bg-secondary)] h-full text-[var(--color)]"
         ref={showDialog}
       >
         <div

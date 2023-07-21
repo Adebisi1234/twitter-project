@@ -17,7 +17,7 @@ export default function Note({
 }) {
   return (
     <>
-      <div className="flex notes bg-blue-50 p-3 gap-3 bg-[var(--bg-primary)]  items-start mb-4 border-b">
+      <div className="flex notes p-3 gap-3 bg-[var(--bg-primary)]  items-start mb-4 border-b">
         <div className="react">
           {action.includes("liked") ? (
             <div className="w-7 h-7 !text-[#f91880]">

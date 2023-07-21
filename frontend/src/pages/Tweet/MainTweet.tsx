@@ -28,8 +28,8 @@ const MainTweet = ({ id }: { id: string }) => {
   const quote =
     post.quoteId && posts[0].find((quote) => quote._id === post.quoteId);
   return Object.keys(post).length ? (
-    <div className="border-b flex flex-col bg-[var(--bg-primary)] text-[var(--color)] py-2 ">
-      <div className="details mb-2 border-b flex gap-3">
+    <div className="border-b flex flex-col bg-[var(--bg-primary)] text-[var(--color)] my-2 ">
+      <div className="details mb-2 shadow-md shadow-[var(--bg-secondary)]  flex gap-3">
         {post.pp ? (
           <ProfilePix pp={post.pp} handle={post.handle} />
         ) : (
@@ -57,13 +57,13 @@ const MainTweet = ({ id }: { id: string }) => {
           />
         )}
         {post.audioUrl && (
-          <audio className="w-full z-0" controls>
+          <audio className="max-w-full z-0" controls>
             <source src={post.audioUrl} type="video/webm"></source>
             Somethings going on
           </audio>
         )}
         {post.quoteId && (
-          <div className="w-full px-2 h-3/5 border-2 pointer-events-none">
+          <div className="w-full border-[0.1px] border-b-0 h-fit pointer-events-none">
             <Tweet post={quote as Post} isQuote={true} />
           </div>
         )}
@@ -75,7 +75,7 @@ const MainTweet = ({ id }: { id: string }) => {
           <p>{post.retweet} Retweets</p>
           <p>{post.likes} Likes</p>
         </div>
-        <div className="buttons border-y-[0.2px] py-2 w-full flex justify-around items-center">
+        <div className="buttons py-2 w-full flex justify-around items-center">
           <div className="contain gap-2 flex justify-center items-center">
             <div className="w-5 h-5">
               <svg viewBox="0 0 24 24" aria-hidden="true">
