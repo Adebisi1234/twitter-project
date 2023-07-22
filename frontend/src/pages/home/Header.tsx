@@ -16,17 +16,17 @@ const Header = ({
   const follow = useRef<HTMLSpanElement>(null);
   return (
     <header className="w-full shadow-md shadow-[var(--bg-secondary)] bg-transparent backdrop-blur-lg  sticky top-0">
-      <div className="flex w-full justify-between p-2 ">
-        {imgs && window.innerWidth < 756 ? (
-          <img
-            src={imgs}
-            className="h-7 rounded-full"
-            onClick={() => {
-              slide.current?.classList.toggle("-translate-x-full");
-            }}
-          />
-        ) : (
-          window.innerWidth < 756 && (
+      {window.innerWidth < 768 && (
+        <div className="flex w-full justify-between p-2 ">
+          {imgs ? (
+            <img
+              src={imgs}
+              className="h-7 rounded-full"
+              onClick={() => {
+                slide.current?.classList.toggle("-translate-x-full");
+              }}
+            />
+          ) : (
             <div
               className="w-7 lg:hidden h-7"
               onClick={() => {
@@ -39,32 +39,33 @@ const Header = ({
                 </g>
               </svg>
             </div>
-          )
-        )}
+          )}
 
-        <div className="h-full header w-fit ml-auto flex justify-center items-center font-extrabold">
-          <Logo />
+          <div className="h-full header w-fit ml-auto flex justify-center items-center font-extrabold">
+            <Logo />
+          </div>
+
+          <div className="h-full w-fit flex justify-end items-end ml-auto">
+            <svg
+              className="w-8 h-8"
+              viewBox="0 0 1024 1024"
+              onClick={() => {
+                setNewTheme(true);
+              }}
+              version="1.1"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path d="M512 51.2a460.8 460.8 0 0 0 0 921.6c78.5408 0 133.12-40.0384 139.264-102.4 2.3552-23.6544-6.5536-44.9536-15.1552-65.6384-14.336-34.5088-24.6784-59.4944 9.216-93.2864s73.5232-27.4432 119.7056-20.48c29.7984 4.5056 60.416 9.0112 89.1904 1.2288C929.5872 672.0512 972.8 606.208 972.8 512A461.312 461.312 0 0 0 512 51.2z m331.3664 601.9072c-20.48 5.5296-45.568 1.8432-71.68-2.2528-47.4112-7.0656-106.496-15.9744-154.7264 31.9488-53.4528 53.248-33.0752 102.4-18.1248 138.1376a105.2672 105.2672 0 0 1 12.1856 45.8752C604.672 927.1296 533.6064 931.84 512 931.84a419.84 419.84 0 1 1 419.84-419.84c0 43.6224-11.4688 120.1152-88.4736 141.1072z" />
+              <path d="M235.52 512m-51.2 0a51.2 51.2 0 1 0 102.4 0 51.2 51.2 0 1 0-102.4 0Z" />
+              <path d="M307.2 337.92m-51.2 0a51.2 51.2 0 1 0 102.4 0 51.2 51.2 0 1 0-102.4 0Z" />
+              <path d="M471.04 245.76m-51.2 0a51.2 51.2 0 1 0 102.4 0 51.2 51.2 0 1 0-102.4 0Z" />
+              <path d="M655.36 276.48m-51.2 0a51.2 51.2 0 1 0 102.4 0 51.2 51.2 0 1 0-102.4 0Z" />
+              <path d="M778.24 419.84m-51.2 0a51.2 51.2 0 1 0 102.4 0 51.2 51.2 0 1 0-102.4 0Z" />
+            </svg>
+          </div>
         </div>
-        <div className="h-full w-fit flex justify-end items-end ml-auto">
-          <svg
-            className="w-8 h-8"
-            viewBox="0 0 1024 1024"
-            onClick={() => {
-              setNewTheme(true);
-            }}
-            version="1.1"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path d="M512 51.2a460.8 460.8 0 0 0 0 921.6c78.5408 0 133.12-40.0384 139.264-102.4 2.3552-23.6544-6.5536-44.9536-15.1552-65.6384-14.336-34.5088-24.6784-59.4944 9.216-93.2864s73.5232-27.4432 119.7056-20.48c29.7984 4.5056 60.416 9.0112 89.1904 1.2288C929.5872 672.0512 972.8 606.208 972.8 512A461.312 461.312 0 0 0 512 51.2z m331.3664 601.9072c-20.48 5.5296-45.568 1.8432-71.68-2.2528-47.4112-7.0656-106.496-15.9744-154.7264 31.9488-53.4528 53.248-33.0752 102.4-18.1248 138.1376a105.2672 105.2672 0 0 1 12.1856 45.8752C604.672 927.1296 533.6064 931.84 512 931.84a419.84 419.84 0 1 1 419.84-419.84c0 43.6224-11.4688 120.1152-88.4736 141.1072z" />
-            <path d="M235.52 512m-51.2 0a51.2 51.2 0 1 0 102.4 0 51.2 51.2 0 1 0-102.4 0Z" />
-            <path d="M307.2 337.92m-51.2 0a51.2 51.2 0 1 0 102.4 0 51.2 51.2 0 1 0-102.4 0Z" />
-            <path d="M471.04 245.76m-51.2 0a51.2 51.2 0 1 0 102.4 0 51.2 51.2 0 1 0-102.4 0Z" />
-            <path d="M655.36 276.48m-51.2 0a51.2 51.2 0 1 0 102.4 0 51.2 51.2 0 1 0-102.4 0Z" />
-            <path d="M778.24 419.84m-51.2 0a51.2 51.2 0 1 0 102.4 0 51.2 51.2 0 1 0-102.4 0Z" />
-          </svg>
-        </div>
-      </div>
-      <div className="flex items-center h-11 w-full">
+      )}
+      <div className="flex items-center h-11 lg:h-12 w-full">
         <button
           className=" w-full h-full"
           onClick={() => {
@@ -80,6 +81,7 @@ const Header = ({
             For You
           </span>
         </button>
+        {window.innerWidth > 765 && <Logo />}
         <button
           className="w-full h-full"
           onClick={() => {

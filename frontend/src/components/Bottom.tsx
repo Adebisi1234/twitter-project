@@ -8,7 +8,7 @@ const Bottom = () => {
   let location = useLocation();
 
   return (
-    <footer className="flex lg:hidden fixed bottom-0   z-50 p-3 w-full justify-evenly gap-12 items-center">
+    <footer className="flex lg:hidden fixed bottom-0 bg-[var(--bg-primary)] text-[var(--color)]  z-50 p-3 w-full justify-evenly gap-12 items-center">
       <div className="contain gap-2 flex bg-left">
         <Link to="/">
           <div className="w-7 bg-cover h-7">

@@ -18,7 +18,6 @@ export default function Theme({
         "--bg-secondary",
         "rgba(171, 182, 182, 0.574)"
       );
-
       document.documentElement.style.setProperty("--color", "black");
     } else {
       document.documentElement.style.setProperty("--bg-primary", color);

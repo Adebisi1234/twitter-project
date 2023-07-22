@@ -279,7 +279,7 @@ const Form = () => {
           </label>
         </div>
         <button
-          className=" bg-black hover:!bg-[var(--button-primary)] hover:dark:!bg-[var(--button-primary)] p-3 my-3 dark:bg-[var(--bg-primary)] dark:text-black text-white w-full font-bold rounded-3xl"
+          className=" hover:bg-[var(--button-primary)] bg-[var(--color)] text-[var(--bg-primary)] p-3 my-3  w-full font-bold rounded-3xl"
           onClick={() => {
             img.current?.classList.replace("hidden", "flex");
             if (!fromGoogle) {

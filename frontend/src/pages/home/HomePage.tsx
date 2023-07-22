@@ -89,7 +89,7 @@ const HomePage = ({
         <Hr />
       </div>
       <div
-        className=" fixed lg:hidden top-0 left-0 z-50 -translate-x-full w-full transition-all duration-300"
+        className=" fixed lg:hidden top-0 left-0 z-50 bg-[var(--bg-secondary)] -translate-x-full w-full transition-all duration-300"
         ref={slide}
         id="slide"
         onClick={(e) => {
@@ -98,7 +98,7 @@ const HomePage = ({
           }
         }}
       >
-        <div className="size max-w-[320px]   h-screen">
+        <div className="size max-w-[320px] bg-[var(--bg-primary)] text-[var(--color)]  h-screen">
           <Sidebar setNewTheme={setNewTheme!} />
         </div>
       </div>

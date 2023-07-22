@@ -75,9 +75,9 @@ const Form = () => {
   };
 
   return !Object.keys(user).length ? (
-    <div className="w-full overflow-hidden  bg-[var(--bg-primary)] text-black">
+    <div className="w-full overflow-hidden  bg-[var(--bg-primary)] text-[var(--color)]">
       <div className=" mx-4 h-screen flex flex-col gap-4 my-36 ">
-        <h1 className=" text-3xl text-black  font-bold mb-2">
+        <h1 className=" text-3xl text-[var(--color)]  font-bold mb-2">
           Sign in to Clone
         </h1>
         <Button
@@ -126,7 +126,7 @@ const Form = () => {
               }
             }}
             type="submit"
-            className="!text-black !bg-[var(--bg-primary)] hover:!bg-green-600 dark:bg-[var(--bg-lighter)]  w-full p-3 mt-2 font-bold rounded-3xl"
+            className="text-[var(--color)] bg-[var(--bg-primary)] hover:bg-[var(--button-primary)]  w-full p-3 mt-2 font-bold rounded-3xl"
           >
             Log in
           </button>
@@ -139,7 +139,7 @@ const Form = () => {
               img.current?.classList.replace("hidden", "flex");
             }}
             type="submit"
-            className="!text-black !bg-[var(--bg-primary)] hover:!bg-green-600 dark:bg-[var(--bg-lighter)]  w-full p-3 mt-2 font-bold rounded-3xl"
+            className="bg-[var(--color)] text-[var(--bg-primary)] hover:bg-[var(--button-primary)]  w-full p-3 mt-2 font-bold rounded-3xl"
           >
             Test Clone out without an account
           </button>
@@ -153,9 +153,9 @@ const Form = () => {
           <span id="err" ref={errs}></span>
         </form>
 
-        <p className=" text-black">
+        <p className="">
           Don't have an account?{" "}
-          <Link to="/signin" className=" !text-green-600 ">
+          <Link to="/signin" className=" text-[var(--button-primary)] ">
             Sign up
           </Link>
         </p>

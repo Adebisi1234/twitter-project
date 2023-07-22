@@ -234,19 +234,17 @@ const Sidebar = ({
           </svg>
           Theme
         </li>
-      </ul>
-      <div className="grow flex items-end">
-        <button
-          className=" w-full ! border-slate-300 border !bg-red-500 h-10 flex p-3 gap-1 mb-20 lg:mb-0 justify-center items-center rounded-3xl"
+        <li
+          className="p-2 rounded-3xl bg-[var(--color)] text-[var(--bg-primary)] text-center mt-4"
           onClick={() => {
             dispatch(logout());
             localStorage.clear();
             navigate("/login");
           }}
         >
-          Logout
-        </button>
-      </div>
+          Log out
+        </li>
+      </ul>
     </div>
   ) : (
     <div></div>

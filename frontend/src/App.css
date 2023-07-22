@@ -15,6 +15,7 @@ input, textarea {
   :root {
     --bg-primary: black;
     --bg-secondary: #16181c9f;
+    --button-primary: rgb(0, 186, 124);
     --color: white;
     --svg: rgb(247, 249, 249);
   }

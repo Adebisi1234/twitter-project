@@ -120,6 +120,10 @@ const Tweet = (prop: { post: Post | undefined; isQuote?: boolean }) => {
             <Tweet post={quote} isQuote={true} />
           </div>
         )}
+        <div className="time my-3 bg-[var(--bg-secondary)] flex gap-3 w-fit px-3 opacity-80">
+          <p>{prop.post?.createdAt.slice(0, 10)}</p>
+          <p>{prop.post?.createdAt.slice(11, -8)}</p>
+        </div>
         {!prop.isQuote && (
           <div className="buttons w-full flex justify-around items-center mr-1">
             <div
