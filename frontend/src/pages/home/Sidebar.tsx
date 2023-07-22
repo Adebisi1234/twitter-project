@@ -14,10 +14,10 @@ const Sidebar = ({
   let location = useLocation();
   return Object.keys(user).length ? (
     <div
-      className="flex pl-2 z-50 !sticky top-0 flex-col h-screen w-full sidebar  "
+      className="flex pl-2 z-50 !sticky bg-[var(--bg-primary)] text-[var(--color)] top-0 flex-col h-screen w-full sidebar "
       id="sidebar"
     >
-      <div>
+      <div className="bg-[var(--bg-primary)] text-[var(--color)]">
         <div className="flex justify-between p-3 ">
           <h1>Account Info</h1>
           <span
@@ -75,7 +75,7 @@ const Sidebar = ({
           <hr />
         </div>
       </div>
-      <ul className="p-3 flex flex-col gap-2">
+      <ul className="p-3 flex flex-col gap-2 bg-[var(--bg-primary)] text-[var(--color)]">
         <Link to="/">
           <li className="flex p-2 rounded-3xl gap-6  ">
             {location.pathname === "/" || location.pathname === "/home" ? (
