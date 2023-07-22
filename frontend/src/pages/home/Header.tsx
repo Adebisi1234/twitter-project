@@ -1,6 +1,7 @@
 import React from "react";
 import { useRef } from "react";
 import Logo from "../../components/Logo";
+import useWindowSize from "../../utils/useWindowSize";
 const Header = ({
   imgs,
   slide,
@@ -14,9 +15,10 @@ const Header = ({
 }) => {
   const you = useRef<HTMLSpanElement>(null);
   const follow = useRef<HTMLSpanElement>(null);
+  const width = useWindowSize();
   return (
     <header className="w-full shadow-md shadow-[var(--bg-secondary)] bg-transparent backdrop-blur-lg  sticky top-0">
-      {window.innerWidth < 768 && (
+      {width < 768 && (
         <div className="flex w-full justify-between p-2 ">
           {imgs ? (
             <img
@@ -81,7 +83,7 @@ const Header = ({
             For You
           </span>
         </button>
-        {window.innerWidth > 765 && <Logo />}
+        {width > 765 && <Logo />}
         <button
           className="w-full h-full"
           onClick={() => {

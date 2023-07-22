@@ -14,8 +14,10 @@ import { useNavigate, useParams } from "react-router-dom";
 import Tag from "../../components/Tag";
 import { User } from "../../types/User";
 import { RootState } from "../../app/store";
+import useWindowSize from "../../utils/useWindowSize";
 
 const NewTweet = ({ status, record }: { status?: string; record?: Blob }) => {
+  const width = useWindowSize();
   const { quote } = useParams();
   const recorder = () => {
     const device = navigator.mediaDevices.getUserMedia({
@@ -181,7 +183,7 @@ const NewTweet = ({ status, record }: { status?: string; record?: Blob }) => {
                   }}
                 ></input>
               </label>
-              {window.innerWidth > 756 && (
+              {width > 756 && (
                 <div
                   ref={reference}
                   className=" w-7 h-7 relative cursor-pointer !bg-cover"
@@ -227,7 +229,7 @@ const NewTweet = ({ status, record }: { status?: string; record?: Blob }) => {
                   )
                   .then((data) => {
                     dispatch(newPost(data.data));
-                    if (window.innerWidth < 1024 || quote) {
+                    if (width < 1024 || quote) {
                       navigate(-1);
                     }
                   })
