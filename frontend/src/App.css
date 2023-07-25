@@ -2,7 +2,6 @@ html {
     height: 100vh;
     background-color: var(--bg-primary);
     color: var(--color);
-    transition: all 500ms ease;
     
 }
 
