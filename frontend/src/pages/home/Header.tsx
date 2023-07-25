@@ -22,6 +22,8 @@ const Header = ({
         <div className="flex w-full justify-between p-2 ">
           {imgs ? (
             <img
+              loading="lazy"
+              decoding="async"
               src={imgs}
               className="h-7 rounded-full"
               onClick={() => {

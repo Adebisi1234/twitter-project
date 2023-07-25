@@ -12,7 +12,15 @@ const Button = ({
       className=" w-full  border-slate-300 border  h-10 flex p-3 gap-1 justify-center items-center"
       onClick={onClick()}
     >
-      {svg && <img src={svg} height="24px" width="24px" />}
+      {svg && (
+        <img
+          loading="lazy"
+          decoding="async"
+          src={svg}
+          height="24px"
+          width="24px"
+        />
+      )}
       {word}
     </button>
   );

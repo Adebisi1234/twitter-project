@@ -20,13 +20,20 @@ const Tweet = (prop: { post: Post | undefined; isQuote?: boolean }) => {
   const [recount, setRecount] = useState(0);
   const user = useSelector((state: RootState) => state.user.user);
   const posts = useSelector((state: RootState) => state.post);
-  const isComment = posts[1].find((comment) => comment._id === prop.post?._id);
+  const isComment = posts[1].find(
+    (comment: Post) => comment._id === prop.post?._id
+  );
   const dispatch = useDispatch();
   const [toRetweet, setToRetweet] = useState(false);
   const ref: React.LegacyRef<SVGSVGElement> = useRef(null);
+  const time = (hour: string): { hr: number; amOrPm: string } => {
+    let amOrPm: string = "";
+    12 / +hour > 0 ? (amOrPm = "AM") : "PM";
+    return { hr: 12 % +hour === 0 ? 12 : 12 % +hour, amOrPm };
+  };
 
   const quote = prop.post?.quoteId
-    ? posts[0].find((quote) => quote._id === prop.post?.quoteId)
+    ? posts[0].find((quote: Post) => quote._id === prop.post?.quoteId)
     : undefined;
 
   const showDialog = useRef<HTMLDialogElement>(null);
@@ -62,16 +69,18 @@ const Tweet = (prop: { post: Post | undefined; isQuote?: boolean }) => {
           className="w-full bg-[var(--bg-secondary)] h-full  "
           ref={showDialog}
         >
-          <div
-            className="x"
+          <button
+            className="x text-[var(--color)] bg-[var(--button-primary)] w-fit p-1 rounded-md"
             onClick={() => {
               showDialog.current?.close();
             }}
           >
-            X
-          </div>
+            close
+          </button>
           <div className="img h-[calc(100%_-_24px)] flex items-center">
             <img
+              loading="lazy"
+              decoding="async"
               src={dialogImgSrc}
               alt="image"
               className="max-h-full mx-auto max-w-full object-cover aspect-auto"
@@ -95,13 +104,13 @@ const Tweet = (prop: { post: Post | undefined; isQuote?: boolean }) => {
           <p className="whitespace-pre-wrap">{prop.post?.content}</p>
           {prop.post?.img && (
             <img
+              loading="lazy"
+              decoding="async"
               className=" max-w-full h-auto max-h-96 object-contain rounded-3xl my-2 "
               src={prop.post?.img}
-              decoding="async"
               height={384}
               width={360}
               alt="loading"
-              loading="lazy"
               onClick={() => {
                 setDialogImgSrc(prop.post!.img);
                 showDialog.current?.showModal();
@@ -110,7 +119,7 @@ const Tweet = (prop: { post: Post | undefined; isQuote?: boolean }) => {
           )}
         </div>
         {prop.post?.audioUrl && (
-          <audio controls className="max-w-full z-0">
+          <audio controls className="max-w-full -z-10" preload="none">
             <source src={prop.post?.audioUrl} type="video/webm"></source>
           </audio>
         )}
@@ -120,9 +129,17 @@ const Tweet = (prop: { post: Post | undefined; isQuote?: boolean }) => {
             <Tweet post={quote} isQuote={true} />
           </div>
         )}
-        <div className="time my-3 bg-[var(--bg-secondary)] flex gap-3 w-fit px-3 opacity-80">
+        <div className="time my-3 text-sm flex gap-2 w-fit px-3 -z-10 opacity-80">
           <p>{prop.post?.createdAt.slice(0, 10)}</p>
-          <p>{prop.post?.createdAt.slice(11, -8)}</p>
+          <p>•</p>
+          <p>
+            {prop.post?.createdAt.slice(11, -8) &&
+              `${
+                time(prop.post?.createdAt.slice(11, 13)).hr
+              }:${prop.post?.createdAt.slice(14, -8)} ${
+                time(prop.post?.createdAt.slice(11, 13)).amOrPm
+              }`}
+          </p>
         </div>
         {!prop.isQuote && (
           <div className="buttons w-full flex justify-around items-center mr-1">
@@ -212,29 +229,18 @@ const Tweet = (prop: { post: Post | undefined; isQuote?: boolean }) => {
               </Link>
               {isComment ? isComment.commentCount : prop.post?.commentCount}
             </div>
-            <div
-              className="contain gap-2 relative flex justify-center items-center"
-              onClick={(e) => {
-                console.log("Haa");
-              }}
-            >
+            <div className="contain gap-2 relative flex -z-10 justify-center items-center">
               <div
-                className="w-5 h-5 relative z-0"
+                className="w-5 h-5 relative"
                 onClick={() => {
                   setToRetweet(!toRetweet);
                 }}
               >
                 {toRetweet && (
-                  <div
-                    className="absolute -left-9 bottom-5 bg-[var(--bg-secondary)] p-2 w-fit"
-                    onClick={(e) => {
-                      console.log(e.target);
-                    }}
-                  >
+                  <div className="absolute -left-9 bottom-5 bg-[var(--bg-secondary)] p-2 w-fit">
                     <Link
                       to={`/newtweet/${prop.post?._id}`}
                       onClick={(e) => {
-                        console.log(e.target);
                         setToRetweet(false);
                       }}
                     >

@@ -45,7 +45,12 @@ export default function Tag({
           }}
         >
           {user.pp ? (
-            <img src={user.pp} className="h-14 w-14 rounded-full" />
+            <img
+              loading="lazy"
+              decoding="async"
+              src={user.pp}
+              className="h-14 w-14 rounded-full"
+            />
           ) : (
             <div className="w-14 bg-left-bottom bg-cover h-14">
               <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -74,7 +79,12 @@ export default function Tag({
           }}
         >
           {user.pp ? (
-            <img src={user.pp} className="h-14 w-14 rounded-full" />
+            <img
+              loading="lazy"
+              decoding="async"
+              src={user.pp}
+              className="h-14 w-14 rounded-full"
+            />
           ) : (
             <div className="w-14 h-14">
               <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -97,7 +107,7 @@ export default function Tag({
   });
   return loading || !users?.length ? (
     <div
-      className="min-h-[100px] max-h-[331.5px] gap-y-1 tagging justify-center items-center overflow-x-hidden min-w-[380px] absolute bg-[rgba(255,255,255,1.00)] border-black flex flex-col rounded-[4px]"
+      className="min-h-[100px] max-h-[331.5px] gap-y-1 tagging justify-center items-center overflow-x-hidden min-w-[380px] absolute bg-[var(-bg-secondary)] text-[var(--color)] flex flex-col rounded-[4px]"
       onClick={() => {
         setUsers([]);
       }}
@@ -106,7 +116,7 @@ export default function Tag({
     </div>
   ) : (
     <div
-      className="min-h-[100px] max-h-[331.5px] gap-y-1 tagging overflow-x-hidden min-w-[380px] absolute bg-[rgba(255,255,255,1.00)] border-black flex flex-col rounded-[4px]"
+      className="min-h-[100px] max-h-[331.5px] gap-y-1 tagging overflow-x-hidden min-w-[380px] absolute bg-[var(-bg-secondary)] text-[var(--color)] flex flex-col rounded-[4px]"
       onClick={() => {
         setUsers([]);
       }}

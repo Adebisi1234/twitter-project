@@ -50,14 +50,14 @@ const MainTweet = ({ id }: { id: string }) => {
         <p>{post.content}</p>
         {post.img && (
           <img
+            loading="lazy"
+            decoding="async"
             className=" max-w-full max-h-96 object-contain rounded-3xl my-2 "
             src={post.img}
-            decoding="async"
-            loading="lazy"
           />
         )}
         {post.audioUrl && (
-          <audio className="max-w-full z-0" controls>
+          <audio className="max-w-full z-0" preload="none" controls>
             <source src={post.audioUrl} type="video/webm"></source>
             Somethings going on
           </audio>
