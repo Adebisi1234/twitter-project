@@ -55,16 +55,18 @@ export default function Poster() {
         className="w-full bg-[var(--bg-secondary)] h-full "
         ref={showDialog}
       >
-        <div
-          className="x"
+        <button
+          className="x text-[var(--color)] bg-[var(--button-primary)] w-fit p-1 rounded-md"
           onClick={() => {
             showDialog.current?.close();
           }}
         >
-          X
-        </div>
+          close
+        </button>
         <div className="img h-[calc(100%_-_24px)] flex items-center">
           <img
+            loading="lazy"
+            decoding="async"
             src={dialogImgSrc}
             alt="image"
             className="max-h-full mx-auto max-w-full object-cover aspect-auto"
