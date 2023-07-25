@@ -49,6 +49,8 @@ const Sidebar = ({
               <div className="img w-14 h-14 mr-2">
                 {user.pp ? (
                   <img
+                    loading="lazy"
+                    decoding="async"
                     src={user.pp}
                     className="h-full w-full !bg-cover rounded-full"
                   />
