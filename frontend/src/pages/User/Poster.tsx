@@ -35,10 +35,9 @@ export default function Poster() {
 
   const liked = post[0].filter((post) => {
     if (user) {
-      user.likes?.includes(post._id);
+      return user.likes?.includes(post._id);
     }
   });
-  console.log(liked);
   const tweets = userPost.map((post) => {
     return <Tweet key={post._id} post={post} />;
   });
@@ -98,14 +97,16 @@ export default function Poster() {
             }}
           ></div>
         </div>
-        <div className="    options">
+        <div className="options">
           <div className="edit-profile flex items-end justify-end pr-3">
             <button
-              className="border dark:border-white border-black py-3 px-4 rounded-3xl mt-1"
+              className="border py-3 px-4 bg-[var(--color)] hover:bg-[var(--button-primary)] transition text-[var(--bg-primary)] rounded-xl mt-1"
               id="follow"
               ref={follow}
               onClick={() => {
-                follow.current.textContent = "Following";
+                follow.current.textContent === "Following"
+                  ? (follow.current.textContent = "Follow")
+                  : (follow.current.textContent = "Following");
                 axios.post(
                   `https://my-twitter-backend.onrender.com/users/new-following/${users.handle}`,
                   {
@@ -120,26 +121,26 @@ export default function Poster() {
                 );
               }}
             >
-              {users.following.includes(user.handle) ? "following" : "follow"}
+              {users.following.includes(user.handle) ? "Following" : "Follow"}
             </button>
           </div>
         </div>
-        <div className="ml-5">
-          <div className="name   mb-6">
+        <div className="ml-2">
+          <div className="name mb-6">
             <h1 className="text-xl font-bold">{user.username}</h1>
             <small className="font-thin opacity-80">{user.handle}</small>
           </div>
-          <div className="bio   mb-4 whitespace-pre">{user.bio}</div>
-          <div className="info   mb-4 flex flex-wrap opacity-80 gap-x-8">
+          <div className="bio mb-4 whitespace-pre">{user.bio}</div>
+          <div className="info mb-4 flex flex-wrap opacity-80 gap-x-8">
             <div>{user.location} </div>
           </div>
 
-          <div className="follow-count   mb-4 flex gap-4">
+          <div className="follow-count mb-4 flex gap-4">
             <div className="following">{user.followersCount} Following</div>
             <div className="following">{user.followingCount} Followers</div>
           </div>
 
-          <div className="tweets   flex items-center justify-evenly w-full gap-11">
+          <div className="tweets flex items-center justify-evenly w-full gap-11">
             <h1
               className="post font-extrabold border-b-4 !border-b-[var(--button-primary)]"
               id="posts"
@@ -165,13 +166,14 @@ export default function Poster() {
               Likes
             </h1>
           </div>
-          {!like
-            ? tweets
-            : likedPost.length
-            ? likedPost
-            : "Please like more posts"}
+          <div className="text-base">
+            {!like
+              ? tweets
+              : likedPost.length
+              ? likedPost
+              : "Please like more posts"}
+          </div>
         </div>
-        <Hr />
       </div>
       <Bottom />
     </div>

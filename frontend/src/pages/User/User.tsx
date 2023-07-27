@@ -24,7 +24,7 @@ export default function User() {
 
   const liked = post[0].filter((post) => {
     if (user) {
-      user.likes?.includes(post._id);
+      return user.likes?.includes(post._id);
     }
   });
 
@@ -94,13 +94,13 @@ export default function User() {
         <div className="    options">
           <div className="edit-profile flex items-end justify-end pr-3">
             <Link to="/profile/edit">
-              <button className="border dark:border-white border-black py-3 px-4 rounded-3xl mt-1">
+              <button className="border bg-[var(--color)] hover:bg-[var(--button-primary)] transition text-[var(--bg-primary)] rounded-xl py-3 px-4 mt-1">
                 Edit Profile
               </button>
             </Link>
           </div>
         </div>
-        <div className="ml-5">
+        <div className="ml-2">
           <div className="name   mb-6">
             <h1 className="text-xl font-bold">{user.username}</h1>
             <small className="font-thin opacity-80">{user.handle}</small>
