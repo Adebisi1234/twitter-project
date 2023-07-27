@@ -64,6 +64,7 @@ export default function TweetPage() {
               setMatch("");
             }
           }}
+          onBlur={() => tags.current?.classList.add("!hidden")}
           placeholder="Post your reply"
         ></textarea>
         <button
@@ -107,7 +108,6 @@ export default function TweetPage() {
         </div>
       </div>
       {comment}
-      <Hr />
       <Bottom />
     </div>
   ) : (

@@ -138,6 +138,7 @@ const NewTweet = ({ status, record }: { status?: string; record?: Blob }) => {
                   setMatch("");
                 }
               }}
+              onBlur={() => tags.current?.classList.add("!hidden")}
             ></textarea>
             <div className="relative w-full">
               <div

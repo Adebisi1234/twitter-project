@@ -59,6 +59,7 @@ const Search = () => {
                 setMatch("");
               }
             }}
+            onBlur={() => tags.current?.classList.add("!hidden")}
             onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
               if (e.key === "Enter" && query !== "") {
                 navigate(`/searchPage/${query}`);
