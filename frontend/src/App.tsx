@@ -63,7 +63,7 @@ function App() {
     }
   }, []);
   return (
-    <div className="min-h-screen lg:grid lg:grid-cols-[280px,1fr,280px]  ">
+    <div className="min-h-screen pb-[60px] lg:pb-0 lg:grid lg:grid-cols-[280px,1fr,280px]  ">
       <div className="hidden lg:block">
         <Sidebar setNewTheme={setNewTheme} />
       </div>

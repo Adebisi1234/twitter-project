@@ -147,7 +147,6 @@ export default function User() {
             ? likedPost
             : "Please like more posts"}
         </div>
-        <Hr />
       </div>
       <Bottom />
     </div>

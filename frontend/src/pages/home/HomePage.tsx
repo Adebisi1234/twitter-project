@@ -86,7 +86,6 @@ const HomePage = ({
         ) : (
           "There's no post here or it's loading"
         )}
-        <Hr />
       </div>
       <div
         className=" fixed lg:hidden top-0 left-0 z-50 bg-[var(--bg-secondary)] -translate-x-full w-full transition-all duration-300"
