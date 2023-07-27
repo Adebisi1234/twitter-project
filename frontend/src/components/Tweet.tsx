@@ -90,7 +90,10 @@ const Tweet = (prop: { post: Post | undefined; isQuote?: boolean }) => {
         <div
           className="tweet flex flex-col p-2 pt-0"
           onClick={(e) => {
-            if ((e.target as HTMLDivElement).tagName !== "IMG") {
+            if (
+              (e.target as HTMLDivElement).tagName !== "IMG" &&
+              !(e.target as HTMLDivElement).classList.contains("border-0")
+            ) {
               navigate(!isComment ? `/tweetPage/${prop.post?._id}` : "");
             }
           }}
@@ -106,7 +109,7 @@ const Tweet = (prop: { post: Post | undefined; isQuote?: boolean }) => {
             <img
               loading="lazy"
               decoding="async"
-              className=" max-w-full h-auto max-h-96 object-contain rounded-3xl my-2 "
+              className=" max-w-full w-fit h-auto max-h-96 object-contain rounded-3xl my-2"
               src={prop.post?.img}
               height={384}
               width={360}
@@ -125,7 +128,7 @@ const Tweet = (prop: { post: Post | undefined; isQuote?: boolean }) => {
         )}
 
         {prop.post?.quoteId && !prop.isQuote && (
-          <div className="w-full border-[0.1px] border-b-0 h-fit pointer-events-none">
+          <div className="w-full border-[0.1px] border-b-0 h-fit">
             <Tweet post={quote} isQuote={true} />
           </div>
         )}
