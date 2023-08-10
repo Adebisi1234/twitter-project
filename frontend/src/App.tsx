@@ -4,33 +4,37 @@ import Login from "./pages/login/Login";
 import Signin from "./pages/signin/Signin";
 import HomePage from "./pages/home/HomePage";
 import Sidebar from "./pages/home/Sidebar";
-import Search from "./pages/search/Search";
-import SearchPage from "./pages/search/SearchPage";
-import User from "./pages/User/User";
-import Notifications from "./pages/notifications/Notifications";
-import TweetPage from "./pages/Tweet/TweetPage";
 import { Route, Routes } from "react-router-dom";
 import ErrorPage from "./components/ErrorPage";
 import { useRef, useState, Suspense, lazy, useEffect } from "react";
 import { useSelector } from "react-redux";
-import MobileTweet from "./pages/home/MobileTweet";
-import Poster from "./pages/User/Poster";
 import { io } from "socket.io-client";
 import Skeleton from "./components/Skeleton";
 import { RootState } from "./app/store";
 import Theme from "./components/Theme";
 
 function App() {
+  const Messages = lazy(() => import("./pages/messages/Messages"));
+  const Notifications = lazy(
+    () => import("./pages/notifications/Notifications")
+  );
+  const User = lazy(() => import("./pages/User/User"));
+  const SearchPage = lazy(() => import("./pages/search/SearchPage"));
+  const TweetPage = lazy(() => import("./pages/Tweet/TweetPage"));
+  const MessagePage = lazy(() => import("./pages/messages/MessagePage"));
+  const EditProfile = lazy(() => import("./pages/User/EditProfile"));
+  const MobileTweet = lazy(() => import("./pages/home/MobileTweet"));
+  const Search = lazy(() => import("./pages/search/Search"));
+  const Poster = lazy(() => import("./pages/User/Poster"));
+
   const socket = useRef<any>(null);
-  const [newTheme, setNewTheme] = useState(false);
   const user = useSelector((state: RootState) => state.user.user);
   socket.current = io("https://my-twitter-backend.onrender.com", {
     autoConnect: false,
   });
-  const ref = useRef<HTMLDivElement>(null);
-  const Messages = lazy(() => import("./pages/messages/Messages"));
-  const MessagePage = lazy(() => import("./pages/messages/MessagePage"));
-  const EditProfile = lazy(() => import("./pages/User/EditProfile"));
+  const [newTheme, setNewTheme] = useState(false);
+  const themeRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     if (!localStorage.getItem("THEME")) {
       window.matchMedia("(prefers-color-scheme: dark)").matches
@@ -97,11 +101,47 @@ function App() {
           </Route>
           <Route path="signin" element={<Signin />} />
           <Route path="login" element={<Login />} />
-          <Route path="notifications" element={<Notifications />} />
-          <Route path="tweetPage/:id" element={<TweetPage />} />
-          <Route path="newtweet/:quote?" element={<MobileTweet />} />
-          <Route path="search" element={<Search />} />
-          <Route path="searchPage/:id" element={<SearchPage />} />
+
+          <Route
+            path="notifications"
+            element={
+              <Suspense fallback={<Skeleton />}>
+                <Notifications />
+              </Suspense>
+            }
+          />
+          <Route
+            path="tweetPage/:id"
+            element={
+              <Suspense fallback={<Skeleton />}>
+                <TweetPage />
+              </Suspense>
+            }
+          />
+          <Route
+            path="newtweet/:quote?"
+            element={
+              <Suspense fallback={<Skeleton />}>
+                <MobileTweet />
+              </Suspense>
+            }
+          />
+          <Route
+            path="search"
+            element={
+              <Suspense fallback={<Skeleton />}>
+                <Search />
+              </Suspense>
+            }
+          />
+          <Route
+            path="searchPage/:id"
+            element={
+              <Suspense fallback={<Skeleton />}>
+                <SearchPage />
+              </Suspense>
+            }
+          />
           <Route
             path="messages"
             element={
@@ -127,9 +167,9 @@ function App() {
       {newTheme && (
         <div
           className="fixed flex justify-center items-center inset-0 bg-[var(--bg-secondary)] z-50"
-          ref={ref}
+          ref={themeRef}
           onClick={(e) => {
-            if (e.target === ref.current) {
+            if (e.target === themeRef.current) {
               setNewTheme(false);
             }
           }}

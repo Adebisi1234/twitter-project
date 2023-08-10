@@ -38,6 +38,7 @@ Here's where I'll keep the note of the stuffs I want to improve or add or change
 
 - Send email to all registered user on new updates. With link to opt out
 - Implement the recover password feature
+- Use debounce and throttle
 - On new follows update the users preferences
 - Implement true JWT authentication
 - Make comments a property under a post, and not a post in of it self
