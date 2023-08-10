@@ -1,5 +1,0 @@
-After login save user data in localstorage so the next reload won't start at login
-
-Goodluck implementing the functionality
-
-Use react-redux and react-router (Gambate lol)

@@ -1,2 +1,0 @@
-Auth - Signup, Signin, and Logout (Working)
-User - getUser, editProfile (Working)
