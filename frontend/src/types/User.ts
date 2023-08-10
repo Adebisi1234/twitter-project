@@ -15,6 +15,7 @@ export interface User {
   location: string;
   messageCount: number;
   fromGoogle: boolean;
-  likes: String[];
+  likes: string[];
+  retweets: string[];
   rooms: string[];
 }

@@ -1,7 +1,6 @@
 import Bottom from "../../components/Bottom";
 import Tweet from "../../components/Tweet";
 import Header from "./Header";
-import Hr from "../../components/Hr";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Skeleton from "../../components/Skeleton";
@@ -33,11 +32,15 @@ export default function User() {
   });
 
   useEffect(() => {
-    axios
-      .get(`https://my-twitter-backend.onrender.com/users/get/${user.handle}`)
-      .then((data) => {
-        dispatch(login(data.data));
-      });
+    try {
+      axios
+        .get(`https://my-twitter-backend.onrender.com/users/get/${user.handle}`)
+        .then((data) => {
+          dispatch(login(data.data));
+        });
+    } catch (err) {
+      console.log(err);
+    }
   }, []);
 
   const [dialogImgSrc, setDialogImgSrc] = useState<string>("");
@@ -143,7 +146,7 @@ export default function User() {
           </div>
           {!like
             ? tweets
-            : likedPost.length
+            : likedPost.length !== 0
             ? likedPost
             : "Please like more posts"}
         </div>

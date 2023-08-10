@@ -12,19 +12,47 @@ import { useDispatch, useSelector } from "react-redux";
 import { login } from "../../features/auth/userSlice";
 import { useNavigate } from "react-router-dom";
 import { RootState } from "../../app/store";
+import { User } from "../../types/User";
 
 export default function User() {
+  interface details {
+    pp: string;
+    bio: string;
+    location: string;
+    username: string;
+    coverImg: string;
+  }
+
   const navigate = useNavigate();
   const user = useSelector((state: RootState) => state.user.user);
+  const [userDetails, setUserDetails] = useState<details>({
+    pp: user.pp,
+    bio: user.bio,
+    location: user.location,
+    username: user.username,
+    coverImg: user.coverImg,
+    // password: ""  // implement recover password feature
+  });
+
+  function setDetails(
+    name: "pp" | "coverImg" | "location" | "username" | "bio",
+    value: string
+  ) {
+    setUserDetails((prev: details) => ({
+      ...prev,
+      [name]: [value],
+    }));
+  }
+
   const [uploadPPStatus, setUploadPPStatus] = useState("");
   const [uploadCoverStatus, setUploadCoverStatus] = useState("");
-  const [pp, setPp] = useState(user.pp);
-  const [CoverImg, setCoverImg] = useState(user.coverImg);
-  const [username, setUsername] = useState(user.username);
-  const [bio, setBio] = useState(user.bio);
-  const [location, setLocation] = useState(user.location);
   const dispatch = useDispatch();
-  const uploadPP = (file: File) => {
+
+  const uploadFile = (
+    name: "pp" | "coverImg",
+    file: File,
+    status: (value: React.SetStateAction<string>) => void
+  ): void => {
     const storage = getStorage(app);
     const fileName = new Date().getTime() + file.name;
     const storageRef = ref(storage, fileName);
@@ -33,10 +61,7 @@ export default function User() {
     uploadTask.on(
       "state_changed",
       (snapshot) => {
-        const progress =
-          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        setUploadPPStatus(`${Math.floor(progress)}% uploading please wait`);
-        console.log("Upload is " + progress + "% done");
+        status(`uploading please wait`);
         switch (snapshot.state) {
           case "paused":
             console.log("Upload is paused");
@@ -48,46 +73,11 @@ export default function User() {
             break;
         }
       },
-      (error) => {},
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
           console.log("File available at", downloadURL);
-          setPp(downloadURL);
-          setUploadPPStatus("");
-        });
-      }
-    );
-  };
-  const uploadCover = (file: File) => {
-    const storage = getStorage(app);
-    const fileName = new Date().getTime() + file.name;
-    const storageRef = ref(storage, fileName);
-    const uploadTask = uploadBytesResumable(storageRef, file);
-
-    uploadTask.on(
-      "state_changed",
-      (snapshot) => {
-        const progress =
-          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        setUploadCoverStatus(`${Math.floor(progress)}% uploading please wait`);
-        console.log("Upload is " + progress + "% done");
-        switch (snapshot.state) {
-          case "paused":
-            console.log("Upload is paused");
-            break;
-          case "running":
-            console.log("Upload is running");
-            break;
-          default:
-            break;
-        }
-      },
-      (error) => {},
-      () => {
-        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          console.log("File available at", downloadURL);
-          setCoverImg(downloadURL);
-          setUploadCoverStatus("");
+          setDetails(name, downloadURL);
+          status("");
         });
       }
     );
@@ -116,10 +106,9 @@ export default function User() {
                       type="file"
                       accept="image/*"
                       onChange={(e) => {
-                        const { target } = e;
-                        if (target.files != null) {
-                          const images = target.files[0];
-                          uploadCover(images);
+                        if (e.target.files != null) {
+                          const image = e.target.files[0];
+                          uploadFile("coverImg", image, setUploadCoverStatus);
                         }
                       }}
                     ></input>
@@ -145,10 +134,9 @@ export default function User() {
                         type="file"
                         accept="image/*"
                         onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                          const { target } = e;
-                          if (target.files != null) {
-                            const images = target.files[0];
-                            uploadPP(images);
+                          if (e.target.files != null) {
+                            const image = e.target.files[0];
+                            uploadFile("pp", image, setUploadPPStatus);
                           }
                         }}
                       ></input>
@@ -174,8 +162,8 @@ export default function User() {
                   type="text"
                   className="bg-transparent text-white"
                   placeholder="Username"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
+                  value={userDetails.username}
+                  onChange={(e) => setDetails("username", e.target.value)}
                 />
               </div>
               <div className="bio border p-2   mb-4">
@@ -184,8 +172,8 @@ export default function User() {
                 </label>
                 <textarea
                   className="bg-transparent w-full no-scrollbar"
-                  value={bio}
-                  onChange={(e) => setBio(e.target.value)}
+                  value={userDetails.bio}
+                  onChange={(e) => setDetails("bio", e.target.value)}
                 ></textarea>
               </div>
               <div className="info   mb-4 border p-3">
@@ -197,26 +185,22 @@ export default function User() {
                   name="location"
                   className="bg-transparent "
                   id="location"
-                  value={location}
-                  onChange={(e) => setLocation(e.target.value)}
+                  value={userDetails.location}
+                  onChange={(e) => setDetails("location", e.target.value)}
                   placeholder="Location"
                 />
               </div>
             </div>
           </div>
           <button
-            className="w-full !text-white border-slate-300 border !bg-green-500 h-10 flex p-3 gap-1 justify-center items-center rounded-3xl"
+            className="w-full text-white border-slate-300 border !bg-green-500 h-10 flex p-3 gap-1 justify-center items-center rounded-2xl"
             onClick={() => {
               axios
                 .post(
                   "https://my-twitter-backend.onrender.com/users/editProfile",
                   {
                     handle: user.handle,
-                    username: username ? username : user.username,
-                    bio: bio ? bio : user.bio,
-                    location: location ? location : user.location,
-                    pp: pp ? pp : user.pp,
-                    coverImg: CoverImg ? CoverImg : user.coverImg,
+                    ...userDetails,
                   }
                 )
                 .then((res) => {

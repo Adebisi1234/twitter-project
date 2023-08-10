@@ -10,7 +10,7 @@ export default function Header({
   tweets: number;
 }) {
   return (
-    <header className="w-full flex h-12 p-2   dark:border-b items-center gap-3">
+    <header className="w-full flex h-12 p-2 border-b items-center gap-3">
       <div className="arrow h-full w-10">
         <Link to="/">
           <Logo />

@@ -4,6 +4,7 @@ export interface Post {
   likes: number;
   handle: string;
   username: string;
+  // comments: Post;
   comment: boolean;
   commentCount: number;
   PostId: string;
