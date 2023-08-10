@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { login } from "../../features/auth/userSlice";
 import HomePage from "../home/HomePage";
 import { auth, provider } from "../../firebase";
-import { signInWithPopup } from "firebase/auth";
+import { UserCredential, signInWithPopup } from "firebase/auth";
 import google from "../../assets/google.svg";
 import Button from "../../components/Button";
 import {
@@ -25,7 +25,7 @@ const Form = () => {
 
   const [password, setPassword] = useState("");
   const [bio, setBio] = useState("");
-  const [handle, setHandle] = useState("@");
+  const [handle, setHandle] = useState("");
 
   const [uploadPPStatus, setUploadPPStatus] = useState("");
   const [uploadCoverStatus, setUploadCoverStatus] = useState("");
@@ -43,9 +43,10 @@ const Form = () => {
 
   const signInWithGoogle = () => {
     signInWithPopup(auth, provider)
-      .then((result) => {
+      .then((result: UserCredential) => {
         setUsername(result.user.displayName!);
-        setHandle(`@${result.user.email}`);
+        let userHandle = result.user.email?.replace("@gmail.com", "");
+        setHandle(`@${userHandle}`);
         setBio("This profile is from google");
         setFromGoogle(true);
 
@@ -128,7 +129,7 @@ const Form = () => {
   };
 
   return !Object.keys(user).length ? (
-    <div className="h-full dark:text-black bg-[var(--bg-primary)] text-white">
+    <div className="h-full  bg-[var(--bg-primary)] text-[var(--color)]">
       <div className=" mx-4 h-2/3 flex flex-col gap-4 my-14 ">
         <h1 className=" text-3xl  font-bold mb-2">Join Clone today</h1>
         <Button
@@ -145,17 +146,21 @@ const Form = () => {
           <label htmlFor="handle" className="block">
             handle:
           </label>
-          <input
-            required
-            value={handle}
-            onChange={(e) => {
-              setHandle(e.target.value);
-            }}
-            type="text"
-            id="handle"
-            name="handle"
-            className="border-b w-full"
-          />
+          <div className="flex">
+            <span>@</span>
+            <input
+              required
+              value={handle}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                e.target.value[e.target.value.length - 1] !== "@" &&
+                  setHandle(e.target.value);
+              }}
+              type="text"
+              id="handle"
+              name="handle"
+              className="border-b w-full"
+            />
+          </div>
         </div>
         <div className="input border p-3 username">
           <label htmlFor="username" className="block">
