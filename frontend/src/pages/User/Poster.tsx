@@ -3,7 +3,6 @@ import { useEffect, useState, useRef } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import Bottom from "../../components/Bottom";
-import Hr from "../../components/Hr";
 import Skeleton from "../../components/Skeleton";
 import Tweet from "../../components/Tweet";
 import Header from "./Header";
@@ -16,17 +15,18 @@ export default function Poster() {
   const follow = useRef<HTMLButtonElement>(null!);
   const { handle } = useParams();
   const users = useSelector((state: RootState) => state.user.user);
-  const [user, setUser]: [
-    user: User,
-    setUser: React.Dispatch<React.SetStateAction<User>>
-  ] = useState<User>(undefined!);
+  const [user, setUser] = useState<User>(undefined!);
   const [like, setLikes] = useState(false);
   useEffect(() => {
     const getUser = async (handle: string) => {
-      const { data } = await axios.get(
-        `https://my-twitter-backend.onrender.com/users/get/${handle}`
-      );
-      setUser(data);
+      try {
+        const { data } = await axios.get(
+          `https://my-twitter-backend.onrender.com/users/get/${handle}`
+        );
+        setUser(data);
+      } catch (err) {
+        console.log(err);
+      }
     };
     getUser(handle!);
   }, []);
@@ -34,9 +34,7 @@ export default function Poster() {
   const userPost = post[0].filter((post) => post.handle === handle);
 
   const liked = post[0].filter((post) => {
-    if (user) {
-      return user.likes?.includes(post._id);
-    }
+    return user.likes?.includes(post._id);
   });
   const tweets = userPost.map((post) => {
     return <Tweet key={post._id} post={post} />;
@@ -169,7 +167,7 @@ export default function Poster() {
           <div className="text-base">
             {!like
               ? tweets
-              : likedPost.length
+              : likedPost.length !== 0
               ? likedPost
               : "Please like more posts"}
           </div>
