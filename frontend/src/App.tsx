@@ -67,7 +67,7 @@ function App() {
       <div className="hidden lg:block">
         <Sidebar setNewTheme={setNewTheme} />
       </div>
-      <div className="lg:border-x ">
+      <div className="lg:border-x min-h-screen">
         <Routes>
           <Route
             path="/"
