@@ -128,8 +128,8 @@ const Form = () => {
   };
 
   return !Object.keys(user).length ? (
-    <div className="h-full dark:text-black bg-[var(--bg-primary)] text-white">
-      <div className=" mx-4 h-2/3 flex flex-col gap-4 my-14 ">
+    <div className="h-full bg-[var(--bg-primary)] text-[var(--color)]">
+      <div className=" mx-4 h-fit flex flex-col gap-4 my-14 ">
         <h1 className=" text-3xl  font-bold mb-2">Join Clone today</h1>
         <Button
           onClick={() => signInWithGoogle}
