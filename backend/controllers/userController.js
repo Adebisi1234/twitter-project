@@ -2,52 +2,12 @@ const User = require("../model/User");
 
 const editProfile = async (req, res, next) => {
   try {
-    if (req.body.username) {
+    for (const prop in req.body) {
       await User.findOneAndUpdate(
         { handle: req.body.handle },
         {
           $set: {
-            username: req.body.username,
-          },
-        }
-      );
-    }
-    if (req.body.bio) {
-      await User.findOneAndUpdate(
-        { handle: req.body.handle },
-        {
-          $set: {
-            bio: req.body.bio,
-          },
-        }
-      );
-    }
-    if (req.body.pp) {
-      await User.findOneAndUpdate(
-        { handle: req.body.handle },
-        {
-          $set: {
-            pp: req.body.pp,
-          },
-        }
-      );
-    }
-    if (req.body.coverImg) {
-      await User.findOneAndUpdate(
-        { handle: req.body.handle },
-        {
-          $set: {
-            coverImg: req.body.coverImg,
-          },
-        }
-      );
-    }
-    if (req.body.location) {
-      await User.findOneAndUpdate(
-        { handle: req.body.handle },
-        {
-          $set: {
-            location: req.body.location,
+            prop: req.body[prop],
           },
         }
       );

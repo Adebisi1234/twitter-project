@@ -8,7 +8,7 @@ import { RootState } from "../../app/store";
 const Signin = () => {
   const user = useSelector((state: RootState) => state.user.user);
   return !Object.keys(user).length ? (
-    <div className="max-h-screen">
+    <div>
       <Header />
       <Form />
     </div>

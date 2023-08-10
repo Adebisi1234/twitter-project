@@ -141,7 +141,7 @@ const Form = () => {
             type="submit"
             className="bg-[var(--color)] text-[var(--bg-primary)] hover:bg-[var(--button-primary)]  w-full p-3 mt-2 font-bold rounded-3xl"
           >
-            Test Clone out without an account
+            Log in without an account
           </button>
           <div
             className="h-12 w-fit mx-auto hidden justify-center items-center"
