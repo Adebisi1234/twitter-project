@@ -78,7 +78,7 @@ const Form = () => {
     <div className="w-full overflow-hidden  bg-[var(--bg-primary)] text-[var(--color)]">
       <div className=" mx-4 h-screen flex flex-col gap-4 my-36 ">
         <h1 className=" text-3xl text-[var(--color)]  font-bold mb-2">
-          Sign in to Clone
+          Sign in to Heyyy
         </h1>
         <Button
           onClick={() => signInWithGoogle}
